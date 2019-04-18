@@ -1,1 +1,6 @@
-jbiewer*
+# IntelliJ files to ignore:
+out/*
+.idea/*
+test
+
+# Eclipse files to ignore:

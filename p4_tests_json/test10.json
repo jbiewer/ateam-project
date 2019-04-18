@@ -1,0 +1,24 @@
+{
+  "packages": [
+    {
+      "name": "A",
+      "dependencies": ["B"]
+    },
+    {
+      "name": "B",
+      "dependencies": ["C","D"]
+    },
+    {
+      "name": "C",
+      "dependencies": []
+    },
+    {
+      "name": "D",
+      "dependencies": []
+    },
+    {
+      "name": "E",
+      "dependencies": ["B"]
+    }
+  ]
+}

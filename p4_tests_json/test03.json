@@ -1,0 +1,48 @@
+{
+  "packages": [
+    {
+      "name": "type_detect",
+      "dependencies": []
+    },
+    {
+      "name": "concat_map",
+      "dependencies": []
+    },
+    {
+      "name": "chai",
+      "dependencies": ["type_detect","deep_eql"]
+    },
+    {
+      "name": "debug",
+      "dependencies": []
+    },
+    {
+      "name": "brace_expansion",
+      "dependencies": ["concat_map"]
+    },
+    {
+      "name": "realpath",
+      "dependencies": []
+    },
+    {
+      "name": "deep_eql",
+      "dependencies": ["type_detect"]
+    },
+    {
+      "name": "glob",
+      "dependencies": ["realpath","inherits"]
+    },
+    {
+      "name": "mocha",
+      "dependencies": ["debug"]
+    },
+    {
+      "name": "java_package",
+      "dependencies": ["mocha","chai","brace_expansion"]
+    },
+    {
+      "name": "inherits",
+      "dependencies": []
+    }
+  ]
+}

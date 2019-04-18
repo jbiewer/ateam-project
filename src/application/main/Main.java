@@ -1,8 +1,7 @@
-package application;
+package application.main;
 
+import application.util.GUIScene;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 /**
@@ -11,6 +10,8 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     private static Stage stage; // the primary stage of the application
+
+    public static final int WIDTH = 1200, HEIGHT = 800; // dimensions of each scene
 
     /**
      * Method run before the application opens.
@@ -30,8 +31,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Main.stage = primaryStage;
+        Main.switchScene(GUIScene.TITLE_SCENE);
         primaryStage.show();
-        // hello, world!
     }
 
     /**
@@ -46,8 +47,8 @@ public class Main extends Application {
      * Used to switch between scenes on the primary stage.
      * @param scene Scene to switch to.
      */
-    public static void switchScene(Scene scene) {
-        Main.stage.setScene(scene);
+    public static void switchScene(GUIScene scene) {
+        Main.stage.setScene(scene.getScene());
     }
 
 }

@@ -31,7 +31,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Main.stage = primaryStage;
-        Main.switchScene(GUIScene.TITLE_SCENE);
+        Main.switchScene(GUIScene.TITLE);
         primaryStage.show();
     }
 

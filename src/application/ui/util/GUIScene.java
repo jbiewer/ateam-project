@@ -1,9 +1,8 @@
-package application.util;
+package application.ui.util;
 
 import application.main.Main;
-import application.ui.*;
+import application.ui.root.*;
 import javafx.scene.Scene;
-import javafx.scene.chart.StackedAreaChart;
 
 public enum GUIScene {
     TITLE(new Scene(new TitleRoot(), Main.WIDTH, Main.HEIGHT)),

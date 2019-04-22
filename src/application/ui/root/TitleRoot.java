@@ -1,13 +1,12 @@
-package application.ui;
+package application.ui.root;
 
 import javafx.scene.Parent;
 
 // Parent to be changed to whatever layout we want to use later.
-public class QuizSettingsRoot extends Parent {
+public class TitleRoot extends Parent {
 
-    public QuizSettingsRoot() {
+    public TitleRoot() {
         // create layout here.
-
     }
 
 }

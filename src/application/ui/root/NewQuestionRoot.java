@@ -1,4 +1,4 @@
-package application.ui;
+package application.ui.root;
 
 import javafx.scene.Parent;
 

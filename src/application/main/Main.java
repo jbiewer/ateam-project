@@ -1,6 +1,6 @@
 package application.main;
 
-import application.util.GUIScene;
+import application.ui.util.GUIScene;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

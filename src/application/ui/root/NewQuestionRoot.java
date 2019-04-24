@@ -56,9 +56,6 @@ public class NewQuestionRoot extends GridPane {
         TextField textField = new TextField();
         VBox    choicesGroup = new ChoicesVBox();
 
-        // IMPLEMENT NODE FUNCTIONALITY //
-
-
         // SET ROW AND COLUMN INDICES //
         new HashMap<Node, Integer>() {{
             put(title, 0);
@@ -85,10 +82,8 @@ public class NewQuestionRoot extends GridPane {
         this.getChildren().addAll(children);
 
         // SET STYLE //
-        this.setStyleClasses(
-                new Pair<>("main-text", new Node[] { text, image, choices }),
-                new Pair<>("text-field", new Node[] { textField })
-        );
+        Arrays.stream(new Node[] { text, image, choices }).forEach(n -> n.getStyleClass().add("main-text"));
+        textField.getStyleClass().add("text-field");
     }
 
     /**
@@ -167,14 +162,6 @@ public class NewQuestionRoot extends GridPane {
             this.setAlignment(Pos.CENTER);
             this.setSpacing(100);
         }
-    }
-
-    @SafeVarargs
-    private final void setStyleClasses(Pair<String, Node[]>... toStyle) {
-        Arrays.stream(toStyle).forEach(pair -> {
-            for (Node node : pair.getValue())
-                node.getStyleClass().add(pair.getKey());
-        });
     }
 
 }

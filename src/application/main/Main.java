@@ -16,7 +16,7 @@ public class Main extends Application {
   public static final int WIDTH = 800, HEIGHT = 600; // dimensions of each scene
 
   private static Stage stage; // the primary stage of the application
-  public static String theme = "style-light.css"; // default theme for all layouts
+  public static String theme = "application/style/style-light.css"; // default theme for all layouts
 
   /**
    * Method run before the application opens.
@@ -53,18 +53,18 @@ public class Main extends Application {
 
       switch(args[0]) {
         case "light":
-          Main.theme = "style-light.css";
+          Main.theme = "application/style/style-light.css";
           break;
         case "dark":
           Main.theme = "style-dark.css";
           break;
         default:
           System.out.println("Theme " + args[0] + " unrecognized. Using default 'light' theme.");
-          Main.theme = "style-light.css";
+          Main.theme = "application/style/style-light.css";
           break;
       }
     } else {
-      Main.theme = "style-light.css";
+      Main.theme = "application/style/style-light.css";
     }
     launch(args);
   }
@@ -91,12 +91,13 @@ public class Main extends Application {
     return choose.showOpenDialog(Main.stage);
   }
 
-  /**
-   * Getter method for the main stage.
-   * @return the main stage.
-   */
-  public static Stage getStage() {
-    return Main.stage;
-  }
+  // may not need to use this:
+//  /**
+//   * Getter method for the main stage.
+//   * @return the main stage.
+//   */
+//  public static Stage getStage() {
+//    return Main.stage;
+//  }
 
 }

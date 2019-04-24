@@ -26,8 +26,9 @@ public class NewQuestionRoot extends GridPane {
     private File imgToSave;
 
     public NewQuestionRoot() {
+        this.getStylesheets().add(Main.theme); // style layout to global theme.
+
         // DEFINE COLUMN WIDTH's //
-        this.getStylesheets().add("stylesheet.css");
         Arrays.stream(new ColumnConstraints[2]).forEach(c -> {
             c = new ColumnConstraints();
             c.setHgrow(Priority.ALWAYS);
@@ -75,11 +76,11 @@ public class NewQuestionRoot extends GridPane {
         ObservableList<Node> children = FXCollections.observableArrayList(
                 title, text, image, choices, imgBox, options, textField, choicesGroup
         );
-        children.forEach(n -> GridPane.setMargin(n, new Insets(21)));
+        children.forEach(n -> GridPane.setMargin(n, new Insets(20)));
         this.getChildren().addAll(children);
 
         // SET STYLE FOR EACH //
-        this.setStyles(
+        this.setStyleClasses(
                 new Pair<>("main-text", new Node[] { text, image, choices }),
                 new Pair<>("text-field", new Node[] { textField })
         );
@@ -161,7 +162,7 @@ public class NewQuestionRoot extends GridPane {
     }
 
     @SafeVarargs
-    private final void setStyles(Pair<String, Node[]>... toStyle) {
+    private final void setStyleClasses(Pair<String, Node[]>... toStyle) {
         Arrays.stream(toStyle).forEach(pair -> {
             for (Node node : pair.getValue())
                 node.getStyleClass().add(pair.getKey());

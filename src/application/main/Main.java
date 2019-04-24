@@ -13,11 +13,10 @@ import java.io.File;
  */
 public class Main extends Application {
 
-  private static Stage stage; // the primary stage of the application
-
   public static final int WIDTH = 1200, HEIGHT = 800; // dimensions of each scene
 
-  public static File theme;
+  private static Stage stage; // the primary stage of the application
+  public static String theme = "stylesheet.css"; // default theme for all layouts
 
   /**
    * Method run before the application opens.

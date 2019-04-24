@@ -16,7 +16,7 @@ public class Main extends Application {
   public static final int WIDTH = 800, HEIGHT = 600; // dimensions of each scene
 
   private static Stage stage; // the primary stage of the application
-  public static String theme = "stylesheet.css"; // default theme for all layouts
+  public static String theme = "style-light.css"; // default theme for all layouts
 
   /**
    * Method run before the application opens.
@@ -36,7 +36,7 @@ public class Main extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
     Main.stage = primaryStage;
-    Main.switchScene(GUIScene.QUIZ_SETTINGS);
+    Main.switchScene(GUIScene.NEW_QUESTION);
     primaryStage.show();
   }
 
@@ -45,6 +45,27 @@ public class Main extends Application {
    * @param args cmd line args.
    */
   public static void main(String[] args) {
+    if (args.length != 0) {
+      if (args[0].equals("themes")) {
+        System.out.println("Themes: light, dark");
+        return;
+      }
+
+      switch(args[0]) {
+        case "light":
+          Main.theme = "style-light.css";
+          break;
+        case "dark":
+          Main.theme = "style-dark.css";
+          break;
+        default:
+          System.out.println("Theme " + args[0] + " unrecognized. Using default 'light' theme.");
+          Main.theme = "style-light.css";
+          break;
+      }
+    } else {
+      Main.theme = "style-light.css";
+    }
     launch(args);
   }
 
@@ -57,7 +78,7 @@ public class Main extends Application {
   }
 
   /**
-   * loads a file and returns it
+   * Loads a file and returns it.
    *
    * @param filter type of file to select
    * @param title title of the FileChooser
@@ -71,8 +92,8 @@ public class Main extends Application {
   }
 
   /**
-   * getter method for the main stage
-   * @return the main stage
+   * Getter method for the main stage.
+   * @return the main stage.
    */
   public static Stage getStage() {
     return Main.stage;

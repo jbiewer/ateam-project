@@ -1,9 +1,10 @@
 # IntelliJ files to ignore:
 out/*
 .idea/*
-test
 
 # Eclipse files to ignore:
 .classpath
 .project
 # anything else?
+
+# Other files to ignore:

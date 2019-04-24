@@ -8,3 +8,4 @@ out/*
 # anything else?
 
 # Other files to ignore:
+/bin/

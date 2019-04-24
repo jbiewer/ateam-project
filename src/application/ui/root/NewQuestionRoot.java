@@ -14,7 +14,7 @@ public class NewQuestionRoot extends GridPane {
 
     public NewQuestionRoot() {
         // Root property definitions:
-        this.getStylesheets().add("stylesheet-light.css");
+//        this.getStylesheets().add("stylesheet-light.css");
 
         // Node instantiation:
         Label   title = new Label("New Question"),

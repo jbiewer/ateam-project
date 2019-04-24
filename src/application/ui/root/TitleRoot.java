@@ -1,15 +1,14 @@
 package application.ui.root;
 
-import java.io.File;
 import application.main.Main;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+
+import java.io.File;
 
 // Parent to be changed to whatever layout we want to use later.
 public class TitleRoot extends Parent {

@@ -13,7 +13,7 @@ import java.io.File;
  */
 public class Main extends Application {
 
-  public static final int WIDTH = 1200, HEIGHT = 800; // dimensions of each scene
+  public static final int WIDTH = 800, HEIGHT = 600; // dimensions of each scene
 
   private static Stage stage; // the primary stage of the application
   public static String theme = "stylesheet.css"; // default theme for all layouts
@@ -36,7 +36,7 @@ public class Main extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
     Main.stage = primaryStage;
-    Main.switchScene(GUIScene.NEW_QUESTION);
+    Main.switchScene(GUIScene.QUIZ_SETTINGS);
     primaryStage.show();
   }
 

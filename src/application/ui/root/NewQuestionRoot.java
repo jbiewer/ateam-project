@@ -79,7 +79,7 @@ public class NewQuestionRoot extends GridPane {
         children.forEach(n -> GridPane.setMargin(n, new Insets(20)));
         this.getChildren().addAll(children);
 
-        // SET STYLE FOR EACH //
+        // SET STYLE //
         this.setStyleClasses(
                 new Pair<>("main-text", new Node[] { text, image, choices }),
                 new Pair<>("text-field", new Node[] { textField })
@@ -96,11 +96,14 @@ public class NewQuestionRoot extends GridPane {
             this.getChildren().add(title);
             this.setAlignment(Pos.CENTER);
 
-            // SET STYLE FOR TITLE //
+            // SET STYLE //
             title.getStyleClass().add("header");
         }
     }
 
+    /**
+     * Custom HBox to organize the image browsing feature.
+     */
     private class ImageBrowsingHBox extends HBox {
         private ImageBrowsingHBox() {
             // SETUP BOX //

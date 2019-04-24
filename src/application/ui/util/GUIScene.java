@@ -15,7 +15,7 @@ public enum GUIScene {
     private Scene scene;
     GUIScene(Scene scene) {
         this.scene = scene;
-        scene.getStylesheets().add("stylesheet.css");
+        scene.getStylesheets().add(Main.theme);
     }
     public Scene getScene() {
         return scene;

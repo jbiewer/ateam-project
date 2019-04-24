@@ -1,6 +1,7 @@
 package application.ui.root;
 
 import application.main.Main;
+import application.ui.util.GUIScene;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -14,12 +15,16 @@ import javafx.scene.layout.VBox;
 
 import java.util.Arrays;
 
-// Parent to be changed to whatever layout we want to use later.
+/**
+ * The root node class of the scene "New Question".
+ * @author Jacob Biewer
+ */
 public class QuizSettingsRoot extends VBox {
 
+    /**
+     * Constructs layout from root node.
+     */
     public QuizSettingsRoot() {
-        this.getStylesheets().add(Main.theme); // style layout to global theme
-
         // INITIALIZE NODES //
         Label   title = new Label("Quiz Setup");
         HBox    topicSelectionBox = new TopicSelectionBox(),
@@ -30,7 +35,7 @@ public class QuizSettingsRoot extends VBox {
         Arrays.stream(new HBox[] { topicSelectionBox, numOfQuestionsBox, controlBtnBox })
                 .forEach(box -> {
                     box.setAlignment(Pos.CENTER);
-                    box.setSpacing(20);
+                    box.setSpacing(box instanceof ControlButtonBox ? 100 : 20);
                 });
 
         // LAYOUT EACH ELEMENT /
@@ -86,6 +91,14 @@ public class QuizSettingsRoot extends VBox {
             // SETUP BOX //
             Button  cancel = new Button("Cancel"),
                     begin = new Button("Begin Quiz");
+
+            // ADD FUNCTIONALITY //
+            cancel.setOnMouseClicked(event -> Main.switchScene(GUIScene.TITLE));
+            begin.setOnMouseClicked(event -> {
+                // todo implement way to save fields to transfer to next scene
+                Main.switchScene(GUIScene.QUESTION);
+            });
+
             this.getChildren().addAll(cancel, begin);
 
             // SET STYLE //

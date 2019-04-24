@@ -21,13 +21,18 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 
+/**
+ * The root node class of the scene "New Question".
+ * @author Jacob Biewer
+ */
 public class NewQuestionRoot extends GridPane {
 
     private File imgToSave;
 
+    /**
+     * Constructs layout from root node.
+     */
     public NewQuestionRoot() {
-        this.getStylesheets().add(Main.theme); // style layout to global theme.
-
         // DEFINE COLUMN WIDTH's //
         Arrays.stream(new ColumnConstraints[2]).forEach(c -> {
             c = new ColumnConstraints();

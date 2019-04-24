@@ -4,6 +4,8 @@ import application.ui.util.GUIScene;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.io.File;
+
 /**
  * The main class of the entire program. It's the Main Man.
  */
@@ -12,6 +14,7 @@ public class Main extends Application {
     private static Stage stage; // the primary stage of the application
 
     public static final int WIDTH = 1200, HEIGHT = 800; // dimensions of each scene
+    public static File theme;
 
     /**
      * Method run before the application opens.

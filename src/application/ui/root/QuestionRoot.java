@@ -7,8 +7,13 @@ import javafx.scene.layout.BorderPane;
 // Parent to be changed to whatever layout we want to use later.
 public class QuestionRoot extends BorderPane {
 
+    /**
+     * Empty constructor that creates a QuestionRoot scene
+     */
     public QuestionRoot() {
-        this.setCenter(new Button("hello!"));
+        Button btn = new Button("hi");
+        btn.getStyleClass().add("btn-large");
+        this.setCenter(btn);
         // create layout here.
     }
 

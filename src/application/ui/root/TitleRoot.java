@@ -44,11 +44,23 @@ public class TitleRoot extends Parent {
     this.load.setOnAction(event -> {
       File questions = Main.loadFile(new ExtensionFilter("JSON (*.json)", "*.json"),
           "Choose the JSON Quiz File to Load");
-      // todo: For milestone 3, this will add new Question()'s to main.questionBank.
-      System.out.println(questions);
+
+      // parse JSON file and add it to questions database //
+    });
+
+    this.start.setOnAction(Event -> {
+      Main.switchScene(GUIScene.QUIZ_SETTINGS);
+    });
+
+    this.exit.setOnAction(Event -> {
+      // show popup dialogue
+    });
+    this.addQuestion.setOnAction(Event -> {
+      Main.switchScene(GUIScene.NEW_QUESTION);
+    });
+    this.save.setOnAction(Event -> {
+      // save unstored values in question database to the file
     });
     this.getChildren().add(vertical);
   }
-
-
 }

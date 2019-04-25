@@ -111,14 +111,19 @@ public class QuestionRoot extends VBox {
      */
     public QuestionRoot() {
         // INITIALIZE NODES //
+        String[] choices = {"Choice 1", "Choice 2", "Choice 3"};
+        Question[] sampleQ = new Question[] {
+                new Question("Harry Potter Trivia", "Who is Harry?", choices),
+                new Question("Harry Potter Trivia", "Who is Dumbledore?", choices),
+        };
+        QuestionData sampleD = new QuestionData("Harry Potter Trivia", "3", sampleQ);
         this.topic = new Label("Questions about: ");
         this.qCount = new Label(this.qNum + " / ?");
-        this.question = new Label("Uh oh. Something went wrong!");
+        this.question = new Label();
         this.image = new ImageView();
         this.choiceBox = new ChoicesBox();
         BackNextBox backNextBox = new BackNextBox();
-        String[] choices = {"Choice 1", "Choice 2", "Choice 3"};
-        choiceBox.setChoices(choices);
+
 
         // FUNCTIONALITY //
         // none here...
@@ -129,7 +134,8 @@ public class QuestionRoot extends VBox {
         this.setSpacing(30);
 
         // load first question and data after setup
-        if(currQData != null) this.loadData(currQData);
+        //if(currQData != null) this.loadData(currQData);
+        this.loadData(sampleD);
     }
 
     /**

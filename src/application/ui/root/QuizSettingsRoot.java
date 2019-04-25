@@ -4,9 +4,7 @@ import application.main.Main;
 import application.ui.util.GUIScene;
 import application.util.SettingsData;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -19,6 +17,7 @@ import java.util.Arrays;
  */
 public class QuizSettingsRoot extends VBox {
 
+    // references to nodes
     private TopicSelectionBox topicSelectionBox;
     private NumOfQuestionsBox numOfQuestionsBox;
 
@@ -39,16 +38,13 @@ public class QuizSettingsRoot extends VBox {
                     box.setSpacing(box instanceof ControlButtonBox ? 100 : 20);
                 });
 
-        // LAYOUT EACH ELEMENT /
-        ObservableList<Node> children = FXCollections.observableArrayList(
-                title, this.topicSelectionBox, this.numOfQuestionsBox, controlBtnBox
-        );
-        this.getChildren().addAll(children);
+        // SETUP LAYOUT AND STYLE //
+        title.getStyleClass().add("header");
+
+        this.getChildren().addAll(title, this.topicSelectionBox, this.numOfQuestionsBox, controlBtnBox);
         this.setAlignment(Pos.CENTER);
         this.setSpacing(50);
 
-        // SET STYLE //
-        title.getStyleClass().add("header");
     }
 
     /**
@@ -119,10 +115,7 @@ public class QuizSettingsRoot extends VBox {
             begin.setOnMouseClicked(event -> {
                 int numOfQs = numOfQuestionsBox.getTotal();
                 if (numOfQs == -1) return; // don't switch scenes if an error occurs
-                ((QuestionRoot) GUIScene.QUESTION.getScene().getRoot()).setData(
-                        new SettingsData(topicSelectionBox.getTopic(), numOfQs)
-                );
-
+                QuestionRoot.saveData(new SettingsData(topicSelectionBox.getTopic(), numOfQs));
                 Main.switchScene(GUIScene.QUESTION);
             });
 

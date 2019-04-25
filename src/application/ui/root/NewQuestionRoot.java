@@ -15,8 +15,10 @@ import javafx.scene.layout.*;
 import javafx.stage.FileChooser.ExtensionFilter;
 
 import java.io.File;
-import java.net.URI;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * The root node class of the scene "New Question".

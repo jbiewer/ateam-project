@@ -36,6 +36,7 @@ public class QuizSettingsRoot extends VBox {
 
         // SETUP LAYOUT AND STYLE //
         title.getStyleClass().add("header");
+        this.getStyleClass().add("background");
 
         // center and space out all hbox elements
         Arrays.stream(new HBox[] { this.topicSelectionBox, this.numOfQuestionsBox, controlBtnBox })

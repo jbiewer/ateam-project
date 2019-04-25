@@ -56,10 +56,10 @@ public class Main extends Application {
           Main.theme = "application/style/style-light.css";
           break;
         case "dark":
-          Main.theme = "style-dark.css";
+          Main.theme = "application/style/style-dark.css";
           break;
         default:
-          System.out.println("Theme " + args[0] + " unrecognized. Using default 'light' theme.");
+          System.out.println("Theme '" + args[0] + "' unrecognized. Using default 'light' theme.");
           Main.theme = "application/style/style-light.css";
           break;
       }

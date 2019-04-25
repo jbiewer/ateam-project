@@ -9,13 +9,12 @@ public enum GUIScene {
     QUESTION(new Scene(new QuestionRoot(), Main.WIDTH, Main.HEIGHT)),
     RESULTS(new Scene(new ResultsRoot(), Main.WIDTH, Main.HEIGHT)),
     QUIZ_SETTINGS(new Scene(new QuizSettingsRoot(), Main.WIDTH, Main.HEIGHT)),
-    NEW_QUESTION(new Scene(new NewQuestionRoot(), Main.WIDTH, Main.HEIGHT)),
-    SAVE_ON_LEAVE(new Scene(new SaveOnLeaveRoot(), Main.WIDTH, Main.HEIGHT));
+    NEW_QUESTION(new Scene(new NewQuestionRoot(), Main.WIDTH, Main.HEIGHT));
 
     private Scene scene;
     GUIScene(Scene scene) {
         this.scene = scene;
-        scene.getStylesheets().add("stylesheet.css");
+        scene.getStylesheets().add(Main.theme);
     }
     public Scene getScene() {
         return scene;

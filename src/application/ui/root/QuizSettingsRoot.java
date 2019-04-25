@@ -61,7 +61,7 @@ public class QuizSettingsRoot extends VBox {
             // SETUP BOX //
             Label topic = new Label("Select Topic:");
             this.topics = new ComboBox<>();
-            // todo implement list of topics integration
+            this.topics.getItems().addAll(Main.questionBank.getAllTopics());
             this.getChildren().addAll(topic, this.topics);
 
             // SET STYLE //
@@ -108,7 +108,7 @@ public class QuizSettingsRoot extends VBox {
     /**
      * Custom HBox to hold the control buttons.
      */
-    private class ControlButtonBox extends HBox{
+    private class ControlButtonBox extends HBox {
         private ControlButtonBox() {
             // SETUP BOX //
             Button  cancel = new Button("Cancel"),
@@ -132,6 +132,15 @@ public class QuizSettingsRoot extends VBox {
             cancel.getStyleClass().add("btn-large");
             begin.getStyleClass().add("btn-large");
         }
+    }
+
+    /**
+     * Reloads topics in case some have been added.
+     */
+    protected void reloadTopics() {
+        this.topicSelectionBox.topics.setItems(FXCollections.observableArrayList(
+                Main.questionBank.getAllTopics()
+        ));
     }
 
 }

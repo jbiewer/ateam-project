@@ -66,7 +66,6 @@ public class NewQuestionRoot extends GridPane {
             ComboBox src = (ComboBox) event.getSource();
             if (src.getValue().equals("+ add topic"))
                 Main.initDialogScene(new Scene(new NewTopicDialog(), 300, 150));
-
         });
 
         // SET ROW AND COLUMN INDICES //
@@ -227,6 +226,7 @@ public class NewQuestionRoot extends GridPane {
                     return;
                 }
                 topicsList.getItems().add(0, this.topicEntry.getText());
+                topicsList.setValue(this.topicEntry.getText());
                 Main.closeCurrentDialogScene();
             });
             cancel.setOnMouseClicked(event -> Main.closeCurrentDialogScene());

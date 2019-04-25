@@ -22,7 +22,7 @@ public class Main extends Application {
   private static Stage currentPopup; // the stage of a window if one's popped up.
   public static String theme = "application/style/style-light.css"; // default theme for all layouts
 
-  public static QuestionBank questionBank = new QuestionBank(null);
+  public static QuestionBank questionBank = new QuestionBank();
 
   /**
    * Method run before the application opens.

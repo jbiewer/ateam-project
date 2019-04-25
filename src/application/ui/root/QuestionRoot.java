@@ -207,7 +207,6 @@ public class QuestionRoot extends VBox {
                 totalCountText = (data.getTotalQuestions() > questions.length ?
                                 questions.length : data.getTotalQuestions())+"";
 
-
         // reference them as a QuestionData data structure
         currQData = new QuestionData(topicText, totalCountText, questions);
     }

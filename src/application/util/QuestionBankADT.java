@@ -12,14 +12,14 @@ public interface QuestionBankADT {
      * @param jsonFile JSON file to use.
      * @return True if the file was successfully read, false if it was in the wrong format.
      */
-    boolean readFromJSON(File jsonFile);
+    boolean addJSONQuestion(File... jsonFile);
 
     /**
      * Takes the current data and writes it to a JSON as as Quiz.
      * @param destination Where to store the JSON file.
      * @return True if the file was successfully written, false if the file location doesn't exist.
      */
-    boolean writeToJSON(File destination);
+    boolean writeQuestionsToJSON(File destination);
 
     /**
      * Goes through all the questions in the question bank and returns a distinct list of all the topics.

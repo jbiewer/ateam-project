@@ -4,35 +4,36 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
-
 /**
  * Data structure to manage all the questions.
- *
  */
 public class QuestionBank implements QuestionBankADT {
 
     private List<Question> questionBank;
 
+    /**
+     * Initializes field members
+     */
     public QuestionBank() {
-        this(null);
-    }
-
-    public QuestionBank(File jsonFile) {
         this.questionBank = new ArrayList<>();
-        this.readFromJSON(jsonFile);
     }
 
     @Override
-    public boolean readFromJSON(File jsonFile) {
-        if (jsonFile == null) return false;
-        // todo implement
+    public boolean addJSONQuestion(File... jsonFiles) {
+//        try {
+            for (File jsonFile : jsonFiles) {
+                // todo implement
+            }
+//        } catch (IOException e) { e.printStackTrace(); }
+//        finally {
+//            return false;
+//        }
         return false;
     }
 
     @Override
-    public boolean writeToJSON(File destination) {
-        if (!destination.exists()) return false; // todo maybe print message to user?
+    public boolean writeQuestionsToJSON(File destination) {
+        if (!destination.exists()) return false; // todo print message to user somehow of invalid destination
         // todo implement
         return false;
     }

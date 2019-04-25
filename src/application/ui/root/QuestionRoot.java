@@ -117,6 +117,8 @@ public class QuestionRoot extends VBox {
         this.image = new ImageView();
         this.choiceBox = new ChoicesBox();
         BackNextBox backNextBox = new BackNextBox();
+        String[] choices = {"Choice 1", "Choice 2", "Choice 3"};
+        choiceBox.setChoices(choices);
 
         // FUNCTIONALITY //
         // none here...
@@ -125,9 +127,11 @@ public class QuestionRoot extends VBox {
         this.topic.getStyleClass().add("header");
         this.qCount.getStyleClass().add("sub-header");
         this.question.getStyleClass().add("main-text");
+        this.choiceBox.getStyleClass().add("main-text");
+        this.getStyleClass().add("background");
 
-        this.getChildren().addAll(this.topic, this.qCount, this.question, this.image, backNextBox);
-        this.getChildren().forEach(node -> this.setAlignment(Pos.CENTER));
+        this.getChildren().addAll(this.topic, this.qCount, this.question, this.choiceBox, this.image, backNextBox);
+        this.setAlignment(Pos.CENTER);
         this.setSpacing(30);
 
         // load first question and data after setup

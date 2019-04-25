@@ -36,7 +36,13 @@
 }
 
 .main-text{
-
+     -fx-font: 20px Droid-Serif;
+     -fx-padding: 10 10 10 10;
+     -fx-background-color: white;
+     -fx-fill: #21586b;
+     -fx-stroke: black;
+     -fx-stroke-width: 1;
+     -fx-font-weight: bold;
 }
 
 .dropdown{

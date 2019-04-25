@@ -12,9 +12,10 @@ public class ResultsRoot extends VBox {
 	
     public ResultsRoot() {
         // Initialize nodes
-    Label summary = new Label("Your results: ");
-    HBox percentageBox = new percentageBox();
-    HBox results = new resultsBox();
+        Label summary = new Label("Your results: ");
+        HBox percentageBox = new percentageBox();
+        HBox results = new resultsBox();
+        this.getChildren().addAll(percentageBox, results);
     }
     
     private class percentageBox extends HBox {
@@ -26,7 +27,7 @@ public class ResultsRoot extends VBox {
     		//this.middle = new HBox(numCorrect, numQuestions, percentage);
     		
     		// Set style?
-    		
+
     	}
     }
     

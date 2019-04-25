@@ -45,6 +45,7 @@ public class TitleRoot extends Parent {
     this.load.setOnAction(event -> {
       File questions = Main.loadFile(new ExtensionFilter("JSON (*.json)", "*.json"),
           "Choose the JSON Quiz File to Load");
+
       // parse JSON file and add it to questions database //
     });
 

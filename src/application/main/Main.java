@@ -1,9 +1,12 @@
 package application.main;
 
 import application.ui.util.GUIScene;
+import application.util.QuestionBank;
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -16,7 +19,10 @@ public class Main extends Application {
   public static final int WIDTH = 800, HEIGHT = 600; // dimensions of each scene
 
   private static Stage stage; // the primary stage of the application
+  private static Stage currentPopup; // the stage of a window if one's popped up.
   public static String theme = "application/style/style-light.css"; // default theme for all layouts
+
+  public static QuestionBank questionBank = new QuestionBank();
 
   /**
    * Method run before the application opens.
@@ -85,6 +91,30 @@ public class Main extends Application {
   }
 
   /**
+   * Pops up a dialog window with the given scene.
+   * @param scene Scene to use in the popup.
+   */
+  public static void initDialogScene(Scene scene) {
+    Stage popup = new Stage();
+    popup.setScene(scene);
+    popup.initOwner(stage);
+    popup.initModality(Modality.WINDOW_MODAL);
+    popup.show();
+    currentPopup = popup;
+  }
+
+  /**
+   * Closes a popup window if one is currently open.
+   * @return True if the window was successfully closed, false if a window wasn't open.
+   */
+  public static boolean closeCurrentDialogScene() {
+    if (currentPopup == null) return false;
+    currentPopup.close();
+    currentPopup = null;
+    return true;
+  }
+
+  /**
    * Loads a file and returns it.
    *
    * @param filter type of file to select
@@ -97,14 +127,5 @@ public class Main extends Application {
     choose.setTitle(title);
     return choose.showOpenDialog(Main.stage);
   }
-
-  // may not need to use this:
-//  /**
-//   * Getter method for the main stage.
-//   * @return the main stage.
-//   */
-//  public static Stage getStage() {
-//    return Main.stage;
-//  }
 
 }

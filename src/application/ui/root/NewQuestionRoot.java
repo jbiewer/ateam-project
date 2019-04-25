@@ -100,6 +100,8 @@ public class NewQuestionRoot extends GridPane {
         // SET STYLE //
         Arrays.stream(new Node[] { text, image, choices }).forEach(n -> n.getStyleClass().add("main-text"));
         this.promptField.getStyleClass().add("text-field");
+
+        this.getStyleClass().add("background");
     }
 
     /**
@@ -275,7 +277,13 @@ public class NewQuestionRoot extends GridPane {
             topic.getStyleClass().add("main-text");
 
             this.getChildren().addAll(fieldBox, controlBox);
+            this.getChildren().forEach(child -> {
+                ((HBox) child).setAlignment(Pos.CENTER);
+                ((HBox) child).setSpacing(20);
+            });
             this.topicEntry.getStyleClass().add("text-field");
+            this.setSpacing(20);
+            this.setAlignment(Pos.CENTER);
         }
     }
 

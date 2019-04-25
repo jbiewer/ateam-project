@@ -1,0 +1,55 @@
+
+<=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=>
+<=0=> List of things to do for the UI (milestone 2) <=0=>
+
+    MAIN SCENE ROOTS:
+
+        TitleRoot:
+        (Assigned to = Max)
+            Layout?         DONE
+            Documented?     .
+            Functionality?  .
+
+        NewQuestionRoot:
+        (Assigned to = Jake)
+            Layout?         DONE
+            Documented?     DONE
+            Functionality?  ALMOST
+
+        QuestionRoot:
+        (Assigned to = Emily)
+            Layout?         DONE
+            Documented?     DONE
+            Functionality?  A LITTLE
+
+        QuizSettingsRoot:
+        (Assigned to = Jake)
+            Layout?         DONE
+            Documented?     DONE
+            Functionality?  ALMOST
+
+        ResultsRoot:
+        (Assigned to = Jack)
+            Layout?         .
+            Documented?     .
+            Functionality?  .
+
+
+    OTHER ALERTS / ROOTS:
+
+        SaveOnLeaveAlert:
+        (Assigned to = Jack)
+            Layout?         .
+            Documented?     .
+            Functionality?  .
+
+<=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=>
+
+<=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=>
+<=0=>      List of things to do  (milestone 3)      <=0=>
+
+
+?
+
+
+<=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=>

@@ -1,6 +1,7 @@
 package application.ui.root;
 
 import application.main.Main;
+import application.ui.util.GUIScene;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,7 +11,6 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 import java.io.File;
 
-// Parent to be changed to whatever layout we want to use later.
 public class TitleRoot extends Parent {
 
   private Label title;
@@ -37,8 +37,11 @@ public class TitleRoot extends Parent {
     this.bottom = new HBox(10, exit, totalQuestions, start);
     this.vertical = new VBox(10, title, middle, bottom);
 
+    this.start.setOnAction(event -> Main.switchScene(GUIScene.QUIZ_SETTINGS));
+    this.exit.setOnAction(event -> Main.closeApplication());
+    this.addQuestion.setOnAction(event -> Main.switchScene(GUIScene.NEW_QUESTION));
 
-    this.load.setOnAction(Event -> {
+    this.load.setOnAction(event -> {
       File questions = Main.loadFile(new ExtensionFilter("JSON (*.json)", "*.json"),
           "Choose the JSON Quiz File to Load");
       System.out.println(questions);

@@ -36,7 +36,7 @@ public class Main extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
     Main.stage = primaryStage;
-    Main.switchScene(GUIScene.NEW_QUESTION);
+    Main.switchScene(GUIScene.TITLE);
     primaryStage.show();
   }
 
@@ -75,6 +75,13 @@ public class Main extends Application {
    */
   public static void switchScene(GUIScene scene) {
     Main.stage.setScene(scene.getScene());
+  }
+
+  /**
+   * Safe-close of the application to avoid any corrupt save files, etc.
+   */
+  public static void closeApplication() {
+    stage.close();
   }
 
   /**

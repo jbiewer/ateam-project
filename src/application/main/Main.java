@@ -6,7 +6,6 @@ import javafx.application.Application;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
-
 import java.io.File;
 
 /**
@@ -78,6 +77,6 @@ public class Main extends Application {
    */
   public static void switchScene(GUIScene scene) {
     Main.stage.setScene(scene.getScene());
-  } 
+  }
 
 }

@@ -2,6 +2,7 @@ package application.ui.root;
 
 import java.io.File;
 import application.main.Main;
+import application.ui.util.GUIScene;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -42,10 +43,22 @@ public class TitleRoot extends Parent {
     this.load.setOnAction(Event -> {
       File questions = Main.loadFile(new ExtensionFilter("JSON (*.json)", "*.json"),
           "Choose the JSON Quiz File to Load");
-      System.out.println(questions);
+      // parse JSON file and add it to questions database //
+    });
+
+    this.start.setOnAction(Event -> {
+      Main.switchScene(GUIScene.QUIZ_SETTINGS);
+    });
+
+    this.exit.setOnAction(Event -> {
+      // show popup dialogue
+    });
+    this.addQuestion.setOnAction(Event -> {
+      Main.switchScene(GUIScene.NEW_QUESTION);
+    });
+    this.save.setOnAction(Event -> {
+      // save unstored values in question database to the file
     });
     this.getChildren().add(vertical);
   }
-
-
 }

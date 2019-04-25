@@ -2,21 +2,30 @@ package application.ui.util;
 
 import application.main.Main;
 import application.ui.root.*;
+import application.util.Question;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.util.Pair;
 
 public enum GUIScene {
-    TITLE(new Scene(new TitleRoot(), Main.WIDTH, Main.HEIGHT)),
-    QUESTION(new Scene(new QuestionRoot(), Main.WIDTH, Main.HEIGHT)),
-    RESULTS(new Scene(new ResultsRoot(), Main.WIDTH, Main.HEIGHT)),
-    QUIZ_SETTINGS(new Scene(new QuizSettingsRoot(), Main.WIDTH, Main.HEIGHT)),
-    NEW_QUESTION(new Scene(new NewQuestionRoot(), Main.WIDTH, Main.HEIGHT));
+    TITLE(TitleRoot.class),
+    QUESTION(QuestionRoot.class),
+    RESULTS(ResultsRoot.class),
+    QUIZ_SETTINGS(QuizSettingsRoot.class),
+    NEW_QUESTION(NewQuestionRoot.class);
 
-    private Scene scene;
-    GUIScene(Scene scene) {
-        this.scene = scene;
-        scene.getStylesheets().add(Main.theme);
+    private Class root;
+
+    GUIScene(Class root) {
+        this.root = root;
     }
+
     public Scene getScene() {
-        return scene;
+        try {
+            Scene s = new Scene((Parent) this.root.newInstance(), Main.WIDTH, Main.HEIGHT);
+            s.getStylesheets().add(Main.theme);
+            return s;
+        } catch (InstantiationException | IllegalAccessException e) { e.printStackTrace(); }
+        return null;
     }
 }

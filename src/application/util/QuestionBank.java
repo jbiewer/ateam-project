@@ -6,48 +6,55 @@ import java.util.List;
 
 /**
  * Data structure to manage all the questions.
- *
  */
 public class QuestionBank implements QuestionBankADT {
 
-    List<Question> questionBank;
+    private List<Question> questionBank;
 
+    /**
+     * Initializes field members
+     */
     public QuestionBank() {
-        this(null);
-    }
-
-    public QuestionBank(File jsonFile) {
         this.questionBank = new ArrayList<>();
-        this.readFromJSON(jsonFile);
     }
 
     @Override
-    public boolean readFromJSON(File jsonFile) {
-        // todo implement
+    public boolean addJSONQuestion(File... jsonFiles) {
+//        try {
+            for (File jsonFile : jsonFiles) {
+                // todo implement
+            }
+//        } catch (IOException e) { e.printStackTrace(); }
+//        finally {
+//            return false;
+//        }
         return false;
     }
 
     @Override
-    public boolean writeToJSON(File destination) {
+    public boolean writeQuestionsToJSON(File destination) {
+        if (!destination.exists()) return false; // todo print message to user somehow of invalid destination
         // todo implement
         return false;
     }
 
     @Override
     public String[] getAllTopics() {
-        // todo implement
-        return new String[0];
+        return this.questionBank.stream()
+                .map(Question::getTopic)
+                .toArray(String[]::new);
     }
 
     @Override
     public Question[] getQuestionsOfTopic(String topic) {
-        // todo implement
-        return null;
+        return this.questionBank.stream()
+                .filter(question -> question.getTopic().equals(topic))
+                .toArray(Question[]::new);
     }
 
     @Override
     public void addQuestion(Question question) {
-        // todo implement
+        this.questionBank.add(question);
     }
 }
 

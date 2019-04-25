@@ -38,10 +38,6 @@ public class TitleRoot extends Parent {
     this.bottom = new HBox(10, exit, totalQuestions, start);
     this.vertical = new VBox(10, title, middle, bottom);
 
-    this.start.setOnAction(event -> Main.switchScene(GUIScene.QUIZ_SETTINGS));
-    this.exit.setOnAction(event -> Main.closeApplication());
-    this.addQuestion.setOnAction(event -> Main.switchScene(GUIScene.NEW_QUESTION));
-
     this.load.setOnAction(event -> {
       File questions = Main.loadFile(new ExtensionFilter("JSON (*.json)", "*.json"),
           "Choose the JSON Quiz File to Load");

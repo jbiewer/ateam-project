@@ -2,10 +2,7 @@
  * The main style sheet to be used throughout the quiz application
 */
 
-.root * {
-}
-
-.background {
+.root {
     -fx-padding: 15 15 15 15;
     -fx-background-image: url("wallpaper.png");
     -fx-background-repeat: no-repeat;
@@ -13,7 +10,8 @@
     -fx-background-position: center center;
 }
 
-.header{
+
+Label{
     -fx-font: 40px Droid-Serif;
     -fx-padding: 10 10 10 10;
     -fx-background-color: white;
@@ -24,7 +22,7 @@
     -fx-background-radius: 20 20 20 20;
 }
 
-.sub-header{
+.label-small{
      -fx-font: 30px Droid-Serif;
      -fx-padding: 10 10 10 10;
      -fx-background-color: white;
@@ -43,7 +41,19 @@
      -fx-stroke: black;
      -fx-stroke-width: 1;
      -fx-font-weight: bold;
+     -fx-background-radius: 20 20 20 20;
 }
+
+.choice-box{
+     -fx-font: 20px Droid-Serif;
+     -fx-padding: 10 10 10 10;
+     -fx-background-color: white;
+     -fx-fill: #21586b;
+     -fx-stroke: black;
+     -fx-stroke-width: 1;
+     -fx-font-weight: bold;
+}
+
 
 .dropdown{
 
@@ -53,7 +63,7 @@
 
 }
 
-.btn-large{
+Button{
     -fx-padding: 8 15 15 15;
         -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
         -fx-background-radius: 8;
@@ -68,11 +78,3 @@
 
 }
 
-
-.btn-medium{
-
-}
-
-.btn-small{
-
-}

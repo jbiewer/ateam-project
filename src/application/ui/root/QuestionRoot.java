@@ -123,13 +123,7 @@ public class QuestionRoot extends VBox {
         // FUNCTIONALITY //
         // none here...
 
-        // SETUP LAYOUT AND STYLE //
-        this.topic.getStyleClass().add("header");
-        this.qCount.getStyleClass().add("sub-header");
-        this.question.getStyleClass().add("main-text");
-        this.choiceBox.getStyleClass().add("main-text");
-        this.getStyleClass().add("background");
-
+        // SETUP LAYOUT //
         this.getChildren().addAll(this.topic, this.qCount, this.question, this.choiceBox, this.image, backNextBox);
         this.setAlignment(Pos.CENTER);
         this.setSpacing(30);

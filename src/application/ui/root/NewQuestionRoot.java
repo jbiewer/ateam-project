@@ -96,12 +96,6 @@ public class NewQuestionRoot extends GridPane {
                 title, text, image, choices, imgBox, options, this.promptField, this.choicesVBox, topic, this.topicsList
         );
         this.getChildren().forEach(n -> GridPane.setMargin(n, new Insets(20)));
-
-        // SET STYLE //
-        Arrays.stream(new Node[] { text, image, choices }).forEach(n -> n.getStyleClass().add("main-text"));
-        this.promptField.getStyleClass().add("text-field");
-
-        this.getStyleClass().add("background");
     }
 
     /**
@@ -118,10 +112,9 @@ public class NewQuestionRoot extends GridPane {
             // FUNCTIONALITY //
             // none... :(
 
-            // SETUP LAYOUT AND STYLE //
+            // SETUP LAYOUT //
             this.getChildren().add(title);
             this.setAlignment(Pos.CENTER);
-            title.getStyleClass().add("header");
         }
     }
 
@@ -147,11 +140,9 @@ public class NewQuestionRoot extends GridPane {
                 imgPreview.setImage(new Image(imgFile.toURI().toString()));
             });
 
-            // SETUP LAYOUT AND STYLE //
-            imgBrowse.getStyleClass().add("btn-medium");
+            // SETUP LAYOUT //
             imgPreview.setFitWidth(100);
             imgPreview.setFitHeight(100);
-
             this.getChildren().addAll(imgBrowse, imgPreview);
             this.setAlignment(Pos.CENTER_LEFT);
             this.setSpacing(30);
@@ -173,13 +164,10 @@ public class NewQuestionRoot extends GridPane {
             addChoice.setOnMouseClicked(e -> {
                 TextField toAdd = new TextField();
                 toAdd.maxWidth(Double.MAX_VALUE);
-                toAdd.getStyleClass().add("text-field");
                 this.getChildren().add(this.getChildren().size()-1, toAdd);
             });
 
             // SETUP LAYOUT AND STYLE //
-            addChoice.getStyleClass().add("btn-medium");
-
             this.getChildren().add(addChoice);
             this.setSpacing(10);
         }
@@ -209,7 +197,6 @@ public class NewQuestionRoot extends GridPane {
             // INITIALIZE NODES //
             Arrays.stream(new Button[] { new Button("Cancel"), new Button("Save") })
                     .forEach(btn -> {
-                        btn.getStyleClass().add("btn-large");
                         HBox.setHgrow(btn, Priority.ALWAYS);
                         this.getChildren().add(btn);
                     });
@@ -272,16 +259,11 @@ public class NewQuestionRoot extends GridPane {
             cancel.setOnMouseClicked(event -> Main.closeCurrentDialogScene());
 
             // SETUP LAYOUT //
-            cancel.getStyleClass().add("btn-large");
-            done.getStyleClass().add("btn-large");
-            topic.getStyleClass().add("main-text");
-
             this.getChildren().addAll(fieldBox, controlBox);
             this.getChildren().forEach(child -> {
                 ((HBox) child).setAlignment(Pos.CENTER);
                 ((HBox) child).setSpacing(20);
             });
-            this.topicEntry.getStyleClass().add("text-field");
             this.setSpacing(20);
             this.setAlignment(Pos.CENTER);
         }

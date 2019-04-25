@@ -1,6 +1,8 @@
-# ateam-project - *Who you gonna call??? A TEAM!*
+### ateam-project - *Who you gonna call??? A TEAM!* ###
 
-# Project's package structure:
+![A-Team](https://upload.wikimedia.org/wikipedia/commons/d/d0/A-Team-Logo.svg)
+
+# Project's package structure: #
 
 ```
 application ~ root of package structure

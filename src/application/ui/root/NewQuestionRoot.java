@@ -2,24 +2,21 @@ package application.ui.root;
 
 import application.main.Main;
 import application.ui.util.GUIScene;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import application.util.Question;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.util.Pair;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.net.URI;
+import java.util.*;
 
 /**
  * The root node class of the scene "New Question".
@@ -27,6 +24,10 @@ import java.util.HashMap;
  */
 public class NewQuestionRoot extends GridPane {
 
+    // references to labels used to save data
+    private TextField promptField;
+    private ChoicesVBox choicesVBox;
+    private ComboBox<String> topicsList;
     private File imgToSave;
 
     /**
@@ -51,39 +52,52 @@ public class NewQuestionRoot extends GridPane {
                 options = new CancelSaveHBox(),
                 imgBox = new ImageBrowsingHBox();
         Label   text = new Label("Prompt:"),
+                topic = new Label("Topic: "),
                 image = new Label("Image:"),
                 choices = new Label("Choices");
-        TextField textField = new TextField();
-        VBox    choicesGroup = new ChoicesVBox();
+        this.topicsList = new ComboBox<>();
+        this.promptField = new TextField();
+        this.choicesVBox = new ChoicesVBox();
+
+        // SETUP topicsList COMBO BOX //
+        this.topicsList.getItems().add("+ add topic");
+        this.topicsList.getItems().addAll(0, Arrays.asList(Main.questionBank.getAllTopics()));
+        this.topicsList.setOnAction(event -> {
+            ComboBox src = (ComboBox) event.getSource();
+            if (src.getValue().equals("+ add topic"))
+                Main.initDialogScene(new Scene(new NewTopicDialog(), 300, 150));
+
+        });
 
         // SET ROW AND COLUMN INDICES //
         new HashMap<Node, Integer>() {{
             put(title, 0);
-            put(text, 0);       put(textField, 1);
+            put(topic, 0);      put(topicsList, 1);
+            put(text, 0);       put(promptField, 1);
             put(image, 0);      put(imgBox, 1);
-            put(choices, 0);    put(choicesGroup, 1);
+            put(choices, 0);    put(choicesVBox, 1);
             put(options, 0);
         }}.forEach(GridPane::setColumnIndex);
         new HashMap<Node, Integer>() {{
             put(title, 0);
-            put(text, 1);       put(textField, 1);
-            put(image, 2);      put(imgBox, 2);
-            put(choices, 3);    put(choicesGroup, 3);
-            put(options, 4);
+            put(topic, 1);      put(topicsList, 1);
+            put(text, 2);       put(promptField, 2);
+            put(image, 3);      put(imgBox, 3);
+            put(choices, 4);    put(choicesVBox, 4);
+            put(options, 5);
         }}.forEach(GridPane::setRowIndex);
         GridPane.setColumnSpan(title, 2); // let title span entire layout
         GridPane.setColumnSpan(options, 2); // same with options
 
         // LAYOUT EACH ELEMENT //
-        ObservableList<Node> children = FXCollections.observableArrayList(
-                title, text, image, choices, imgBox, options, textField, choicesGroup
+        this.getChildren().addAll(
+                title, text, image, choices, imgBox, options, this.promptField, this.choicesVBox, topic, this.topicsList
         );
-        children.forEach(n -> GridPane.setMargin(n, new Insets(20)));
-        this.getChildren().addAll(children);
+        this.getChildren().forEach(n -> GridPane.setMargin(n, new Insets(20)));
 
         // SET STYLE //
         Arrays.stream(new Node[] { text, image, choices }).forEach(n -> n.getStyleClass().add("main-text"));
-        textField.getStyleClass().add("text-field");
+        this.promptField.getStyleClass().add("text-field");
     }
 
     /**
@@ -105,16 +119,23 @@ public class NewQuestionRoot extends GridPane {
      * Custom HBox to organize the image browsing feature.
      */
     private class ImageBrowsingHBox extends HBox {
+
         private ImageBrowsingHBox() {
-            // SETUP BOX //
+            // INITIALIZE NODES //
             Button  imgBrowse = new Button("Browse");
             ImageView imgPreview = new ImageView();
+
+            // FUNCTIONALITY //
             imgBrowse.setOnMouseClicked(event -> {
-                imgPreview.setImage(new Image(Main.loadFile(
+                File imgFile = Main.loadFile(
                         new ExtensionFilter("Image File (png/jpg)", "*.jpg", "*.png"),
                         "Choose Image File For Question"
-                ).toURI().toString()));
+                );
+                if (imgFile == null) return;
+                imgPreview.setImage(new Image(imgFile.toURI().toString()));
             });
+
+            // SETUP LAYOUT //
             imgBrowse.getStyleClass().add("btn-medium");
             imgPreview.setFitWidth(100);
             imgPreview.setFitHeight(100);
@@ -123,12 +144,14 @@ public class NewQuestionRoot extends GridPane {
             this.setAlignment(Pos.CENTER_LEFT);
             this.setSpacing(30);
         }
+
     }
 
     /**
      * Custom VBox to handle adding new choices in the layout.
      */
     private class ChoicesVBox extends VBox {
+
         private ChoicesVBox() {
             Button addChoice = new Button("+");
             addChoice.setOnMouseClicked(e -> {
@@ -140,6 +163,16 @@ public class NewQuestionRoot extends GridPane {
             addChoice.getStyleClass().add("btn-medium");
             this.getChildren().add(addChoice);
             this.setSpacing(10);
+        }
+
+        private String[] getChoices() {
+            List<String> choices = new ArrayList<>();
+            this.getChildren().forEach(child -> {
+                if(child instanceof TextField) {
+                    choices.add(((TextField) child).getText());
+                }
+            });
+            return choices.toArray(new String[0]);
         }
     }
 
@@ -156,11 +189,57 @@ public class NewQuestionRoot extends GridPane {
                     });
             this.getChildren().get(0).setOnMouseClicked(e -> Main.switchScene(GUIScene.TITLE));
             this.getChildren().get(1).setOnMouseClicked(e -> {
-                // todo 'save' implementation
+                saveQuestion();
                 Main.switchScene(GUIScene.TITLE);
             });
             this.setAlignment(Pos.CENTER);
             this.setSpacing(100);
+        }
+
+        private void saveQuestion() {
+            Main.questionBank.addQuestion(new Question(
+                    topicsList.getValue(), promptField.getText(), choicesVBox.getChoices(), imgToSave
+            ));
+        }
+    }
+
+    /**
+     * Custom VBox used in the popup window when entering a new topic.
+     */
+    private class NewTopicDialog extends VBox {
+
+        private TextField topicEntry;
+
+        private NewTopicDialog() {
+            this.getStylesheets().add(Main.theme); // add stylesheet
+
+            // INITIALIZE NODES //
+            Button  cancel = new Button("Cancel"),
+                    done = new Button("Done");
+            Label   topic = new Label("Topic:");
+            this.topicEntry = new TextField();
+
+            // FUNCTIONALITY //
+            done.setDefaultButton(true);
+            done.setOnMouseClicked(event -> {
+                if(this.topicEntry.getText().isEmpty()) {
+                    new Alert(Alert.AlertType.WARNING, "Topic field can't be empty.").showAndWait();
+                    return;
+                }
+                topicsList.getItems().add(0, this.topicEntry.getText());
+                Main.closeCurrentDialogScene();
+            });
+            cancel.setOnMouseClicked(event -> Main.closeCurrentDialogScene());
+
+            // SETUP LAYOUT //
+            cancel.getStyleClass().add("btn-large");
+            done.getStyleClass().add("btn-large");
+            topic.getStyleClass().add("main-text");
+            this.topicEntry.getStyleClass().add("text-field");
+
+            HBox    fieldBox = new HBox(topic, this.topicEntry),
+                    controlBox = new HBox(cancel, done);
+            this.getChildren().addAll(fieldBox, controlBox);
         }
     }
 

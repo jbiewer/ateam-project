@@ -46,10 +46,6 @@ public class TitleRoot extends Parent {
 
     this.start.setOnAction(Event -> {
       Main.switchScene(GUIScene.QUIZ_SETTINGS);
-
-      // I (Jake) added this in so I could test some functionality :)
-      ((QuizSettingsRoot) GUIScene.QUIZ_SETTINGS.getScene().getRoot()).reloadTopics();
-
     });
 
     this.exit.setOnAction(Event -> {

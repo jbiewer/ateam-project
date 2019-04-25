@@ -17,6 +17,8 @@ import java.util.Arrays;
 
 /**
  * Class that represents the root node for the Question Scene.
+ * @author Emily Cebasek
+ * @author Jacob Biewer
  */
 public class QuestionRoot extends VBox {
 
@@ -29,9 +31,10 @@ public class QuestionRoot extends VBox {
      *
      *   Conversely, when the user wants to go back to another question, add it to the "unanswered" stack,
      *   and remove it from the "answered" stack.
+     *
+     * The stack is implemented using a doubly linked-list.
      */
     private class QuestionStack {
-
         /**
          * Utility class used with the Question Stack class.
          */
@@ -40,6 +43,12 @@ public class QuestionRoot extends VBox {
             private Question data;
             private QuestionNode prev;
 
+            /**
+             * QuestionNode constructor.
+             * @param data Question
+             * @param prev Link to previous node.
+             * @param next Link to next node.
+             */
             private QuestionNode(Question data, QuestionNode prev, QuestionNode next) {
                 this.next = next;
                 this.data = data;
@@ -51,6 +60,10 @@ public class QuestionRoot extends VBox {
         private QuestionNode tail;
         private int size;
 
+        /**
+         * Add a question to the top of the stack.
+         * @param q Question to add.
+         */
         private void add(Question q) {
             QuestionNode node = new QuestionNode(q, tail, null); // reference new node
             if (head == null) head = tail = node; // if emtpy, set head and tail to new node
@@ -61,6 +74,10 @@ public class QuestionRoot extends VBox {
             size++;
         }
 
+        /**
+         * Remove a question from the top of the stack.
+         * @return The question at the top.
+         */
         private Question pop() {
             if(head == null) return null; // if empty, return null
 
@@ -75,6 +92,7 @@ public class QuestionRoot extends VBox {
         }
     }
 
+
     private static QuestionData currQData; // holds information about the current question
 
     private int qNum; // keeps track of the current question number
@@ -87,8 +105,9 @@ public class QuestionRoot extends VBox {
     private ImageView image;
     private ChoicesBox choiceBox;
 
+
     /**
-     * Creates a QuestionRoot root node.
+     * Constructs the root node for the QuestionRoot scene.
      */
     public QuestionRoot() {
         // INITIALIZE NODES //
@@ -99,6 +118,9 @@ public class QuestionRoot extends VBox {
         this.choiceBox = new ChoicesBox();
         BackNextBox backNextBox = new BackNextBox();
 
+        // FUNCTIONALITY //
+        // none here...
+
         // SETUP LAYOUT AND STYLE //
         this.topic.getStyleClass().add("header");
         this.qCount.getStyleClass().add("sub-header");
@@ -108,12 +130,12 @@ public class QuestionRoot extends VBox {
         this.getChildren().forEach(node -> this.setAlignment(Pos.CENTER));
         this.setSpacing(30);
 
-        // load first question and data
+        // load first question and data after setup
         if(currQData != null) this.loadData(currQData);
     }
 
     /**
-     * VBox to organize choices into radio buttons
+     * Custom root node to organize the list of choices for the question.
      */
     private class ChoicesBox extends VBox {
         /**
@@ -121,18 +143,23 @@ public class QuestionRoot extends VBox {
          * @param choices List of choices.
          */
         private void setChoices(String[] choices) {
-            this.getChildren().removeAll(this.getChildren());
-            for (String choice : choices)
+            this.getChildren().removeAll(this.getChildren()); // update the children by removing all of them
+            for (String choice : choices) // add the new choices as children.
                 this.getChildren().add(new RadioButton(choice));
+
+            // SETUP LAYOUT AND STYLE //
             this.setSpacing(10);
             this.setAlignment(Pos.CENTER_LEFT);
         }
     }
 
     /**
-     * HBox to organize the back/next buttons.
+     * Custom root node to organize the 'back' and 'next' buttons.
      */
     private class BackNextBox extends HBox {
+        /**
+         * Constructs the node.
+         */
         private BackNextBox() {
             // INITIALIZE NODES //
             Button  back = new Button("Back"),
@@ -156,24 +183,14 @@ public class QuestionRoot extends VBox {
                 }
             });
 
-            // SETUP LAYOUT //
+            // SETUP LAYOUT AND STYLE //
             this.getChildren().addAll(back, next);
             this.getChildren().forEach(child -> child.getStyleClass().add("btn-large"));
             this.setAlignment(Pos.CENTER);
             this.setSpacing(100);
         }
-
     }
 
-    /**
-     * Helper method to set a new question up on the window.
-     * @param q Question to prompt the user.
-     */
-    private void setQuestion(Question q) {
-        this.question.setText(q.getPrompt());
-        if (q.getImageURI() != null) this.image.setImage(new Image(q.getImageURI().toString()));
-        this.choiceBox.setChoices(q.getChoices());
-    }
 
     /**
      * Method to pass in data about the quiz from an external source.
@@ -217,4 +234,15 @@ public class QuestionRoot extends VBox {
         this.qCount.setText(data.getTotalCountText());
     }
 
+    /**
+     * Helper method to set a new question up on the window.
+     * Accessed by the loadData() method and by event handlers for next/back buttons.
+     * @param q Question to prompt the user.
+     */
+    private void setQuestion(Question q) {
+        this.question.setText(q.getPrompt()); // set question prompt text
+        // if there's an image, display it
+        if (q.getImageURI() != null) this.image.setImage(new Image(q.getImageURI().toString()));
+        this.choiceBox.setChoices(q.getChoices()); // setup choices for user
+    }
 }

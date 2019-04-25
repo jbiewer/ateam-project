@@ -3,7 +3,6 @@ package application.ui.root;
 import application.main.Main;
 import application.ui.util.GUIScene;
 import application.util.SettingsData;
-import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -12,17 +11,17 @@ import javafx.scene.layout.VBox;
 import java.util.Arrays;
 
 /**
- * The root node class of the scene "New Question".
+ * Custom root node for the QuizSettingsRoot scene.
  * @author Jacob Biewer
  */
 public class QuizSettingsRoot extends VBox {
 
-    // references to nodes
+    // references to components in layout
     private TopicSelectionBox topicSelectionBox;
     private NumOfQuestionsBox numOfQuestionsBox;
 
     /**
-     * Constructs layout from root node.
+     * Constructs the node.
      */
     public QuizSettingsRoot() {
         // INITIALIZE NODES //
@@ -31,6 +30,13 @@ public class QuizSettingsRoot extends VBox {
         this.numOfQuestionsBox = new NumOfQuestionsBox();
         HBox controlBtnBox = new ControlButtonBox();
 
+        // FUNCTIONALITY //
+        // none here...
+
+
+        // SETUP LAYOUT AND STYLE //
+        title.getStyleClass().add("header");
+
         // center and space out all hbox elements
         Arrays.stream(new HBox[] { this.topicSelectionBox, this.numOfQuestionsBox, controlBtnBox })
                 .forEach(box -> {
@@ -38,55 +44,72 @@ public class QuizSettingsRoot extends VBox {
                     box.setSpacing(box instanceof ControlButtonBox ? 100 : 20);
                 });
 
-        // SETUP LAYOUT AND STYLE //
-        title.getStyleClass().add("header");
-
         this.getChildren().addAll(title, this.topicSelectionBox, this.numOfQuestionsBox, controlBtnBox);
         this.setAlignment(Pos.CENTER);
         this.setSpacing(50);
-
     }
 
     /**
-     * Custom HBox to hold the topic selection feature.
+     * Custom root node to organize topic selection layout.
      */
     private class TopicSelectionBox extends HBox {
         private ComboBox<String> topics;
 
+        /**
+         * Constructs the node.
+         */
         private TopicSelectionBox() {
-            // SETUP BOX //
+            // INITIALIZE NODES //
             Label topic = new Label("Select Topic:");
             this.topics = new ComboBox<>();
-            this.topics.getItems().addAll(Main.questionBank.getAllTopics());
-            this.getChildren().addAll(topic, this.topics);
 
-            // SET STYLE //
+            // FUNCTIONALITY //
+            // none here...
+
+            // SETUP LAYOUT AND STYLE //
             topic.getStyleClass().add("main-text");
             this.topics.getStyleClass().add("text-field");
+
+            this.topics.getItems().addAll(Main.questionBank.getAllTopics());
+            this.getChildren().addAll(topic, this.topics);
         }
 
+        /**
+         * @return The topic selected in the combo box.
+         */
         private String getTopic() {
             return this.topics.getValue();
         }
     }
 
     /**
-     * Custom HBox to hold the number of questions prompt.
+     * Custom root node to organize the number of questions prompt layout.
      */
     private class NumOfQuestionsBox extends HBox {
-        private TextField number;
+        private TextField number; // reference to the field where the user enters the number
 
+        /**
+         * Constructs the root node.
+         */
         private NumOfQuestionsBox() {
-            // SETUP BOX //
+            // INITIALIZE NODES //
             Label numOfQuestions = new Label("Number of Questions:");
-            this.number= new TextField();
-            this.getChildren().addAll(numOfQuestions, this.number);
+            this.number = new TextField();
 
-            // SET STYLE //
+            // FUNCTIONALITY //
+            // none here...
+
+            // SETUP LAYOUT AND STYLE //
             numOfQuestions.getStyleClass().add("main-text");
             this.number.getStyleClass().add("text-field");
+
+            this.getChildren().addAll(numOfQuestions, this.number);
+
         }
 
+        /**
+         * @return The value in the 'number' text field.
+         */
         private int getTotal() {
             String txt = this.number.getText();
             try {
@@ -102,15 +125,18 @@ public class QuizSettingsRoot extends VBox {
     }
 
     /**
-     * Custom HBox to hold the control buttons.
+     * Custom root node to organize the control buttons (cancel, begin) layout.
      */
     private class ControlButtonBox extends HBox {
+        /**
+         * Constructs the node.
+         */
         private ControlButtonBox() {
-            // SETUP BOX //
+            // INITIALIZE NODES //
             Button  cancel = new Button("Cancel"),
                     begin = new Button("Begin Quiz");
 
-            // ADD FUNCTIONALITY //
+            // FUNCTIONALITY //
             cancel.setOnMouseClicked(event -> Main.switchScene(GUIScene.TITLE));
             begin.setOnMouseClicked(event -> {
                 int numOfQs = numOfQuestionsBox.getTotal();
@@ -119,21 +145,11 @@ public class QuizSettingsRoot extends VBox {
                 Main.switchScene(GUIScene.QUESTION);
             });
 
-            this.getChildren().addAll(cancel, begin);
-
-            // SET STYLE //
+            // SETUP LAYOUT AND STYLE //
             cancel.getStyleClass().add("btn-large");
             begin.getStyleClass().add("btn-large");
+
+            this.getChildren().addAll(cancel, begin);
         }
     }
-
-    /**
-     * Reloads topics in case some have been added.
-     */
-    protected void reloadTopics() {
-        this.topicSelectionBox.topics.setItems(FXCollections.observableArrayList(
-                Main.questionBank.getAllTopics()
-        ));
-    }
-
 }

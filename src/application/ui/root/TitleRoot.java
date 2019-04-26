@@ -63,6 +63,5 @@ public class TitleRoot extends VBox {
     this.save.setOnAction(Event -> {
       // save unstored values in question database to the file
     });
-
   }
 }

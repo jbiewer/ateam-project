@@ -44,11 +44,10 @@ public class NewQuestionRoot extends GridPane {
             this.getColumnConstraints().add(c);
         });
         this.getColumnConstraints().get(0).setHalignment(HPos.RIGHT);
-        this.getColumnConstraints().get(0).setPercentWidth(25);
+        this.getColumnConstraints().get(0).setPercentWidth(40);
         this.getColumnConstraints().get(1).setHalignment(HPos.LEFT);
-        this.getColumnConstraints().get(1).setPercentWidth(75);
+        this.getColumnConstraints().get(1).setPercentWidth(60);
         this.setAlignment(Pos.CENTER);
-        this.setPadding(new Insets(50));
 
         // INITIALIZE NODES //
         HBox    title = new TitleHBox(),
@@ -95,7 +94,7 @@ public class NewQuestionRoot extends GridPane {
         this.getChildren().addAll(
                 title, text, image, choices, imgBox, options, this.promptField, this.choicesVBox, topic, this.topicsList
         );
-        this.getChildren().forEach(n -> GridPane.setMargin(n, new Insets(20)));
+        this.getChildren().forEach(n -> GridPane.setMargin(n, new Insets(5)));
     }
 
     /**

@@ -5,18 +5,19 @@ package application.util;
  */
 public class QuestionData {
 
-    private String topicText, totalCountText; // text to be assigned to their respective labels
+    private String topicText; // text to be assigned to their respective labels
+    private int totalCount; // total number of questions
     private Question[] questions; // list of questions to be asked
 
     /**
      * Initializes the data.
      * @param topicText Topic to be displayed.
-     * @param qCountText Total number of questions to be displayed.
+     * @param totalCount Total number of questions to be displayed.
      * @param questions The questions to be displayed.
      */
-    public QuestionData(String topicText, String qCountText, Question[] questions) {
+    public QuestionData(String topicText, int totalCount, Question[] questions) {
         this.topicText = topicText;
-        this.totalCountText = qCountText;
+        this.totalCount = totalCount;
         this.questions = questions;
     }
 
@@ -30,8 +31,8 @@ public class QuestionData {
     /**
      * @return The text for the total number of questions.
      */
-    public String getTotalCountText() {
-        return totalCountText;
+    public int getTotalCount() {
+        return totalCount;
     }
 
     /**

@@ -93,12 +93,14 @@ public class QuestionRoot extends VBox {
     }
 
 
-    private static QuestionData currQData; // holds information about the current question
+    private static QuestionData currQuestionData; // holds information about the current question
 
     private int qNum; // keeps track of the current question number
+    private final int TOTAL; // how many total questions there are.
     // stacks of questions to ask and those already answered
     private QuestionStack questionsToAsk = new QuestionStack(),
             questionsAnswered = new QuestionStack();
+    private Question currentQuestion; // question buffer to avoid having clicking 'back'/'next' twice
 
     // class fields to reference labels
     private Label topic, qCount, question;
@@ -116,7 +118,7 @@ public class QuestionRoot extends VBox {
                 new Question("Harry Potter Trivia", "Who is Harry?", choices),
                 new Question("Harry Potter Trivia", "Who is Dumbledore?", choices),
         };
-        QuestionData sampleD = new QuestionData("Harry Potter Trivia", "3", sampleQ);
+        QuestionData sampleD = new QuestionData("Harry Potter Trivia", 3, sampleQ);
         this.topic = new Label("Questions about: ");
         this.topic.getStyleClass().add("label-big");
         this.qCount = new Label(this.qNum + " / ?");
@@ -129,14 +131,15 @@ public class QuestionRoot extends VBox {
         // FUNCTIONALITY //
         // none here...
 
-        // SETUP LAYOUT //
+        // SETUP LAYOUT AND STYLE //
+        this.choiceBox.getStyleClass().add("choice-box");
         this.getChildren().addAll(this.topic, this.qCount, this.question, this.choiceBox, this.image, backNextBox);
         this.setAlignment(Pos.CENTER);
         this.setSpacing(30);
 
         // load first question and data after setup
-        //if(currQData != null) this.loadData(currQData);
-        this.loadData(sampleD);
+        //if(currQuestionData != null) this.loadData(currQuestionData);
+        this.TOTAL = this.loadData(sampleD);
     }
 
     /**
@@ -171,20 +174,20 @@ public class QuestionRoot extends VBox {
                     next = new Button("Next");
 
             // FUNCTIONALITY //
-            back.setOnMouseClicked(event -> {
-                Question prevQuestion = questionsAnswered.pop();
-                if (prevQuestion != null) {
-                    setQuestion(prevQuestion);
-                    questionsToAsk.add(prevQuestion);
-                    qNum--;
-                }
-            });
             next.setOnMouseClicked(event -> {
                 Question nextQuestion = questionsToAsk.pop();
                 if (nextQuestion != null) {
+                    questionsAnswered.add(currentQuestion);
                     setQuestion(nextQuestion);
-                    questionsAnswered.add(nextQuestion);
                     qNum++;
+                }
+            });
+            back.setOnMouseClicked(event -> {
+                Question prevQuestion = questionsAnswered.pop();
+                if (prevQuestion != null) {
+                    questionsToAsk.add(currentQuestion);
+                    setQuestion(prevQuestion);
+                    qNum--;
                 }
             });
 
@@ -195,7 +198,6 @@ public class QuestionRoot extends VBox {
             this.setSpacing(100);
         }
     }
-
 
     /**
      * Method to pass in data about the quiz from an external source.
@@ -208,19 +210,20 @@ public class QuestionRoot extends VBox {
                 .toArray(Question[]::new);
 
         // setup label texts
-        String  topicText = "Questions about: " + data.getTopic(),
-                totalCountText = (data.getTotalQuestions() > questions.length ?
-                        questions.length : data.getTotalQuestions())+"";
+        String  topicText = "Questions about: " + data.getTopic();
+        int totalCount = (data.getTotalQuestions() > questions.length ?
+                        questions.length : data.getTotalQuestions());
 
         // reference them as a QuestionData data structure
-        currQData = new QuestionData(topicText, totalCountText, questions);
+        currQuestionData = new QuestionData(topicText, totalCount, questions);
     }
 
     /**
      * Takes in data about a question and loads it into the scene.
      * @param data Data to load.
+     * @return The total number of questions the data has.
      */
-    private void loadData(QuestionData data) {
+    private int loadData(QuestionData data) {
         // queue up questions to ask
         for (Question q : data.getQuestions())
             this.questionsToAsk.add(q);
@@ -233,9 +236,7 @@ public class QuestionRoot extends VBox {
             qNum++;
         }
 
-        // set labels
-        this.topic.setText(data.getTopicText());
-        this.qCount.setText(data.getTotalCountText());
+        return data.getTotalCount();
     }
 
     /**
@@ -248,5 +249,7 @@ public class QuestionRoot extends VBox {
         // if there's an image, display it
         if (q.getImageURI() != null) this.image.setImage(new Image(q.getImageURI().toString()));
         this.choiceBox.setChoices(q.getChoices()); // setup choices for user
+        this.currentQuestion = q;
+        this.qCount.setText(this.qNum + " / " + this.TOTAL);
     }
 }

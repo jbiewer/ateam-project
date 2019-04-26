@@ -67,7 +67,7 @@ public class NewQuestionRoot extends GridPane {
         this.topicsList.setOnAction(event -> {
             ComboBox src = (ComboBox) event.getSource();
             if (src.getValue().equals("+ add topic"))
-                Main.initDialogScene(new Scene(new NewTopicDialog(), 300, 150));
+                Main.initDialogScene(new Scene(new NewTopicDialog(), 500, 150));
         });
 
         // SET ROW AND COLUMN INDICES //
@@ -137,11 +137,11 @@ public class NewQuestionRoot extends GridPane {
                 );
                 if (imgFile == null) return;
                 imgPreview.setImage(new Image(imgFile.toURI().toString()));
+                imgPreview.setFitWidth(100);
+                imgPreview.setFitHeight(100);
             });
 
             // SETUP LAYOUT //
-            imgPreview.setFitWidth(100);
-            imgPreview.setFitHeight(100);
             this.getChildren().addAll(imgBrowse, imgPreview);
             this.setAlignment(Pos.CENTER_LEFT);
             this.setSpacing(30);
@@ -203,6 +203,15 @@ public class NewQuestionRoot extends GridPane {
             // FUNCTIONALITY //
             this.getChildren().get(0).setOnMouseClicked(e -> Main.switchScene(GUIScene.TITLE));
             this.getChildren().get(1).setOnMouseClicked(e -> {
+                if (promptField.getText().isEmpty()
+                        || choicesVBox.getChoices().length == 0
+                        || topicsList.getValue().isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Input incorrect!");
+                    alert.setHeaderText("There are still empty fields!");
+                    alert.showAndWait();
+                    return;
+                }
                 saveQuestion();
                 Main.switchScene(GUIScene.TITLE);
             });

@@ -8,5 +8,4 @@ public class SaveOnLeaveAlert extends Alert {
         super(AlertType.WARNING);
     }
 
-
 }

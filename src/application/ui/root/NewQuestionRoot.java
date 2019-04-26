@@ -227,7 +227,7 @@ public class NewQuestionRoot extends GridPane {
          */
         private void saveQuestion() {
             Main.questionBank.addQuestion(new Question(
-                    topicsList.getValue(), promptField.getText(), choicesVBox.getChoices(), imgToSave
+                    topicsList.getValue(), promptField.getText(), choicesVBox.getChoices()[0], choicesVBox.getChoices(), imgToSave
             ));
         }
     }

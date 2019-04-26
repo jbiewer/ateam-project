@@ -42,6 +42,7 @@ public class QuestionBank implements QuestionBankADT {
     public String[] getAllTopics() {
         return this.questionBank.stream()
                 .map(Question::getTopic)
+                .distinct()
                 .toArray(String[]::new);
     }
 

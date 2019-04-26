@@ -147,9 +147,6 @@ public class QuizSettingsRoot extends VBox {
             });
 
             // SETUP LAYOUT AND STYLE //
-            cancel.getStyleClass().add("btn-large");
-            begin.getStyleClass().add("btn-large");
-
             this.getChildren().addAll(cancel, begin);
         }
     }

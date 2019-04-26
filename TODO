@@ -30,7 +30,7 @@
 
         ResultsRoot:
         (Assigned to = Jack)
-            Layout?         .
+            Layout?         DONE
             Documented?     .
             Functionality?  .
 
@@ -39,7 +39,7 @@
 
         SaveOnLeaveAlert:
         (Assigned to = Jack)
-            Layout?         .
+            Layout?         DONE
             Documented?     .
             Functionality?  .
 
@@ -49,7 +49,9 @@
 <=0=>      List of things to do  (milestone 3)      <=0=>
 
 
-?
+    Setup Question's capability of distinguishing correct answer
+    QuestionBank's ability to add questions from JSON file
+            and the ability to write JSON files of the current questions held in it
 
 
 <=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=0=>

@@ -52,9 +52,6 @@ public class ResultsRoot extends VBox {
      * Custom root for number of questions correct
      */
     private class numCorrectBox extends HBox {
-    	private TextField numCorrect;
-    	//But should this be a textfield because user won't be inputting this so
-    	//how should I define this?
     	
     	/*
     	 * Constructor
@@ -62,7 +59,7 @@ public class ResultsRoot extends VBox {
     	private numCorrectBox() {
     		
     		Label num = new Label("Number correct: ");
-    		this.numCorrect = new TextField();
+    		Label numCorrect = new Label( "number to be changed by CSS");
     		
     		//Functionality not implemented yet
     		//Get number of correct answers    		
@@ -71,7 +68,7 @@ public class ResultsRoot extends VBox {
     		num.getStyleClass().add("main-text");
     		
     		//Add children
-    		this.getChildren().addAll(num, this.numCorrect);
+    		this.getChildren().addAll(num, numCorrect);
     	}
     	
     	//numCorrect should be obtained not input by the user so I shouldn't
@@ -83,14 +80,13 @@ public class ResultsRoot extends VBox {
      * Custom root for percent of questions correct
      */    
     private class percentCorrectBox extends HBox {
-    	private TextField percentCorrect;
     	
     	/*
     	 * Constructor
     	 */
     	private percentCorrectBox() {
     		Label percent = new Label("Percent correct: ");
-    		this.percentCorrect = new TextField();
+    		Label percentCorrect = new Label("% to be changed by CSS");
     		
     		//Functionality not implemented yet
     		//Get number of correct answers
@@ -101,7 +97,7 @@ public class ResultsRoot extends VBox {
     		percent.getStyleClass().add("main-text");
     		
     		//Add children
-    		this.getChildren().addAll(percent, this.percentCorrect);
+    		this.getChildren().addAll(percent, percentCorrect);
     	}
     }
     /*

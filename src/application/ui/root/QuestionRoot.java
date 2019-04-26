@@ -118,6 +118,7 @@ public class QuestionRoot extends VBox {
         };
         QuestionData sampleD = new QuestionData("Harry Potter Trivia", "3", sampleQ);
         this.topic = new Label("Questions about: ");
+        this.topic.getStyleClass().add("label-big");
         this.qCount = new Label(this.qNum + " / ?");
         this.question = new Label();
         this.image = new ImageView();

@@ -2,9 +2,11 @@ package application.ui.root;
 
 import application.main.Main;
 import application.ui.util.GUIScene;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -12,13 +14,12 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 import java.io.File;
 
-public class TitleRoot extends Parent {
+public class TitleRoot extends VBox {
 
   private Label title;
   private Label totalQuestions;
   private HBox middle;
   private HBox bottom;
-  private VBox vertical;
   private Button load;
   private Button addQuestion;
   private Button save;
@@ -35,8 +36,12 @@ public class TitleRoot extends Parent {
     this.addQuestion = new Button("Add Question");
     this.totalQuestions = new Label("Total Questions: " + this.totalNumQuestions);
     this.middle = new HBox(10, load, addQuestion, save);
+    this.middle.setAlignment(Pos.CENTER);
     this.bottom = new HBox(10, exit, totalQuestions, start);
-    this.vertical = new VBox(10, title, middle, bottom);
+    this.bottom.setAlignment(Pos.CENTER);
+    this.getChildren().addAll(this.title, this.bottom, this.middle);
+    this.setSpacing(10);
+    this.setAlignment(Pos.CENTER);
 
     this.load.setOnAction(event -> {
       File questions = Main.loadFile(new ExtensionFilter("JSON (*.json)", "*.json"),
@@ -58,8 +63,6 @@ public class TitleRoot extends Parent {
     this.save.setOnAction(Event -> {
       // save unstored values in question database to the file
     });
-    this.getChildren().add(vertical);
 
-    this.getStyleClass().add("background");
   }
 }

@@ -59,7 +59,6 @@ public class TitleRoot extends Parent {
       // save unstored values in question database to the file
     });
     this.getChildren().add(vertical);
-
-    this.getStyleClass().add("background");
+    vertical.getStylesheets().add(Main.theme);
   }
 }

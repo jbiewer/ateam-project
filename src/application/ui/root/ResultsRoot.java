@@ -2,6 +2,8 @@ package application.ui.root;
 
 import java.util.Arrays;
 
+import application.main.Main;
+import application.ui.util.GUIScene;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
@@ -54,14 +56,11 @@ public class ResultsRoot extends VBox {
     	private numCorrectBox() {
     		
     		Label num = new Label("Number correct: ");
-    		Label numCorrect = new Label( "number to be changed by CSS");
+    		Label numCorrect = new Label( "number to be changed");
     		
     		//Functionality not implemented yet
     		//Get number of correct answers    		
 
-    		//Style
-    		num.getStyleClass().add("main-text");
-    		
     		//Add children
     		this.getChildren().addAll(num, numCorrect);
     	}
@@ -81,16 +80,13 @@ public class ResultsRoot extends VBox {
     	 */
     	private percentCorrectBox() {
     		Label percent = new Label("Percent correct: ");
-    		Label percentCorrect = new Label("% to be changed by CSS");
+    		Label percentCorrect = new Label("% to be changed");
     		
     		//Functionality not implemented yet
     		//Get number of correct answers
     		//Get total number of questions
     		//Calculate and display percentage
 
-    		//Style
-    		percent.getStyleClass().add("main-text");
-    		
     		//Add children
     		this.getChildren().addAll(percent, percentCorrect);
     	}
@@ -106,9 +102,15 @@ public class ResultsRoot extends VBox {
             Button newQuiz = new Button("New Quiz");
             Button tryAgain = new Button("Try again");
 
-            // Style
-            newQuiz.getStyleClass().add("btn-large");
-            tryAgain.getStyleClass().add("btn-large");
+            // functions
+			newQuiz.setOnMouseClicked(event -> {
+				new SaveOnLeaveAlert().showAndWait();
+				Main.switchScene(GUIScene.QUIZ_SETTINGS);
+			});
+			tryAgain.setOnMouseClicked(event -> {
+				new SaveOnLeaveAlert().showAndWait();
+				Main.switchScene(GUIScene.TITLE);
+			});
 
             //Add children
             this.getChildren().addAll(newQuiz, tryAgain);

@@ -39,6 +39,7 @@ public class ResultsRoot extends VBox {
     Arrays.stream(new HBox[] { this.numCorrectBox, this.percentCorrectBox, decisionBtn })
     .forEach(box -> {
         box.setAlignment(Pos.CENTER);
+	this.setSpacing(50);
     });
     
     

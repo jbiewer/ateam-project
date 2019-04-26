@@ -1,6 +1,7 @@
 package application.ui.root;
 
 import application.main.Main;
+import application.ui.util.GUIScene;
 import application.util.Question;
 import application.util.QuestionData;
 import application.util.SettingsData;
@@ -180,6 +181,8 @@ public class QuestionRoot extends VBox {
                     questionsAnswered.add(currentQuestion);
                     setQuestion(nextQuestion);
                     qNum++;
+                } else {
+                    Main.switchScene(GUIScene.RESULTS);
                 }
             });
             back.setOnMouseClicked(event -> {

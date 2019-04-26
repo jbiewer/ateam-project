@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-/*
+/**
  * Root node for ResultsRoot scene
  * @author Jack Prazich
  */
@@ -20,35 +20,29 @@ public class ResultsRoot extends VBox {
 	//private fields of HBoxs to be referenced later
 	private HBox numCorrectBox;
 	private HBox percentCorrectBox;
-	
-	
-	/*
+
+	/**
 	 * Constructor
 	 */
     public ResultsRoot() {
         // Initialize nodes
-    Label summary = new Label("Results");
-    this.numCorrectBox = new numCorrectBox();
-    this.percentCorrectBox = new percentCorrectBox();
-    HBox decisionBtn = new newDecisionButtonBox();
-    
-    //
-    summary.getStyleClass().add("header");
-    
-    //Stream in all HBoxes and center all of them
-    Arrays.stream(new HBox[] { this.numCorrectBox, this.percentCorrectBox, decisionBtn })
-    .forEach(box -> {
-        box.setAlignment(Pos.CENTER);
-    });
-    
-    
-    
-    this.getChildren().addAll(summary, numCorrectBox, percentCorrectBox, decisionBtn);
+        Label summary = new Label("Results");
+        this.numCorrectBox = new numCorrectBox();
+        this.percentCorrectBox = new percentCorrectBox();
+        HBox decisionBtn = new newDecisionButtonBox();
+
+        summary.getStyleClass().add("header");
+
+        //Stream in all HBoxes and center all of them
+        Arrays.stream(new HBox[] { this.numCorrectBox, this.percentCorrectBox, decisionBtn })
+        .forEach(box -> {
+            box.setAlignment(Pos.CENTER);
+        });
+
+        this.getChildren().addAll(summary, numCorrectBox, percentCorrectBox, decisionBtn);
     }
     
-    
-    
-    /*
+    /**
      * Custom root for number of questions correct
      */
     private class numCorrectBox extends HBox {
@@ -56,7 +50,7 @@ public class ResultsRoot extends VBox {
     	//But should this be a textfield because user won't be inputting this so
     	//how should I define this?
     	
-    	/*
+    	/**
     	 * Constructor
     	 */
     	private numCorrectBox() {
@@ -79,13 +73,13 @@ public class ResultsRoot extends VBox {
     	    	
     }
     
-    /*
+    /**
      * Custom root for percent of questions correct
      */    
     private class percentCorrectBox extends HBox {
     	private TextField percentCorrect;
     	
-    	/*
+    	/**
     	 * Constructor
     	 */
     	private percentCorrectBox() {
@@ -104,29 +98,24 @@ public class ResultsRoot extends VBox {
     		this.getChildren().addAll(percent, this.percentCorrect);
     	}
     }
-    /*
+    /**
      * Custom root for button layout at bottom of scene
      */    
     private class newDecisionButtonBox extends HBox {
-    	
-    	
-    	/*
+    	/**
     	 * Constructor
     	 */
     	private newDecisionButtonBox() {
-    	Button newQuiz = new Button("New Quiz");
-    	Button tryAgain = new Button("Try again");
-    	
-    	
-    	
-        // Style
-        newQuiz.getStyleClass().add("btn-large");
-        tryAgain.getStyleClass().add("btn-large");
-        
-        //Add children
-        this.getChildren().addAll(newQuiz, tryAgain);
+            Button newQuiz = new Button("New Quiz");
+            Button tryAgain = new Button("Try again");
+
+            // Style
+            newQuiz.getStyleClass().add("btn-large");
+            tryAgain.getStyleClass().add("btn-large");
+
+            //Add children
+            this.getChildren().addAll(newQuiz, tryAgain);
     	}
-    	
 
     }
     

@@ -105,11 +105,11 @@ public class ResultsRoot extends VBox {
             // functions
 			newQuiz.setOnMouseClicked(event -> {
 				new SaveOnLeaveAlert().showAndWait();
-				Main.switchScene(GUIScene.QUIZ_SETTINGS);
+				Main.switchScene(GUIScene.TITLE);
 			});
 			tryAgain.setOnMouseClicked(event -> {
 				new SaveOnLeaveAlert().showAndWait();
-				Main.switchScene(GUIScene.TITLE);
+				Main.switchScene(GUIScene.QUIZ_SETTINGS);
 			});
 
             //Add children

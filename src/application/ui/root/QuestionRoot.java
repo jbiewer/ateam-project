@@ -1,19 +1,20 @@
 package application.ui.root;
 
 import application.main.Main;
+import application.ui.util.GUIScene;
 import application.util.Question;
 import application.util.QuestionData;
 import application.util.SettingsData;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Optional;
 
 /**
  * Class that represents the root node for the Question Scene.
@@ -34,7 +35,7 @@ public class QuestionRoot extends VBox {
      *
      * The stack is implemented using a doubly linked-list.
      */
-    private class QuestionStack {
+    private class QuestionStack implements Iterator<Question>, Iterable<Question> {
         /**
          * Utility class used with the Question Stack class.
          */
@@ -90,10 +91,32 @@ public class QuestionRoot extends VBox {
 
             return toRtn;
         }
+
+        private QuestionNode curr = this.head; // used for iterator.
+
+        @Override
+        public Question next() {
+            Question data = curr.data;
+            curr = curr.next;
+            return data;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return curr != null;
+        }
+
+        @Override
+        public Iterator<Question> iterator() {
+            return this;
+        }
     }
 
 
     private static QuestionData currQuestionData; // holds information about the current question
+    // used in case of errors in loading the first question
+    private static final Question EMPTY_QUESTION = new Question("Error!", "Question could not be loaded.",
+            "Please let the developers know about this!", new String[0]);
 
     private int qNum; // keeps track of the current question number
     private final int TOTAL; // how many total questions there are.
@@ -113,33 +136,36 @@ public class QuestionRoot extends VBox {
      */
     public QuestionRoot() {
         // INITIALIZE NODES //
-        String[] choices = {"Choice 1", "Choice 2", "Choice 3"};
-        Question[] sampleQ = new Question[] {
-                new Question("Harry Potter Trivia", "Who is Harry?", choices),
-                new Question("Harry Potter Trivia", "Who is Dumbledore?", choices),
-        };
-        QuestionData sampleD = new QuestionData("Harry Potter Trivia", 3, sampleQ);
         this.topic = new Label("Questions about: ");
-        this.topic.getStyleClass().add("label-big");
         this.qCount = new Label(this.qNum + " / ?");
         this.question = new Label();
         this.image = new ImageView();
         this.choiceBox = new ChoicesBox();
         BackNextBox backNextBox = new BackNextBox();
 
-
         // FUNCTIONALITY //
         // none here...
 
         // SETUP LAYOUT AND STYLE //
+        this.topic.getStyleClass().add("label-big");
         this.choiceBox.getStyleClass().add("choice-box");
         this.getChildren().addAll(this.topic, this.qCount, this.question, this.choiceBox, this.image, backNextBox);
         this.setAlignment(Pos.CENTER);
         this.setSpacing(30);
 
-        // load first question and data after setup
-        //if(currQuestionData != null) this.loadData(currQuestionData);
-        this.TOTAL = this.loadData(sampleD);
+        // load data
+        if(currQuestionData != null) this.TOTAL = this.loadData(currQuestionData);
+        else this.TOTAL = 0;
+
+        // prompt first question
+        Question firstQuestion = this.questionsToAsk.pop();
+        if (firstQuestion != null) {
+            this.currentQuestion = firstQuestion;
+            this.qNum++;
+            setQuestion(firstQuestion);
+        } else {
+            setQuestion(EMPTY_QUESTION);
+        }
     }
 
     /**
@@ -152,10 +178,16 @@ public class QuestionRoot extends VBox {
          */
         private void setChoices(String[] choices) {
             this.getChildren().removeAll(this.getChildren()); // update the children by removing all of them
-            for (String choice : choices) // add the new choices as children.
-                this.getChildren().add(new RadioButton(choice));
+            ToggleGroup group = new ToggleGroup(); // allows only one button to be toggled on
+
+            for (String choice : choices) { // add the new choices as children.
+                RadioButton rb = new RadioButton(choice);
+                rb.setOnMouseClicked(event -> currentQuestion.setChosen(choice));
+                group.getToggles().add(rb); // add button to toggle group
+            }
 
             // SETUP LAYOUT AND STYLE //
+            group.getToggles().forEach(toggle -> this.getChildren().add((RadioButton) toggle));
             this.setSpacing(10);
             this.setAlignment(Pos.CENTER_LEFT);
         }
@@ -175,19 +207,42 @@ public class QuestionRoot extends VBox {
 
             // FUNCTIONALITY //
             next.setOnMouseClicked(event -> {
+                // make the current question the next question to ask if there is any more to ask
                 Question nextQuestion = questionsToAsk.pop();
                 if (nextQuestion != null) {
+                    // change to next question
                     questionsAnswered.add(currentQuestion);
-                    setQuestion(nextQuestion);
                     qNum++;
+                    setQuestion(nextQuestion);
+
+                    this.loadChoice(); // load current choice
+                } else { // if there aren't anymore to ask, do this:
+                    // check if all questions are answered (required)
+                    for (Question q : questionsAnswered) {
+                        if (!q.isAnswered()) {
+                            new Alert(Alert.AlertType.WARNING, "Not all questions are answered!")
+                                    .showAndWait();
+                            return; // return to quiz if questions left unanswered
+                        }
+                    }
+
+                    // ask user what to do after last question
+                    Optional<ButtonType> decision = new LastQuestionAlert().showAndWait();
+                    if (decision.isPresent() && decision.get() == LastQuestionAlert.SEE_RESULTS)
+                        Main.switchScene(GUIScene.RESULTS); // go to results of chosen to
                 }
             });
+
             back.setOnMouseClicked(event -> {
+                // make the current question the previous question if there are any previous questions
                 Question prevQuestion = questionsAnswered.pop();
                 if (prevQuestion != null) {
+                    // change to previous question
                     questionsToAsk.add(currentQuestion);
-                    setQuestion(prevQuestion);
                     qNum--;
+                    setQuestion(prevQuestion);
+
+                    this.loadChoice(); // load current choice
                 }
             });
 
@@ -196,6 +251,17 @@ public class QuestionRoot extends VBox {
             this.getChildren().forEach(child -> child.getStyleClass().add("btn-large"));
             this.setAlignment(Pos.CENTER);
             this.setSpacing(100);
+        }
+
+        /**
+         * Loads the current question's chosen answer to the respective choice.
+         */
+        private void loadChoice() {
+            choiceBox.getChildren().forEach(child -> {
+                RadioButton currChild = (RadioButton) child;
+                if (currChild.getText().equals(currentQuestion.getChosen()))
+                    currChild.fire();
+            });
         }
     }
 
@@ -227,15 +293,7 @@ public class QuestionRoot extends VBox {
         // queue up questions to ask
         for (Question q : data.getQuestions())
             this.questionsToAsk.add(q);
-
-        // prompt first question
-        Question nextQuestion = questionsToAsk.pop();
-        if (nextQuestion != null) {
-            setQuestion(nextQuestion);
-            questionsAnswered.add(nextQuestion);
-            qNum++;
-        }
-
+        this.topic.setText(data.getTopicText());
         return data.getTotalCount();
     }
 
@@ -246,10 +304,12 @@ public class QuestionRoot extends VBox {
      */
     private void setQuestion(Question q) {
         this.question.setText(q.getPrompt()); // set question prompt text
+        this.qCount.setText(this.qNum + " / " + this.TOTAL); // set question count text
+
         // if there's an image, display it
         if (q.getImageURI() != null) this.image.setImage(new Image(q.getImageURI().toString()));
-        this.choiceBox.setChoices(q.getChoices()); // setup choices for user
+        this.choiceBox.setChoices(q.getChoices()); // setup choices for user.
+
         this.currentQuestion = q;
-        this.qCount.setText(this.qNum + " / " + this.TOTAL);
     }
 }

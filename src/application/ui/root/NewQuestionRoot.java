@@ -242,7 +242,7 @@ public class NewQuestionRoot extends GridPane {
          * Constructs the node.
          */
         private NewTopicDialog() {
-            this.getStylesheets().add(Main.theme); // add stylesheet
+            this.getStylesheets().add(Main.mainTheme); // add stylesheet
 
             // INITIALIZE NODES //
             Button  cancel = new Button("Cancel"),

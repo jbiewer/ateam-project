@@ -3,18 +3,17 @@ package application.ui.root;
 import java.util.Arrays;
 
 import application.main.Main;
+import application.ui.alerts.SaveOnLeaveAlert;
+import application.ui.util.GUIAlert;
 import application.ui.util.GUIScene;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
- * Root node for ResultsRoot scene
+ * Root node for ResultsRoot scene.
  * @author Jack Prazich
  */
 public class ResultsRoot extends VBox {
@@ -29,17 +28,13 @@ public class ResultsRoot extends VBox {
     public ResultsRoot() {
         // Initialize nodes
         Label summary = new Label("Results");
-        this.numCorrectBox = new numCorrectBox();
-        this.percentCorrectBox = new percentCorrectBox();
-        HBox decisionBtn = new newDecisionButtonBox();
-
-        summary.getStyleClass().add("header");
+        this.numCorrectBox = new NumCorrectBox();
+        this.percentCorrectBox = new PercentCorrectBox();
+        HBox decisionBtn = new NewDecisionButtonBox();
 
         //Stream in all HBoxes and center all of them
         Arrays.stream(new HBox[] { this.numCorrectBox, this.percentCorrectBox, decisionBtn })
-        .forEach(box -> {
-            box.setAlignment(Pos.CENTER);
-        });
+        .forEach(box -> box.setAlignment(Pos.CENTER));
         this.setSpacing(50);
 
         this.getChildren().addAll(summary, numCorrectBox, percentCorrectBox, decisionBtn);
@@ -48,12 +43,12 @@ public class ResultsRoot extends VBox {
     /**
      * Custom root for number of questions correct
      */
-    private class numCorrectBox extends HBox {
+    private class NumCorrectBox extends HBox {
     	
     	/**
     	 * Constructor
     	 */
-    	private numCorrectBox() {
+    	private NumCorrectBox() {
     		
     		Label num = new Label("Number correct: ");
     		Label numCorrect = new Label( "number to be changed");
@@ -73,12 +68,12 @@ public class ResultsRoot extends VBox {
     /**
      * Custom root for percent of questions correct
      */    
-    private class percentCorrectBox extends HBox {
+    private class PercentCorrectBox extends HBox {
     	
     	/**
     	 * Constructor
     	 */
-    	private percentCorrectBox() {
+    	private PercentCorrectBox() {
     		Label percent = new Label("Percent correct: ");
     		Label percentCorrect = new Label("% to be changed");
     		
@@ -91,24 +86,25 @@ public class ResultsRoot extends VBox {
     		this.getChildren().addAll(percent, percentCorrect);
     	}
     }
+
     /**
      * Custom root for button layout at bottom of scene
      */    
-    private class newDecisionButtonBox extends HBox {
+    private class NewDecisionButtonBox extends HBox {
     	/**
     	 * Constructor
     	 */
-    	private newDecisionButtonBox() {
+    	private NewDecisionButtonBox() {
             Button newQuiz = new Button("New Quiz");
             Button tryAgain = new Button("Try again");
 
             // functions
 			newQuiz.setOnMouseClicked(event -> {
-				new SaveOnLeaveAlert().showAndWait();
+				GUIAlert.SAVE_ON_LEAVE.alert();
 				Main.switchScene(GUIScene.TITLE);
 			});
 			tryAgain.setOnMouseClicked(event -> {
-				new SaveOnLeaveAlert().showAndWait();
+				GUIAlert.SAVE_ON_LEAVE.alert();
 				Main.switchScene(GUIScene.QUIZ_SETTINGS);
 			});
 

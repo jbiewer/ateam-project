@@ -32,21 +32,6 @@ TextField{
     -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
 }
 
-Button{
-    -fx-padding: 8 15 15 15;
-        -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
-        -fx-background-radius: 8;
-        -fx-background-color:
-                #000000,
-                linear-gradient(#7ebcea, #2f4b8f),
-                linear-gradient(#426ab7, #263e75),
-                linear-gradient(#395cab, #223768);
-        -fx-font-weight: bold;
-        -fx-font-size: 1.1em;
-        -fx-text-fill: white;
-
-}
-
 .label-big{
      -fx-font: 40px Droid-Serif;
      -fx-padding: 10 10 10 10;
@@ -80,6 +65,7 @@ Button{
      -fx-font-weight: bold;
 }
 
+
 .dropdown{
 
 }
@@ -88,5 +74,18 @@ Button{
 
 }
 
+Button{
+    -fx-padding: 8 15 15 15;
+        -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+        -fx-background-radius: 8;
+        -fx-background-color:
+                #000000,
+                linear-gradient(#7ebcea, #2f4b8f),
+                linear-gradient(#426ab7, #263e75),
+                linear-gradient(#395cab, #223768);
+        -fx-font-weight: bold;
+        -fx-font-size: 1.1em;
+        -fx-text-fill: white;
 
+}
 

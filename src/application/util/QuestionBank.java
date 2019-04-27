@@ -20,14 +20,6 @@ public class QuestionBank implements QuestionBankADT {
 
     @Override
     public boolean addJSONQuestion(File... jsonFiles) {
-//        try {
-            for (File jsonFile : jsonFiles) {
-                // todo implement
-            }
-//        } catch (IOException e) { e.printStackTrace(); }
-//        finally {
-//            return false;
-//        }
         return false;
     }
 
@@ -51,6 +43,11 @@ public class QuestionBank implements QuestionBankADT {
         return this.questionBank.stream()
                 .filter(question -> question.getTopic().equals(topic))
                 .toArray(Question[]::new);
+    }
+
+    @Override
+    public Question[] getAllQuestions() {
+        return questionBank.toArray(new Question[0]);
     }
 
     @Override

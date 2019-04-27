@@ -1,6 +1,7 @@
 # IntelliJ files to ignore:
 out/*
 .idea/*
+*.iml
 
 # Eclipse files to ignore:
 .classpath

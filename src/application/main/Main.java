@@ -61,7 +61,7 @@ public class Main extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
     Main.stage = primaryStage;
-    Main.switchScene(GUIScene.QUESTION);
+    Main.switchScene(GUIScene.TITLE);
     primaryStage.show();
   }
 

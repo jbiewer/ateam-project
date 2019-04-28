@@ -4,7 +4,7 @@ package application.util;
  * Data Structure used to store information about a quiz.
  * @author Jacob Biewer
  */
-public class SettingsData {
+public class QuizSettingsData {
 
     private String topic; // topic for the quiz
     private int totalQuestions; // how many questions the user wants to answer
@@ -14,7 +14,7 @@ public class SettingsData {
      * @param topic Topic of the quiz.
      * @param total Total number of questions to ask.
      */
-    public SettingsData(String topic, int total) {
+    public QuizSettingsData(String topic, int total) {
         this.topic = topic;
         this.totalQuestions = total;
     }

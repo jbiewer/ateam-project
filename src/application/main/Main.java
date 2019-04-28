@@ -3,6 +3,7 @@ package application.main;
 import application.ui.util.GUIScene;
 import application.util.Question;
 import application.util.QuestionBank;
+import application.util.QuizManager;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.FileChooser;
@@ -19,9 +20,10 @@ public class Main extends Application {
 
   public static final int WIDTH = 800, HEIGHT = 600; // dimensions of each scene
 
-  private static Stage stage; // the primary stage of the application
-  private static Stage currentPopup; // the stage of a window if one's popped up.
-  public static String theme = "application/style/style-light.css"; // default theme for all layouts
+  public static QuizManager quizManager = new QuizManager();
+  private static Stage stage, currentPopup; // primary stage (first) and stage of the current popup (second)
+  public static String mainTheme = "application/style/style-light.css", // default theme for all layouts
+      alertTheme = "application/style/style-light-alert.css";
 
   public static QuestionBank questionBank = new QuestionBank();
 
@@ -78,18 +80,18 @@ public class Main extends Application {
 
       switch(args[0]) {
         case "light":
-          Main.theme = "application/style/style-light.css";
+          Main.mainTheme = "application/style/style-light.css";
           break;
         case "dark":
-          Main.theme = "application/style/style-dark.css";
+          Main.mainTheme = "application/style/style-dark.css";
           break;
         default:
-          System.out.println("Theme '" + args[0] + "' unrecognized. Using default 'light' theme.");
-          Main.theme = "application/style/style-light.css";
+          System.out.println("Theme '" + args[0] + "' unrecognized. Using default 'light' mainTheme.");
+          Main.mainTheme = "application/style/style-light.css";
           break;
       }
     } else {
-      Main.theme = "application/style/style-light.css";
+      Main.mainTheme = "application/style/style-light.css";
     }
     launch(args);
   }

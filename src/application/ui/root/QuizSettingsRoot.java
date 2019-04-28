@@ -1,8 +1,9 @@
 package application.ui.root;
 
 import application.main.Main;
+import application.ui.util.GUIAlert;
 import application.ui.util.GUIScene;
-import application.util.SettingsData;
+import application.util.QuizSettingsData;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -116,10 +117,7 @@ public class QuizSettingsRoot extends VBox {
             try {
                 return Integer.parseInt(txt);
             } catch (NumberFormatException e) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Input format incorrect!");
-                alert.setHeaderText("'Number of Questions' must be an integer.");
-                alert.showAndWait();
+
                 return -1;
             }
         }
@@ -141,8 +139,14 @@ public class QuizSettingsRoot extends VBox {
             cancel.setOnMouseClicked(event -> Main.switchScene(GUIScene.TITLE));
             begin.setOnMouseClicked(event -> {
                 int numOfQs = numOfQuestionsBox.getTotal();
-                if (numOfQs == -1) return; // don't switch scenes if an error occurs
-                QuestionRoot.saveData(new SettingsData(topicSelectionBox.getTopic(), numOfQs));
+                if (numOfQs == -1) { // check if an error occurred
+                    // alert and don't switch scenes yet
+                    GUIAlert.INPUT_FORMAT.alert();
+                    return;
+                }
+
+                // load quiz settings into manager
+                Main.quizManager.loadQuiz(new QuizSettingsData(topicSelectionBox.getTopic(), numOfQs));
                 Main.switchScene(GUIScene.QUESTION);
             });
 

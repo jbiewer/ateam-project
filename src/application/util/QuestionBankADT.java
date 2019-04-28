@@ -35,6 +35,11 @@ public interface QuestionBankADT {
     Question[] getQuestionsOfTopic(String topic);
 
     /**
+     * @return All the questions in the question bank.
+     */
+    Question[] getAllQuestions();
+
+    /**
      * Adds a question to the question bank.
      * @param question Question to add.
      */

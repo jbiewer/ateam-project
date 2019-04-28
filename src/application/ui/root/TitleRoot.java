@@ -57,11 +57,14 @@ public class TitleRoot extends VBox {
     this.exit.setOnAction(Event -> {
       // show popup dialogue
     });
+
     this.addQuestion.setOnAction(Event -> {
       Main.switchScene(GUIScene.NEW_QUESTION);
     });
+
     this.save.setOnAction(Event -> {
       // save unstored values in question database to the file
     });
+
   }
 }

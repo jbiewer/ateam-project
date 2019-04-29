@@ -27,7 +27,7 @@ public class QuizManager {
      *
      * The stack is implemented using a doubly linked-list.
      */
-    private class QuestionStack implements Iterator<Question>, Iterable<Question> {
+    private class QuestionStack implements Iterable<Question> {
         /**
          * Utility class used with the Question Stack class.
          */
@@ -73,36 +73,57 @@ public class QuizManager {
             if(head == null) return null; // if empty, return null
 
             Question toRtn = tail.data; // reference node to return
-
-            // remove from top of stack
-            tail = tail.prev;
-            if(tail == null) head = null; // empty list if the last element was removed
+            if (tail == head) head = tail = null; // emtpy stack if last element is being popped
+            else {
+                // remove from top of stack
+                tail = tail.prev;
+                tail.next = null;
+            }
 
             return toRtn;
         }
 
-        private QuestionNode curr = this.head; // used for iterator.
-
-        @Override
-        public Question next() {
-            Question data = curr.data;
-            curr = curr.next;
-            return data;
+        /**
+         * Gets the Question at the top of the stack w/out removing it.
+         * @return Question at the top of the stack.
+         */
+        private Question peek() {
+            if (tail == null) return null;
+            return tail.data;
         }
 
         @Override
-        public boolean hasNext() {
-            return curr != null;
+        public String toString() {
+            StringBuilder sb = new StringBuilder("[");
+            for (Question question : this) {
+                sb.append(question).append(" ");
+            }
+            sb.append("]");
+            return sb.toString();
         }
 
         @Override
         public Iterator<Question> iterator() {
-            return this;
+            return new Iterator<Question>() {
+                QuestionNode current = head;
+
+                @Override
+                public boolean hasNext() {
+                    return current != null;
+                }
+
+                @Override
+                public Question next() {
+                    Question data = current.data;
+                    current = current.next;
+                    return data;
+                }
+            };
         }
     }
 
     private QuestionStack nextQuestions, prevQuestions; // stacks to keep track of questions
-    private Question currQuestion; // current question being asked
+    private Question firstQuestion; // reference to first question
 
     private int questionNum; // count of current question
     private int questionTotal; // total number of questions
@@ -113,6 +134,7 @@ public class QuizManager {
     public QuizManager() {
         this.nextQuestions = new QuestionStack();
         this.prevQuestions = new QuestionStack();
+        this.questionNum = 0;
     }
 
     /**
@@ -123,16 +145,20 @@ public class QuizManager {
         // read from question bank based on quiz settings
 
         // start by getting questions to quiz on
-        Question[] questions = (data.getTopic().isEmpty() ?
+        Question[] questions = (data.getTopic() == null ?
                 Main.questionBank.getAllQuestions() : Main.questionBank.getQuestionsOfTopic(data.getTopic())
         );
 
-        // queue the questions up in the 'next' stack
-        for (Question question : questions)
-            this.nextQuestions.add(question);
-
         // initialize total questions variable
-        this.questionTotal = data.getTotalQuestions();
+        this.questionTotal = (data.getTotalQuestions() > questions.length ?
+                questions.length : data.getTotalQuestions());
+
+        // queue the questions up in the 'next' stack
+        int limit = this.questionTotal;
+        for (Question question : questions) {
+            if (--limit < 0) break; // limit questions to the num requested by user
+            this.nextQuestions.add(question);
+        }
     }
 
     /**
@@ -141,17 +167,22 @@ public class QuizManager {
      * @return True if there is a next question to display, false if there aren't anymore.
      */
     public boolean next(QuestionRoot root) {
-        if (this.currQuestion != null)
-            this.currQuestion.setChosen(root.getChoiceBox().getChosen()); // set chosen answer to question
+        // setup reference to first question
+        if (this.firstQuestion == null) this.firstQuestion = this.nextQuestions.peek();
 
-        // change questions
-        this.prevQuestions.add(this.currQuestion);
-        this.currQuestion = this.nextQuestions.pop();
-        this.questionNum++;
-
-        if (this.currQuestion == null) return false; // when there are no more questions
-        this.nextPrevUISetup(root);
-        return true;
+        // move 'next' questions into 'prev' questions
+        if (this.nextQuestions.peek() != null) {
+            // move next to prev
+            Question prev = this.nextQuestions.pop();
+            this.prevQuestions.add(prev);
+            // save chosen answer
+            prev.setChosen(root.getChoiceBox().getChosen());
+            this.questionNum++;
+            // setup UI
+            this.nextPrevUISetup(root, this.prevQuestions.peek());
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -159,30 +190,31 @@ public class QuizManager {
      * @param root QuestionRoot to display to.
      */
     public void prev(QuestionRoot root) {
-        if (this.currQuestion != null)
-            this.currQuestion.setChosen(root.getChoiceBox().getChosen()); // set chosen answer to question
-
-        // change question
-        this.nextQuestions.add(this.currQuestion);
-        this.currQuestion = this.prevQuestions.pop();
-        this.questionNum--;
-
-        if (this.currQuestion != null)
-            this.nextPrevUISetup(root);
+        // move 'prev' questions into 'next' questions
+        if (this.prevQuestions.peek() != this.firstQuestion) {
+            // move prev to next
+            Question next = this.prevQuestions.pop();
+            this.nextQuestions.add(next);
+            // save chosen answer
+            next.setChosen(root.getChoiceBox().getChosen());
+            this.questionNum--;
+            // setup UI
+            this.nextPrevUISetup(root, this.prevQuestions.peek());
+        }
     }
 
     /**
      * Helper method to setup the UI elements with the current question's data.
      * @param root QuestionRoot to display to.
      */
-    private void nextPrevUISetup(QuestionRoot root) {
-        root.getTopicLabel().setText(currQuestion.getTopic());
+    private void nextPrevUISetup(QuestionRoot root, Question curr) {
+        root.getTopicLabel().setText(curr.getTopic());
         root.getNumLabel().setText(this.questionNum + " / " + this.questionTotal);
-        root.getQuestionLabel().setText(this.currQuestion.getPrompt());
-        if(this.currQuestion.getImageURI() != null)
-            root.getImage().setImage(new Image(this.currQuestion.getImageURI().toString()));
-        root.getChoiceBox().setChoices(currQuestion.getChoices());
-        root.getChoiceBox().loadChoice(this.currQuestion.getChosen());
+        root.getQuestionLabel().setText(curr.getPrompt());
+        if(curr.getImageURI() != null)
+            root.getImage().setImage(new Image(curr.getImageURI().toString()));
+        root.getChoiceBox().setChoices(curr.getChoices());
+        root.getChoiceBox().loadChoice(curr.getChosen());
     }
 
     /**
@@ -193,8 +225,6 @@ public class QuizManager {
             if (prevQuestion == null) break;
             if (!prevQuestion.isAnswered()) return false;
         }
-
-        if (this.currQuestion != null && !this.currQuestion.isAnswered()) return false; // check current
 
         for (Question nextQuestion : this.nextQuestions) { // check next
             if (nextQuestion == null) break;

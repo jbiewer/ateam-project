@@ -122,7 +122,10 @@ public class QuestionRoot extends VBox {
                 // check if current question was last question (next() returns false)
                 if (!Main.quizManager.next(rootReference)) {
                     // check if all questions are answered
-                    if (!Main.quizManager.allAnswered()) GUIAlert.NOT_ALL_ANSWERED.alert();
+                    if (!Main.quizManager.allAnswered()) {
+                        GUIAlert.NOT_ALL_ANSWERED.alert();
+                        return;
+                    }
 
                     // ask user what to do after last question
                     Optional<ButtonType> decision = GUIAlert.LAST_QUESTION.alert();

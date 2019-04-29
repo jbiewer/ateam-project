@@ -103,4 +103,9 @@ public class Question {
         if(this.imgFile == null) return null;
         return this.imgFile.toURI();
     }
+
+    @Override
+    public String toString() {
+        return this.topic+":"+this.prompt;
+    }
 }

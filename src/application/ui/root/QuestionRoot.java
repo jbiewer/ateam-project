@@ -94,6 +94,7 @@ public class QuestionRoot extends VBox {
          * Loads the current question's chosen answer to the respective choice.
          */
         public void loadChoice(String choice) {
+            if (choice == null) return;
             for (Node child : choiceBox.getChildren()) {
                 RadioButton rb = (RadioButton) child;
                 if (rb.getText().equals(choice)) { // toggle answered choice
@@ -177,4 +178,5 @@ public class QuestionRoot extends VBox {
     public ChoicesBox getChoiceBox() {
         return choiceBox;
     }
+
 }

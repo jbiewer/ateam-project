@@ -6,24 +6,24 @@ package application.util;
  */
 public class QuizSettingsData {
 
-    private String topic; // topic for the quiz
+    private String[] topics; // topic for the quiz
     private int totalQuestions; // how many questions the user wants to answer
 
     /**
      * Constructs the data structure.
-     * @param topic Topic of the quiz.
+     * @param topics Topic of the quiz.
      * @param total Total number of questions to ask.
      */
-    public QuizSettingsData(String topic, int total) {
-        this.topic = topic;
+    public QuizSettingsData(String[] topics, int total) {
+        this.topics = topics;
         this.totalQuestions = total;
     }
 
     /**
      * @return Topic of the quiz.
      */
-    public String getTopic() {
-        return topic;
+    public String[] getTopics() {
+        return this.topics;
     }
 
     /**

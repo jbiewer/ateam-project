@@ -112,4 +112,10 @@ public class Question {
     public String getCorrect() {
       return this.right;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Question)) return false;
+        return this.prompt.equals(((Question) obj).prompt);
+    }
 }

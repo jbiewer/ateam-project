@@ -5,8 +5,10 @@ import application.ui.root.QuestionRoot;
 import application.ui.root.ResultsRoot;
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Holds all the data for a quiz. The "backend" part of the QuestionRoot scene.
@@ -144,12 +146,19 @@ public class QuizManager {
      * @param data Settings of the quiz to load.
      */
     public void loadQuiz(QuizSettingsData data) {
-        // read from question bank based on quiz settings
+        this.questionNum = 0;
 
         // start by getting questions to quiz on
-        Question[] questions = (data.getTopic() == null ?
-                Main.questionBank.getAllQuestions() : Main.questionBank.getQuestionsOfTopic(data.getTopic())
-        );
+        Question[] questions;
+        if (data.getTopics() == null) questions = Main.questionBank.getAllQuestions();
+        else {
+            // for each topic, add all the questions of that topic to the questions array
+            List<Question> qs = new ArrayList<>();
+            Arrays.stream(data.getTopics()).forEach(
+                    t -> qs.addAll(Arrays.asList(Main.questionBank.getQuestionsOfTopic(t)))
+            );
+            questions = qs.toArray(new Question[0]);
+        }
 
         // initialize total questions variable
         this.questionTotal = (data.getTotalQuestions() > questions.length ?

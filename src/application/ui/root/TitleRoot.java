@@ -47,11 +47,11 @@ public class TitleRoot extends VBox {
     this.setAlignment(Pos.CENTER);
 
     this.load.setOnAction(event -> {
-      this.questionFile = Main.loadFile(new ExtensionFilter("JSON (*.json)", "*.json"),
-          "Choose the JSON Quiz File to Load");
+      Main.questionBank.addJSONQuiz(Main.loadFile(new ExtensionFilter("JSON (*.json)", "*.json"),
+          "Choose the JSON Quiz File to Load"));
       if (questionFile == null)
         return;
-      Main.questionBank.addJSONQuestion(questionFile);
+      Main.questionBank.addJSONQuiz(questionFile);
       this.updateNumQuestions(Main.questionBank.getAllQuestions().length);
     });
 
@@ -72,7 +72,7 @@ public class TitleRoot extends VBox {
     this.save.setOnAction(Event -> {
       Main.initDialogScene(new Scene(new SaveQuizPopupRoot(), CustomAlert.WIDTH, CustomAlert.HEIGHT));
 
-      if(questionFile.exists()){
+      if(questionFile != null){
         Main.questionBank.writeQuestionsToJSON(questionFile);
       }
       else{

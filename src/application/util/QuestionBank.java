@@ -26,7 +26,7 @@ public class QuestionBank implements QuestionBankADT {
   }
 
   @Override
-  public boolean addJSONQuestion(File... jsonFiles) {
+  public boolean addJSONQuiz(File... jsonFiles) {
     JSONParser parser = new JSONParser();
     JSONObject jo = null;
     for (File f : jsonFiles) { // for each file in jsonFiles

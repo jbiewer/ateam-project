@@ -12,7 +12,7 @@ public interface QuestionBankADT {
      * @param jsonFile JSON file to use.
      * @return True if the file was successfully read, false if it was in the wrong format.
      */
-    boolean addJSONQuestion(File... jsonFile);
+    boolean addJSONQuiz(File... jsonFile);
 
     /**
      * Takes the current data and writes it to a JSON as as Quiz.

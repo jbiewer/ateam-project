@@ -211,7 +211,6 @@ public class QuizManager {
         root.getTopicLabel().setText(curr.getTopic());
         root.getNumLabel().setText(this.questionNum + " / " + this.questionTotal);
         root.getQuestionLabel().setText(curr.getPrompt());
-        System.out.println("Image being displayed: " + curr.getImageURI());
         if(curr.getImageURI() != null)
             root.getImage().setImage(new Image(curr.getImageURI().toString()));
         root.getChoiceBox().setChoices(curr.getChoices());

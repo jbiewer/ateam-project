@@ -140,6 +140,7 @@ public class NewQuestionRoot extends GridPane {
                 imgPreview.setImage(new Image(imgFile.toURI().toString()));
                 imgPreview.setFitWidth(100);
                 imgPreview.setFitHeight(100);
+                imgToSave = imgFile; // store reference to image chosen
             });
 
             // SETUP LAYOUT //

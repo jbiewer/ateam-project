@@ -26,15 +26,15 @@ public class QuestionBank implements QuestionBankADT {
   }
 
   @Override
-  public boolean addJSONQuiz(File... jsonFiles) {
+  public boolean addJSONQuiz(File jsonFile) {
     JSONParser parser = new JSONParser();
     JSONObject jo;
 
-    for (File f : jsonFiles) { // for each file in jsonFiles
-      if (f == null) return false;
+
+      if (jsonFile == null) return false;
 
       try {
-        jo = (JSONObject) parser.parse(new FileReader(f));
+        jo = (JSONObject) parser.parse(new FileReader(jsonFile));
       } catch (IOException | ParseException e) { return false; }
 
       JSONArray questions = (JSONArray) jo.get("questionArray"); //json array for all of the questions in the json file
@@ -66,19 +66,21 @@ public class QuestionBank implements QuestionBankADT {
           questionBank.add(new Question(topic, text, correct,
               incorrect.stream().toArray(String[]::new), new File(image)));
       }
-    }
+
     return true;
   }
 
   @Override
   public boolean writeQuestionsToJSON(File destination) {
+    JSONObject jo = new JSONObject();
     JSONArray questionArray = new JSONArray();
+    jo.put("questionArray", (Object)questionArray);
     for (Question q : this.getAllQuestions()) {
       JSONObject question = new JSONObject();
       question.put("meta-data", "unused");
       question.put("questionText", q.getPrompt());
       question.put("topic", q.getTopic());
-      question.put("image", q.getImageURI());
+      question.put("image", (q.getImageURI() != null ? q.getImageURI() : "none"));
       JSONArray choices = new JSONArray();
       for (String c : q.getChoices()) {
         JSONObject choice = new JSONObject();
@@ -94,7 +96,7 @@ public class QuestionBank implements QuestionBankADT {
     }
     try (FileWriter file = new FileWriter(destination)) {
 
-      file.write(questionArray.toJSONString());
+      file.write(jo.toJSONString());
       file.flush();
 
     } catch (IOException e) {

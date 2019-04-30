@@ -8,6 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
+import java.util.Optional;
 
 public class SaveQuizPopupRoot extends VBox {
 
@@ -39,10 +40,19 @@ public class SaveQuizPopupRoot extends VBox {
                 return;
             }
             if(new File("./Questions/" + fileNameEntry.getText()).exists()){ //if the file already exists
-                new Alert(Alert.AlertType.WARNING, "This path already exists. Would you like to overwrite it?").showAndWait();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This path already exists. Would you like to overwrite it?");
+                ButtonType confirmation = ButtonType.YES;
+                ButtonType cancelBtn = ButtonType.CANCEL;
+
+                alert.getButtonTypes().setAll(confirmation, cancelBtn);
+                Optional<ButtonType> result = alert.showAndWait();
+                if(result.get() == confirmation){
+                    Main.questionBank.writeQuestionsToJSON(new File("./Questions/" + fileNameEntry.getText() + ".json"));
+                }
+
             }
             else{ //if the file does not exist, make a new one
-                Main.questionBank.writeQuestionsToJSON(new File("./Questions/" + fileNameEntry.getText()));
+                Main.questionBank.writeQuestionsToJSON(new File("./Questions/" + fileNameEntry.getText() + ".json"));
             }
 
             Main.closeCurrentDialogScene();

@@ -139,12 +139,21 @@ public class QuizSetupRoot extends VBox {
             cancel.setOnMouseClicked(event -> Main.switchScene(GUIScene.TITLE));
             begin.setOnMouseClicked(event -> {
                 if (topicSelectionBox.topics.getItems().size() == 0) {
-
+                    // when there aren't any questions in question bank
+                    GUIAlert.quickAlert(Alert.AlertType.INFORMATION,
+                            "No Questions",
+                            "There are currently no questions loaded.\n" +
+                                    "Either add custom questions or load JSON files in."
+                    );
+                    return;
                 }
                 int numOfQs = numOfQuestionsBox.getTotal();
                 if (numOfQs == -1) { // check if an error occurred
                     // alert and don't switch scenes yet
-                    GUIAlert.INPUT_FORMAT.alert();
+                    GUIAlert.quickAlert(Alert.AlertType.WARNING,
+                            "Wrong Input",
+                            "Must input a valid integer for number of questions."
+                    );
                     return;
                 }
 

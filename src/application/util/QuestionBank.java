@@ -79,7 +79,10 @@ public class QuestionBank implements QuestionBankADT {
 
   @Override
   public String[] getAllTopics() {
-    return this.questionBank.stream().map(Question::getTopic).distinct().toArray(String[]::new);
+    return this.questionBank.stream()
+            .map(Question::getTopic)
+            .distinct()
+            .toArray(String[]::new);
   }
 
   @Override

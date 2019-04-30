@@ -207,7 +207,10 @@ public class NewQuestionRoot extends GridPane {
                 if (promptField.getText().isEmpty()
                         || choicesVBox.getChoices().length == 0
                         || topicsList.getValue().isEmpty()) {
-                    GUIAlert.INPUT_FORMAT.alert();
+                    GUIAlert.quickAlert(Alert.AlertType.WARNING,
+                            "Wrong Input",
+                            "One of the input fields is either incorrect or not filled in."
+                    );
                     return;
                 }
                 saveQuestion();

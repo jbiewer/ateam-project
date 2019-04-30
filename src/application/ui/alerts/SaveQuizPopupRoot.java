@@ -1,12 +1,17 @@
 package application.ui.alerts;
 
 import application.main.Main;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextInputDialog;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPaneBuilder;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.io.File;
+
 public class SaveQuizPopupRoot extends VBox {
+
+    TextField fileNameEntry;
 
 
     /**
@@ -15,6 +20,43 @@ public class SaveQuizPopupRoot extends VBox {
     public SaveQuizPopupRoot(){
         this.getChildren().addAll();
 
+        this.getStylesheets().add(Main.mainTheme); // add stylesheet
+
+        // INITIALIZE NODES //
+        Button cancel = new Button("Cancel"),
+                done = new Button("Save");
+        Label topic = new Label("File Name:");
+        this.fileNameEntry = new TextField();
+
+        HBox fieldBox = new HBox(topic, this.fileNameEntry),
+                controlBox = new HBox(cancel, done);
+
+        // FUNCTIONALITY //
+        done.setDefaultButton(true);
+        done.setOnMouseClicked(event -> {
+            if(this.fileNameEntry.getText().isEmpty()) {
+                new Alert(Alert.AlertType.WARNING, "Topic field can't be empty.").showAndWait();
+                return;
+            }
+            if(new File("./Questions/" + fileNameEntry.getText()).exists()){ //if the file already exists
+                new Alert(Alert.AlertType.WARNING, "This path already exists. Would you like to overwrite it?").showAndWait();
+            }
+            else{ //if the file does not exist, make a new one
+                Main.questionBank.writeQuestionsToJSON(new File("./Questions/" + fileNameEntry.getText()));
+            }
+
+            Main.closeCurrentDialogScene();
+        });
+        cancel.setOnMouseClicked(event -> Main.closeCurrentDialogScene());
+
+        // SETUP LAYOUT //
+        this.getChildren().addAll(fieldBox, controlBox);
+        this.getChildren().forEach(child -> {
+            ((HBox) child).setAlignment(Pos.CENTER);
+            ((HBox) child).setSpacing(20);
+        });
+        this.setSpacing(20);
+        this.setAlignment(Pos.CENTER);
 
 //        Main.closeCurrentDialogScene();
 

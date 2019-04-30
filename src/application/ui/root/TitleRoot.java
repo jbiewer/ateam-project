@@ -26,7 +26,6 @@ public class TitleRoot extends VBox {
   private Button save;
   private Button start;
   private Button exit;
-  private File questionFile; //indicates if a file was loaded
   private int totalNumQuestions;
 
   public TitleRoot() {
@@ -67,16 +66,7 @@ public class TitleRoot extends VBox {
 
     this.save.setOnAction(Event -> {
       Main.questionBank.writeQuestionsToJSON(new File("." + "newTestJSON"));
-      //      Main.initDialogScene(
-      //          new Scene(new SaveQuizPopupRoot(), CustomAlert.WIDTH, CustomAlert.HEIGHT));
-      //
-      //      if (questionFile != null) {
-      //        Main.questionBank.writeQuestionsToJSON(questionFile);
-      //      } else {
-      //        File newQuestionFile = new File("./Quiz Questions/testttt2");
-      //        Main.questionBank.writeQuestionsToJSON(newQuestionFile);
-      //      }
-      //      Main.switchScene(GUIScene.TITLE);
+      Main.initDialogScene(new Scene(new SaveQuizPopupRoot(), 600, 150));
     });
 
   }

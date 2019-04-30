@@ -8,6 +8,7 @@ import application.ui.util.GUIAlert;
 import application.ui.util.GUIScene;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -100,11 +101,13 @@ public class ResultsRoot extends VBox {
 
             // functions
 			newQuiz.setOnMouseClicked(event -> {
-				GUIAlert.SAVE_ON_LEAVE.alert();
+				if (GUIAlert.SAVE_ON_LEAVE.alert().get() == ButtonType.YES)
+					Main.questionBank.writeQuestionsToJSON(Main.SAVE_QUESTION_DIR);
 				Main.switchScene(GUIScene.TITLE);
 			});
 			tryAgain.setOnMouseClicked(event -> {
-				GUIAlert.SAVE_ON_LEAVE.alert();
+				if (GUIAlert.SAVE_ON_LEAVE.alert().get() == ButtonType.YES)
+					Main.questionBank.writeQuestionsToJSON(Main.SAVE_QUESTION_DIR);
 				Main.switchScene(GUIScene.QUIZ_SETTINGS);
 			});
 

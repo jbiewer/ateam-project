@@ -1,19 +1,17 @@
 package application.ui.root;
 
 import application.main.Main;
-import application.ui.alerts.SaveOnLeaveAlert;
 import application.ui.util.GUIAlert;
 import application.ui.util.GUIScene;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser.ExtensionFilter;
+
 import java.io.File;
-import java.util.Optional;
 
 
 public class TitleRoot extends VBox {
@@ -59,9 +57,8 @@ public class TitleRoot extends VBox {
     });
 
     this.exit.setOnAction(Event -> {
-      if (GUIAlert.SAVE_ON_LEAVE.alert().get() == ButtonType.YES) {
+      if (GUIAlert.SAVE_ON_LEAVE.alert().get() == ButtonType.YES)
         Main.questionBank.writeQuestionsToJSON(Main.SAVE_QUESTION_DIR);
-      }
       Main.closeApplication();
     });
 
@@ -70,9 +67,8 @@ public class TitleRoot extends VBox {
     });
 
     this.save.setOnAction(Event -> {
-      if (GUIAlert.SAVE_QUIZ.alert().get() == ButtonType.YES) {
+      if (GUIAlert.SAVE_QUIZ.alert().get() == ButtonType.YES)
         Main.questionBank.writeQuestionsToJSON(Main.SAVE_QUESTION_DIR);
-      }
       Main.switchScene(GUIScene.TITLE);
     });
 

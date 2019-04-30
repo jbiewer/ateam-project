@@ -211,6 +211,7 @@ public class QuizManager {
         root.getTopicLabel().setText(curr.getTopic());
         root.getNumLabel().setText(this.questionNum + " / " + this.questionTotal);
         root.getQuestionLabel().setText(curr.getPrompt());
+        System.out.println("Image being displayed: " + curr.getImageURI());
         if(curr.getImageURI() != null)
             root.getImage().setImage(new Image(curr.getImageURI().toString()));
         root.getChoiceBox().setChoices(curr.getChoices());
@@ -223,11 +224,13 @@ public class QuizManager {
     public boolean allAnswered() {
         for (Question prevQuestion : this.prevQuestions) { // check previous
             if (prevQuestion == null) break;
+            System.out.println("Prev question is answered: " + prevQuestion.isAnswered());
             if (!prevQuestion.isAnswered()) return false;
         }
 
         for (Question nextQuestion : this.nextQuestions) { // check next
             if (nextQuestion == null) break;
+            System.out.println("Next question is answered: " + nextQuestion.isAnswered());
             if (!nextQuestion.isAnswered()) return false;
         }
 

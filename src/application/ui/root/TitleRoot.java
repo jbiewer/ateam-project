@@ -59,12 +59,10 @@ public class TitleRoot extends VBox {
     });
 
     this.exit.setOnAction(Event -> {
-      Alert leave = new SaveOnLeaveAlert();
-      Optional<ButtonType> option = leave.showAndWait();
-      if (option.get() == ButtonType.YES) {
-        //save
-      } else
-        Main.closeApplication();
+      if (GUIAlert.SAVE_ON_LEAVE.alert().get() == ButtonType.YES) {
+        Main.questionBank.writeQuestionsToJSON(Main.SAVE_QUESTION_DIR);
+      }
+      Main.closeApplication();
     });
 
     this.addQuestion.setOnAction(Event -> {
@@ -72,7 +70,9 @@ public class TitleRoot extends VBox {
     });
 
     this.save.setOnAction(Event -> {
-      GUIAlert.SAVE_QUIZ.alert();
+      if (GUIAlert.SAVE_QUIZ.alert().get() == ButtonType.YES) {
+        Main.questionBank.writeQuestionsToJSON(Main.SAVE_QUESTION_DIR);
+      }
       Main.switchScene(GUIScene.TITLE);
     });
 

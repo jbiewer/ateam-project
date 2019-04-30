@@ -64,6 +64,7 @@ public class QuizSetupRoot extends VBox {
             // INITIALIZE NODES //
             Label topic = new Label("Select Topic:");
             this.topics = new ComboBox<>();
+            this.topics.setPrefSize(200, 20);
 
             // FUNCTIONALITY //
             // none here...
@@ -97,6 +98,7 @@ public class QuizSetupRoot extends VBox {
             // INITIALIZE NODES //
             Label numOfQuestions = new Label("Number of Questions:");
             this.number = new TextField();
+            this.number.setPrefSize(50, 20);
 
             // FUNCTIONALITY //
             // none here...

@@ -6,7 +6,6 @@ import application.ui.root.ResultsRoot;
 import javafx.scene.image.Image;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
@@ -127,6 +126,7 @@ public class QuizManager {
         }
     }
 
+    private static List<Question> prevSetOfQuestions;
     private QuestionStack nextQuestions, prevQuestions; // stacks to keep track of questions
     private Question firstQuestion; // reference to first question
 
@@ -170,8 +170,10 @@ public class QuizManager {
 
         // queue the questions up in the 'next' stack
         int limit = this.questionTotal;
+        prevSetOfQuestions = new ArrayList<>();
         for (Question question : questions) {
             if (--limit < 0) break; // limit questions to the num requested by user
+            prevSetOfQuestions.add(question);
             this.nextQuestions.add(question);
         }
     }
@@ -260,7 +262,6 @@ public class QuizManager {
         // update percentCorrect label
         root.getPercentCorrectBox().setPercentCorrect((float) numCorrect / (float) this.questionTotal);
 
-        Arrays.stream(Main.questionBank.getAllQuestions()).forEach(q -> q.setChosen(null)); // clear all answers
     }
 
     /**
@@ -286,16 +287,30 @@ public class QuizManager {
      */
     public void saveResults() {
         try {
-            // todo last: implement me!!! :D
             File resultsFile = new File("last_results.txt");
             if (!resultsFile.exists()) resultsFile.createNewFile();
 
+            // general results
             PrintWriter writer = new PrintWriter(resultsFile);
-            writer.printf("<===> OVERAL RESULTS <===>\n\n");
+            writer.printf("<===> OVERALL RESULTS <===>\n\n");
             int numCorrect = Main.questionBank.getCorrect().length;
             writer.printf("\tNumber correct:\t%d / %d\n", numCorrect, this.questionTotal);
             writer.printf("\tPercent score:\t%s\n\n\n", String.valueOf((float) numCorrect / (float) this.questionTotal));
 
+            writer.printf("<===> SPECIFIC QUESTION RESULTS <===>\n\n");
+            writer.printf("\t* = your choice\n\t+ = correct answer\n");
+            // for each question:
+            for (Question question : prevSetOfQuestions) {
+                writer.printf("\t[Topic] Question:\t[%s] %s\n\n", question.getTopic(), question.getPrompt());
+                writer.printf("\tChoices:\n");
+                for (String choice : question.getChoices()) {
+                    char correct = question.getCorrect().equals(choice) ? '+' : ' ';
+                    char chosen = choice.equals(question.getChosen()) ? '*' : ' ';
+                    writer.printf("\t%s%s\t%s\n", correct, chosen, choice);
+                }
+                writer.printf("\n");
+            }
+            writer.close();
         } catch (IOException e) { e.printStackTrace(); }
     }
 

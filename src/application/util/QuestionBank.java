@@ -74,8 +74,6 @@ public class QuestionBank implements QuestionBankADT {
 
   @Override
   public boolean writeQuestionsToJSON(File destination) {
-    if (!destination.exists())
-      return false; // todo print message to user somehow of invalid destination
     JSONArray questionArray = new JSONArray();
     for (Question q : this.getAllQuestions()) {
       JSONObject question = new JSONObject();

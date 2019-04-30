@@ -14,7 +14,8 @@ public enum GUIAlert {
     INPUT_FORMAT(InputFormatAlert.class),
     LAST_QUESTION(LastQuestionAlert.class),
     SAVE_ON_LEAVE(SaveOnLeaveAlert.class),
-    NOT_ALL_ANSWERED(NotAllAnsweredAlert.class);
+    NOT_ALL_ANSWERED(NotAllAnsweredAlert.class),
+    SAVE_QUIZ(SaveQuizAlert.class);
 
     private Class alert; // alert's class
 

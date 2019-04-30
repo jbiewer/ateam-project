@@ -2,6 +2,7 @@ package application.ui.root;
 
 import application.main.Main;
 import application.ui.alerts.SaveOnLeaveAlert;
+import application.ui.util.GUIAlert;
 import application.ui.util.GUIScene;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -71,7 +72,8 @@ public class TitleRoot extends VBox {
     });
 
     this.save.setOnAction(Event -> {
-      // save unstored values in question database to the file
+      GUIAlert.SAVE_QUIZ.alert();
+      Main.switchScene(GUIScene.TITLE);
     });
 
   }
@@ -80,4 +82,6 @@ public class TitleRoot extends VBox {
     this.totalNumQuestions += num;
     this.totalQuestions.setText("Total Questions: " + totalNumQuestions);
   }
+
+
 }

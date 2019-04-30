@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * The root node class of the scene "New Question".
@@ -69,7 +68,7 @@ public class NewQuestionRoot extends GridPane {
         this.topicsList.setOnAction(event -> {
             ComboBox src = (ComboBox) event.getSource();
             if (src.getValue().equals("+ add topic"))
-                Main.initDialogScene(new Scene(new NewTopicDialog(), 500, 150));
+                Main.initDialogScene(new Scene(new NewTopicPopupRoot(), 500, 150));
         });
 
         // SET ROW AND COLUMN INDICES //
@@ -256,13 +255,13 @@ public class NewQuestionRoot extends GridPane {
     /**
      * Custom root node for a popup dialog to create a new topic.
      */
-    private class NewTopicDialog extends VBox {
+    private class NewTopicPopupRoot extends VBox {
         private TextField topicEntry; // reference to the topic textfield
 
         /**
          * Constructs the node.
          */
-        private NewTopicDialog() {
+        private NewTopicPopupRoot() {
             this.getStylesheets().add(Main.mainTheme); // add stylesheet
 
             // INITIALIZE NODES //

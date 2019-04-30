@@ -46,13 +46,15 @@ public class TitleRoot extends VBox {
     this.setSpacing(10);
     this.setAlignment(Pos.CENTER);
 
+    updateNumQuestions(); // update the num of questions if they've changed
+
     this.load.setOnAction(event -> {
       Main.questionBank.addJSONQuiz(Main.loadFile(new ExtensionFilter("JSON (*.json)", "*.json"),
           "Choose the JSON Quiz File to Load"));
       if (questionFile == null)
         return;
       Main.questionBank.addJSONQuiz(questionFile);
-      this.updateNumQuestions(Main.questionBank.getAllQuestions().length);
+      updateNumQuestions();
     });
 
     this.start.setOnAction(Event -> {
@@ -84,9 +86,8 @@ public class TitleRoot extends VBox {
 
   }
 
-  private void updateNumQuestions(int num) {
-    this.totalNumQuestions += num;
-    this.totalQuestions.setText("Total Questions: " + totalNumQuestions);
+  public void updateNumQuestions() {
+    this.totalQuestions.setText("Total Questions: " + Main.questionBank.getAllQuestions().length);
   }
 
 }

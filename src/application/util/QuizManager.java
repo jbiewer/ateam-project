@@ -5,10 +5,7 @@ import application.ui.root.QuestionRoot;
 import application.ui.root.ResultsRoot;
 import javafx.scene.image.Image;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Holds all the data for a quiz. The "backend" part of the QuestionRoot scene.
@@ -163,6 +160,11 @@ public class QuizManager {
         // initialize total questions variable
         this.questionTotal = (data.getTotalQuestions() > questions.length ?
                 questions.length : data.getTotalQuestions());
+
+
+        // randomize questions
+        List<Question> shuffledQuestions = Arrays.asList(questions);
+        Collections.shuffle(shuffledQuestions);
 
         // queue the questions up in the 'next' stack
         int limit = this.questionTotal;

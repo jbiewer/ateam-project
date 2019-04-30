@@ -47,7 +47,6 @@ public class QuestionBank implements QuestionBankADT {
     // iterate through each question
     for (Object o : questions) {
       JSONObject newQ = (JSONObject) o; // json object of the question
-//      String metaData = (String) newQ.get("meta-data"); todo should we remove this ??
 
       // load text for labels
       String text = (String) newQ.get("questionText");
@@ -73,12 +72,6 @@ public class QuestionBank implements QuestionBankADT {
               new Question(topic, text, correct, incorrect.toArray(new String[0]))
               : new Question(topic, text, correct, incorrect.toArray(new String[0]), new File(image))
       );
-
-      // check if question is a duplicate
-      boolean duplicate = false;
-      for (Question question : this.questionBank)
-        if (question.equals(q)) duplicate = true;
-      if (duplicate) continue;
 
       this.questionBank.add(q); // finally add it to the question bank
     }

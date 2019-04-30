@@ -67,7 +67,6 @@ public class TitleRoot extends VBox {
     });
 
     this.save.setOnAction(Event -> {
-      Main.questionBank.writeQuestionsToJSON(new File("." + "newTestJSON"));
       Main.initDialogScene(new Scene(new SaveQuizPopupRoot(), 600, 150));
     });
 

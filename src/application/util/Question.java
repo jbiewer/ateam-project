@@ -108,4 +108,8 @@ public class Question {
     public String toString() {
         return this.topic+":"+this.prompt;
     }
+    
+    public String getCorrect() {
+      return this.right;
+    }
 }

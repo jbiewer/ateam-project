@@ -1,6 +1,7 @@
 package application.ui.root;
 
 import application.main.Main;
+import application.ui.alerts.ChooseCorrectAnswerRoot;
 import application.ui.util.GUIAlert;
 import application.ui.util.GUIScene;
 import application.util.Question;
@@ -188,11 +189,13 @@ public class NewQuestionRoot extends GridPane {
             return choices.toArray(new String[0]);
         }
     }
+    
+    	
 
     /**
      * Custom root node to organize the 'cancel' and 'save' buttons.
      */
-    private class CancelSaveHBox extends HBox {
+    public class CancelSaveHBox extends HBox {
         /**
          * Constructs the root node.
          */
@@ -228,9 +231,8 @@ public class NewQuestionRoot extends GridPane {
                     );
                     return;
                 }
-
-                saveQuestion();
-                Main.switchScene(GUIScene.TITLE);
+                
+                Main.initDialogScene(new Scene(new ChooseCorrectAnswerRoot(choicesVBox.getChoices(), this)));
             });
 
             // SETUP LAYOUT AND STYLE //
@@ -242,13 +244,12 @@ public class NewQuestionRoot extends GridPane {
          * Helper method that is called when the user presses 'save' button successfully.
          * Saves the information into a Question data type and adds it to the global question bank.
          */
-        private void saveQuestion() {
-            String[] choices = choicesVBox.getChoices();
+        public void saveQuestion(String right, String[] wrongs) {
             Main.questionBank.addQuestion(new Question(
                     topicsList.getValue(), promptField.getText(),
-                    choices[0], Arrays.copyOfRange(choices, 1, choices.length),
-                    imgToSave
-            ));
+                    right, wrongs,
+                    imgToSave)
+            );
         }
     }
 

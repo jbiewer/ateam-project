@@ -1,7 +1,6 @@
 package application.main;
 
 import application.ui.util.GUIScene;
-import application.util.Question;
 import application.util.QuestionBank;
 import application.util.QuizManager;
 import javafx.application.Application;
@@ -10,6 +9,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import java.io.File;
 
 /**
@@ -17,7 +17,7 @@ import java.io.File;
  */
 public class Main extends Application {
 
-  public static final int WIDTH = 800, HEIGHT = 600; // dimensions of each scene
+  public static final int WIDTH = 1400, HEIGHT = 1000; // dimensions of each scene
 
   public static QuizManager quizManager = new QuizManager();
   private static Stage stage, currentPopup; // primary stage (first) and stage of the current popup (second)

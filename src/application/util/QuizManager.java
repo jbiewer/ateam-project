@@ -143,8 +143,6 @@ public class QuizManager {
      * @param data Settings of the quiz to load.
      */
     public void loadQuiz(QuizSettingsData data) {
-        this.questionNum = 0;
-
         // start by getting questions to quiz on
         Question[] questions;
         if (data.getTopics() == null) questions = Main.questionBank.getAllQuestions();
@@ -228,10 +226,23 @@ public class QuizManager {
         root.getTopicLabel().setText(curr.getTopic());
         root.getNumLabel().setText(this.questionNum + " / " + this.questionTotal);
         root.getQuestionLabel().setText(curr.getPrompt());
-        if(curr.getImageURI() != null)
+        if(curr.getImageURI() != null) { // set and size the image
             root.getImage().setImage(new Image(curr.getImageURI().toString()));
+            root.getImage().setPreserveRatio(true);
+            root.getImage().setFitHeight(150);
+        } else root.getImage().setImage(null);
         root.getChoiceBox().setChoices(curr.getChoices());
         root.getChoiceBox().loadChoice(curr.getChosen());
+    }
+
+    /**
+     * "Resets" the quiz by clearing all the stacks and setting all variables to null/empty.
+     */
+    public void resetQuiz() {
+        this.questionNum = 0;
+        this.firstQuestion = null;
+        while (this.prevQuestions.pop() != null) { /* Snap crackle */ }
+        while (this.nextQuestions.pop() != null) { /*     pop!     */ }
     }
 
     /**
@@ -263,6 +274,14 @@ public class QuizManager {
         }
 
         return true;
+    }
+
+    /**
+     * Takes the data in this manager and prints out the quiz results to a text file.
+     * The text file is located in the directory relative to where the program was executed.
+     */
+    public void saveResults() {
+        // todo last: implement me!!! :D
     }
 
 }

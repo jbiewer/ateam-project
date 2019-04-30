@@ -11,6 +11,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import static java.util.stream.Collectors.toList;
+
 /**
  * Data structure to manage all the questions.
  */
@@ -124,6 +126,13 @@ public class QuestionBank implements QuestionBankADT {
   @Override
   public void addQuestion(Question question) {
     this.questionBank.add(question);
+  }
+
+  @Override
+  public Question[] getCorrect() {
+    return this.questionBank.stream()
+            .filter(Question::isCorrect)
+            .toArray(Question[]::new);
   }
 }
 

@@ -5,6 +5,7 @@ import application.ui.root.QuestionRoot;
 import application.ui.root.ResultsRoot;
 import javafx.scene.image.Image;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 /**
@@ -228,8 +229,12 @@ public class QuizManager {
      */
     public void loadResults(ResultsRoot root) {
         int numCorrect = Main.questionBank.getCorrect().length;
-        root.getNumCorrectBox().setNumCorrect(numCorrect);
+
+        root.getNumCorrectBox().setNumCorrect(numCorrect); // update numCorrect label
+        // update percentCorrect label
         root.getPercentCorrectBox().setPercentCorrect((float) numCorrect / (float) this.questionTotal);
+
+        Arrays.stream(Main.questionBank.getAllQuestions()).forEach(q -> q.setChosen(null)); // clear all answers
     }
 
     /**

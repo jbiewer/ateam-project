@@ -170,13 +170,15 @@ public class QuizManager {
         // setup reference to first question
         if (this.firstQuestion == null) this.firstQuestion = this.nextQuestions.peek();
 
+        // save chosen answer
+        if (this.prevQuestions.peek() != null)
+                this.prevQuestions.peek().setChosen(root.getChoiceBox().getChosen());
+
         // move 'next' questions into 'prev' questions
         if (this.nextQuestions.peek() != null) {
             // move next to prev
             Question prev = this.nextQuestions.pop();
             this.prevQuestions.add(prev);
-            // save chosen answer
-            prev.setChosen(root.getChoiceBox().getChosen());
             this.questionNum++;
             // setup UI
             this.nextPrevUISetup(root, this.prevQuestions.peek());
@@ -190,13 +192,15 @@ public class QuizManager {
      * @param root QuestionRoot to display to.
      */
     public void prev(QuestionRoot root) {
+        // save chosen answer
+        if (this.prevQuestions.peek() != null)
+            this.prevQuestions.peek().setChosen(root.getChoiceBox().getChosen());
+
         // move 'prev' questions into 'next' questions
         if (this.prevQuestions.peek() != this.firstQuestion) {
             // move prev to next
             Question next = this.prevQuestions.pop();
             this.nextQuestions.add(next);
-            // save chosen answer
-            next.setChosen(root.getChoiceBox().getChosen());
             this.questionNum--;
             // setup UI
             this.nextPrevUISetup(root, this.prevQuestions.peek());
@@ -223,13 +227,11 @@ public class QuizManager {
     public boolean allAnswered() {
         for (Question prevQuestion : this.prevQuestions) { // check previous
             if (prevQuestion == null) break;
-            System.out.println("Prev question is answered: " + prevQuestion.isAnswered());
             if (!prevQuestion.isAnswered()) return false;
         }
 
         for (Question nextQuestion : this.nextQuestions) { // check next
             if (nextQuestion == null) break;
-            System.out.println("Next question is answered: " + nextQuestion.isAnswered());
             if (!nextQuestion.isAnswered()) return false;
         }
 

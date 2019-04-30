@@ -28,19 +28,19 @@ public class QuestionBank implements QuestionBankADT {
   @Override
   public boolean addJSONQuiz(File... jsonFiles) {
     JSONParser parser = new JSONParser();
-    JSONObject jo = null;
+    JSONObject jo;
+
     for (File f : jsonFiles) { // for each file in jsonFiles
+      if (f == null) return false;
 
       try {
         jo = (JSONObject) parser.parse(new FileReader(f));
-      } catch (IOException | ParseException e) {
-        return false;
-      }
-
+      } catch (IOException | ParseException e) { return false; }
 
       JSONArray questions = (JSONArray) jo.get("questionArray"); //json array for all of the questions in the json file
       if (questions == null)
         return false;
+
       for (int i = 0; i < questions.size(); i++) {
         JSONObject newQ = (JSONObject) questions.get(i); // json object of the question
         String metaData = (String) newQ.get("meta-data");

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The root node class of the scene "New Question".
@@ -163,6 +164,8 @@ public class NewQuestionRoot extends GridPane {
 
             // FUNCTIONALITY //
             addChoice.setOnMouseClicked(e -> {
+                if (this.getChildren().size() >= 6) return; // maximum of 5 choices
+                                                            // (6 = 5 choices + 1 button in children)
                 TextField toAdd = new TextField();
                 toAdd.maxWidth(Double.MAX_VALUE);
                 this.getChildren().add(this.getChildren().size()-1, toAdd);
@@ -205,15 +208,28 @@ public class NewQuestionRoot extends GridPane {
             // FUNCTIONALITY //
             this.getChildren().get(0).setOnMouseClicked(e -> Main.switchScene(GUIScene.TITLE));
             this.getChildren().get(1).setOnMouseClicked(e -> {
+                String[] choices = choicesVBox.getChoices();
+
+                // check if any fields are empty
                 if (promptField.getText().isEmpty()
-                        || choicesVBox.getChoices().length == 0
-                        || topicsList.getValue().isEmpty()) {
+                        || choices.length == 0
+                        || topicsList.getValue().isEmpty()
+                        || Arrays.stream(choices).anyMatch(String::isEmpty)) {
                     GUIAlert.quickAlert(Alert.AlertType.WARNING,
                             "Wrong Input",
                             "One of the input fields is either incorrect or not filled in."
                     );
                     return;
                 }
+
+                if (Arrays.stream(choices).distinct().count() != choices.length) {
+                    GUIAlert.quickAlert(Alert.AlertType.WARNING,
+                            "Wrong Input",
+                            "Can not have duplicate choices."
+                    );
+                    return;
+                }
+
                 saveQuestion();
                 Main.switchScene(GUIScene.TITLE);
             });
@@ -228,8 +244,11 @@ public class NewQuestionRoot extends GridPane {
          * Saves the information into a Question data type and adds it to the global question bank.
          */
         private void saveQuestion() {
+            String[] choices = choicesVBox.getChoices();
             Main.questionBank.addQuestion(new Question(
-                    topicsList.getValue(), promptField.getText(), choicesVBox.getChoices()[0], choicesVBox.getChoices(), imgToSave
+                    topicsList.getValue(), promptField.getText(),
+                    choices[0], Arrays.copyOfRange(choices, 1, choices.length),
+                    imgToSave
             ));
         }
     }

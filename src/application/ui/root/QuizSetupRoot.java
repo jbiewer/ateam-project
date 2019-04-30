@@ -4,12 +4,14 @@ import application.main.Main;
 import application.ui.util.GUIAlert;
 import application.ui.util.GUIScene;
 import application.util.QuizSettingsData;
+import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * Custom root node for the QuizSetupRoot scene.
@@ -34,7 +36,6 @@ public class QuizSetupRoot extends VBox {
         // FUNCTIONALITY //
         // none here...
 
-
         // SETUP LAYOUT AND STYLE //
         title.getStyleClass().add("header");
         this.getStyleClass().add("background");
@@ -55,33 +56,34 @@ public class QuizSetupRoot extends VBox {
      * Custom root node to organize topic selection layout.
      */
     private class TopicSelectionBox extends HBox {
-        private ComboBox<String> topics;
+        private ListView<String> topicsList;
 
         /**
          * Constructs the node.
          */
         private TopicSelectionBox() {
             // INITIALIZE NODES //
-            Label topic = new Label("Select Topic:");
-            this.topics = new ComboBox<>();
-            this.topics.setPrefSize(200, 20);
+            Label topicLabel = new Label("Select Topic(s):");
+            this.topicsList = new ListView<>();
 
-            // FUNCTIONALITY //
-            // none here...
+            // allow multiple items to be selected
+            this.topicsList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            // set the list of topics in alphabetical order
+            this.topicsList.setItems(FXCollections.observableArrayList(
+                    Arrays.stream(Main.questionBank.getAllTopics())
+                            .sorted()
+                            .collect(Collectors.toList())
+            ));
 
-            // SETUP LAYOUT AND STYLE //
-            topic.getStyleClass().add("main-text");
-            this.topics.getStyleClass().add("text-field");
-
-            this.topics.getItems().addAll(Main.questionBank.getAllTopics());
-            this.getChildren().addAll(topic, this.topics);
+            // allows the VBox to be scrolled through
+            this.getChildren().addAll(topicLabel, this.topicsList);
         }
 
         /**
          * @return The topic selected in the combo box.
          */
-        private String getTopic() {
-            return this.topics.getValue();
+        private String[] getTopics() {
+            return this.topicsList.getSelectionModel().getSelectedItems().toArray(new String[0]);
         }
     }
 
@@ -140,7 +142,7 @@ public class QuizSetupRoot extends VBox {
             // FUNCTIONALITY //
             cancel.setOnMouseClicked(event -> Main.switchScene(GUIScene.TITLE));
             begin.setOnMouseClicked(event -> {
-                if (topicSelectionBox.topics.getItems().size() == 0) {
+                if (topicSelectionBox.topicsList.getItems().size() == 0) {
                     // when there aren't any questions in question bank
                     GUIAlert.quickAlert(Alert.AlertType.INFORMATION,
                             "No Questions",
@@ -160,7 +162,7 @@ public class QuizSetupRoot extends VBox {
                 }
 
                 // load quiz settings into manager
-                Main.quizManager.loadQuiz(new QuizSettingsData(topicSelectionBox.getTopic(), numOfQs));
+                Main.quizManager.loadQuiz(new QuizSettingsData(topicSelectionBox.getTopics(), numOfQs));
                 Main.switchScene(GUIScene.QUESTION);
             });
             begin.setDefaultButton(true);

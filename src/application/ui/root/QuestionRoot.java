@@ -47,7 +47,7 @@ public class QuestionRoot extends VBox {
         this.questionLabel.setWrapText(true);
         this.getChildren().addAll(
                 this.topicLabel, this.numLabel, this.questionLabel,
-                this.choiceBox, this.image, backNextBox
+                this.image, this.choiceBox, backNextBox
         );
         this.setAlignment(Pos.CENTER);
         this.setSpacing(30);
@@ -94,6 +94,7 @@ public class QuestionRoot extends VBox {
          * Loads the current question's chosen answer to the respective choice.
          */
         public void loadChoice(String choice) {
+            if (choice == null) return;
             for (Node child : choiceBox.getChildren()) {
                 RadioButton rb = (RadioButton) child;
                 if (rb.getText().equals(choice)) { // toggle answered choice
@@ -129,8 +130,10 @@ public class QuestionRoot extends VBox {
 
                     // ask user what to do after last question
                     Optional<ButtonType> decision = GUIAlert.LAST_QUESTION.alert();
-                    if (decision.isPresent() && decision.get() == LastQuestionAlert.SEE_RESULTS)
+                    if (decision.isPresent() && decision.get() == LastQuestionAlert.SEE_RESULTS) {
                         Main.switchScene(GUIScene.RESULTS);
+                        Main.quizManager.resetQuiz();
+                    }
                 }
             });
             back.setOnMouseClicked(event -> Main.quizManager.prev(rootReference));
@@ -177,4 +180,5 @@ public class QuestionRoot extends VBox {
     public ChoicesBox getChoiceBox() {
         return choiceBox;
     }
+
 }

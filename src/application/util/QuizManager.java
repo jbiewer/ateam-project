@@ -2,9 +2,14 @@ package application.util;
 
 import application.main.Main;
 import application.ui.root.QuestionRoot;
+import application.ui.root.ResultsRoot;
 import javafx.scene.image.Image;
 
-import java.util.Iterator;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.*;
 
 /**
  * Holds all the data for a quiz. The "backend" part of the QuestionRoot scene.
@@ -142,16 +147,26 @@ public class QuizManager {
      * @param data Settings of the quiz to load.
      */
     public void loadQuiz(QuizSettingsData data) {
-        // read from question bank based on quiz settings
-
         // start by getting questions to quiz on
-        Question[] questions = (data.getTopic() == null ?
-                Main.questionBank.getAllQuestions() : Main.questionBank.getQuestionsOfTopic(data.getTopic())
-        );
+        Question[] questions;
+        if (data.getTopics() == null) questions = Main.questionBank.getAllQuestions();
+        else {
+            // for each topic, add all the questions of that topic to the questions array
+            List<Question> qs = new ArrayList<>();
+            Arrays.stream(data.getTopics()).forEach(
+                    t -> qs.addAll(Arrays.asList(Main.questionBank.getQuestionsOfTopic(t)))
+            );
+            questions = qs.toArray(new Question[0]);
+        }
 
         // initialize total questions variable
         this.questionTotal = (data.getTotalQuestions() > questions.length ?
                 questions.length : data.getTotalQuestions());
+
+
+        // randomize questions
+        List<Question> shuffledQuestions = Arrays.asList(questions);
+        Collections.shuffle(shuffledQuestions);
 
         // queue the questions up in the 'next' stack
         int limit = this.questionTotal;
@@ -170,13 +185,15 @@ public class QuizManager {
         // setup reference to first question
         if (this.firstQuestion == null) this.firstQuestion = this.nextQuestions.peek();
 
+        // save chosen answer
+        if (this.prevQuestions.peek() != null)
+                this.prevQuestions.peek().setChosen(root.getChoiceBox().getChosen());
+
         // move 'next' questions into 'prev' questions
         if (this.nextQuestions.peek() != null) {
             // move next to prev
             Question prev = this.nextQuestions.pop();
             this.prevQuestions.add(prev);
-            // save chosen answer
-            prev.setChosen(root.getChoiceBox().getChosen());
             this.questionNum++;
             // setup UI
             this.nextPrevUISetup(root, this.prevQuestions.peek());
@@ -190,13 +207,15 @@ public class QuizManager {
      * @param root QuestionRoot to display to.
      */
     public void prev(QuestionRoot root) {
+        // save chosen answer
+        if (this.prevQuestions.peek() != null)
+            this.prevQuestions.peek().setChosen(root.getChoiceBox().getChosen());
+
         // move 'prev' questions into 'next' questions
         if (this.prevQuestions.peek() != this.firstQuestion) {
             // move prev to next
             Question next = this.prevQuestions.pop();
             this.nextQuestions.add(next);
-            // save chosen answer
-            next.setChosen(root.getChoiceBox().getChosen());
             this.questionNum--;
             // setup UI
             this.nextPrevUISetup(root, this.prevQuestions.peek());
@@ -211,10 +230,37 @@ public class QuizManager {
         root.getTopicLabel().setText(curr.getTopic());
         root.getNumLabel().setText(this.questionNum + " / " + this.questionTotal);
         root.getQuestionLabel().setText(curr.getPrompt());
-        if(curr.getImageURI() != null)
+        if(curr.getImageURI() != null) { // set and size the image
             root.getImage().setImage(new Image(curr.getImageURI().toString()));
+            root.getImage().setPreserveRatio(true);
+            root.getImage().setFitHeight(150);
+        } else root.getImage().setImage(null);
         root.getChoiceBox().setChoices(curr.getChoices());
         root.getChoiceBox().loadChoice(curr.getChosen());
+    }
+
+    /**
+     * "Resets" the quiz by clearing all the stacks and setting all variables to null/empty.
+     */
+    public void resetQuiz() {
+        this.questionNum = 0;
+        this.firstQuestion = null;
+        while (this.prevQuestions.pop() != null) { /* Snap crackle */ }
+        while (this.nextQuestions.pop() != null) { /*     pop!     */ }
+    }
+
+    /**
+     * Displays the results from the previous quiz into a results root.
+     * @param root ResultsRoot to display to.
+     */
+    public void loadResults(ResultsRoot root) {
+        int numCorrect = Main.questionBank.getCorrect().length;
+
+        root.getNumCorrectBox().setNumCorrect(numCorrect); // update numCorrect label
+        // update percentCorrect label
+        root.getPercentCorrectBox().setPercentCorrect((float) numCorrect / (float) this.questionTotal);
+
+        Arrays.stream(Main.questionBank.getAllQuestions()).forEach(q -> q.setChosen(null)); // clear all answers
     }
 
     /**
@@ -223,17 +269,34 @@ public class QuizManager {
     public boolean allAnswered() {
         for (Question prevQuestion : this.prevQuestions) { // check previous
             if (prevQuestion == null) break;
-            System.out.println("Prev question is answered: " + prevQuestion.isAnswered());
             if (!prevQuestion.isAnswered()) return false;
         }
 
         for (Question nextQuestion : this.nextQuestions) { // check next
             if (nextQuestion == null) break;
-            System.out.println("Next question is answered: " + nextQuestion.isAnswered());
             if (!nextQuestion.isAnswered()) return false;
         }
 
         return true;
+    }
+
+    /**
+     * Takes the data in this manager and prints out the quiz results to a text file.
+     * The text file is located in the directory relative to where the program was executed.
+     */
+    public void saveResults() {
+        try {
+            // todo last: implement me!!! :D
+            File resultsFile = new File("last_results.txt");
+            if (!resultsFile.exists()) resultsFile.createNewFile();
+
+            PrintWriter writer = new PrintWriter(resultsFile);
+            writer.printf("<===> OVERAL RESULTS <===>\n\n");
+            int numCorrect = Main.questionBank.getCorrect().length;
+            writer.printf("\tNumber correct:\t%d / %d\n", numCorrect, this.questionTotal);
+            writer.printf("\tPercent score:\t%s\n\n\n", String.valueOf((float) numCorrect / (float) this.questionTotal));
+
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
 }

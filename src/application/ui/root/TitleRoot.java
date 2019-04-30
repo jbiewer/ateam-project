@@ -1,18 +1,19 @@
 package application.ui.root;
 
 import application.main.Main;
+import application.ui.alerts.CustomAlert;
+import application.ui.alerts.SaveQuizPopupRoot;
 import application.ui.util.GUIAlert;
 import application.ui.util.GUIScene;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser.ExtensionFilter;
-
 import java.io.File;
-
 
 public class TitleRoot extends VBox {
 
@@ -43,13 +44,12 @@ public class TitleRoot extends VBox {
     this.setSpacing(10);
     this.setAlignment(Pos.CENTER);
 
+    updateNumQuestions(); // update the num of questions if they've changed
+
     this.load.setOnAction(event -> {
-      File questionFile = Main.loadFile(new ExtensionFilter("JSON (*.json)", "*.json"),
-          "Choose the JSON Quiz File to Load");
-      if (questionFile == null)
-        return;
-      Main.questionBank.addJSONQuestion(questionFile);
-      this.updateNumQuestions(Main.questionBank.getAllQuestions().length);
+      Main.questionBank.addJSONQuiz(Main.loadFile(new ExtensionFilter("JSON (*.json)", "*.json"),
+          "Choose the JSON Quiz File to Load"));
+      updateNumQuestions();
     });
 
     this.start.setOnAction(Event -> {
@@ -67,17 +67,13 @@ public class TitleRoot extends VBox {
     });
 
     this.save.setOnAction(Event -> {
-      if (GUIAlert.SAVE_QUIZ.alert().get() == ButtonType.YES)
-        Main.questionBank.writeQuestionsToJSON(Main.SAVE_QUESTION_DIR);
-      Main.switchScene(GUIScene.TITLE);
+      Main.initDialogScene(new Scene(new SaveQuizPopupRoot(), 600, 150));
     });
 
   }
 
-  public void updateNumQuestions(int num) {
-    this.totalNumQuestions += num;
-    this.totalQuestions.setText("Total Questions: " + totalNumQuestions);
+  public void updateNumQuestions() {
+    this.totalQuestions.setText("Total Questions: " + Main.questionBank.getAllQuestions().length);
   }
-
 
 }

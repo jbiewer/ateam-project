@@ -68,7 +68,7 @@ public class NewQuestionRoot extends GridPane {
         this.topicsList.setOnAction(event -> {
             ComboBox src = (ComboBox) event.getSource();
             if (src.getValue().equals("+ add topic"))
-                Main.initDialogScene(new Scene(new NewTopicDialog(), 500, 150));
+                Main.initDialogScene(new Scene(new NewTopicPopupRoot(), 500, 150));
         });
 
         // SET ROW AND COLUMN INDICES //
@@ -163,6 +163,8 @@ public class NewQuestionRoot extends GridPane {
 
             // FUNCTIONALITY //
             addChoice.setOnMouseClicked(e -> {
+                if (this.getChildren().size() >= 6) return; // maximum of 5 choices
+                                                            // (6 = 5 choices + 1 button in children)
                 TextField toAdd = new TextField();
                 toAdd.maxWidth(Double.MAX_VALUE);
                 this.getChildren().add(this.getChildren().size()-1, toAdd);
@@ -205,15 +207,28 @@ public class NewQuestionRoot extends GridPane {
             // FUNCTIONALITY //
             this.getChildren().get(0).setOnMouseClicked(e -> Main.switchScene(GUIScene.TITLE));
             this.getChildren().get(1).setOnMouseClicked(e -> {
+                String[] choices = choicesVBox.getChoices();
+
+                // check if any fields are empty
                 if (promptField.getText().isEmpty()
-                        || choicesVBox.getChoices().length == 0
-                        || topicsList.getValue().isEmpty()) {
+                        || choices.length == 0
+                        || topicsList.getValue().isEmpty()
+                        || Arrays.stream(choices).anyMatch(String::isEmpty)) {
                     GUIAlert.quickAlert(Alert.AlertType.WARNING,
                             "Wrong Input",
                             "One of the input fields is either incorrect or not filled in."
                     );
                     return;
                 }
+
+                if (Arrays.stream(choices).distinct().count() != choices.length) {
+                    GUIAlert.quickAlert(Alert.AlertType.WARNING,
+                            "Wrong Input",
+                            "Can not have duplicate choices."
+                    );
+                    return;
+                }
+
                 saveQuestion();
                 Main.switchScene(GUIScene.TITLE);
             });
@@ -228,8 +243,11 @@ public class NewQuestionRoot extends GridPane {
          * Saves the information into a Question data type and adds it to the global question bank.
          */
         private void saveQuestion() {
+            String[] choices = choicesVBox.getChoices();
             Main.questionBank.addQuestion(new Question(
-                    topicsList.getValue(), promptField.getText(), choicesVBox.getChoices()[0], choicesVBox.getChoices(), imgToSave
+                    topicsList.getValue(), promptField.getText(),
+                    choices[0], Arrays.copyOfRange(choices, 1, choices.length),
+                    imgToSave
             ));
         }
     }
@@ -237,13 +255,13 @@ public class NewQuestionRoot extends GridPane {
     /**
      * Custom root node for a popup dialog to create a new topic.
      */
-    private class NewTopicDialog extends VBox {
+    private class NewTopicPopupRoot extends VBox {
         private TextField topicEntry; // reference to the topic textfield
 
         /**
          * Constructs the node.
          */
-        private NewTopicDialog() {
+        private NewTopicPopupRoot() {
             this.getStylesheets().add(Main.mainTheme); // add stylesheet
 
             // INITIALIZE NODES //

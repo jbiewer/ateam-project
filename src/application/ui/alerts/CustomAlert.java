@@ -19,6 +19,4 @@ public abstract class CustomAlert extends Alert {
         this.setHeight(HEIGHT);
         this.getDialogPane().getStylesheets().add(Main.alertTheme);
     }
-
-
 }

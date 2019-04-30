@@ -12,7 +12,7 @@ public interface QuestionBankADT {
      * @param jsonFile JSON file to use.
      * @return True if the file was successfully read, false if it was in the wrong format.
      */
-    boolean addJSONQuestion(File... jsonFile);
+    boolean addJSONQuiz(File jsonFile);
 
     /**
      * Takes the current data and writes it to a JSON as as Quiz.
@@ -20,6 +20,12 @@ public interface QuestionBankADT {
      * @return True if the file was successfully written, false if the file location doesn't exist.
      */
     boolean writeQuestionsToJSON(File destination);
+
+    /**
+     * Adds a question to the question bank.
+     * @param question Question to add.
+     */
+    void addQuestion(Question question);
 
     /**
      * Goes through all the questions in the question bank and returns a distinct list of all the topics.
@@ -40,8 +46,8 @@ public interface QuestionBankADT {
     Question[] getAllQuestions();
 
     /**
-     * Adds a question to the question bank.
-     * @param question Question to add.
+     * @return All the questions that have correct answers.
      */
-    void addQuestion(Question question);
+    Question[] getCorrect();
+
 }

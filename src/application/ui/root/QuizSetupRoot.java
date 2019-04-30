@@ -12,10 +12,10 @@ import javafx.scene.layout.VBox;
 import java.util.Arrays;
 
 /**
- * Custom root node for the QuizSettingsRoot scene.
+ * Custom root node for the QuizSetupRoot scene.
  * @author Jacob Biewer
  */
-public class QuizSettingsRoot extends VBox {
+public class QuizSetupRoot extends VBox {
 
     // references to components in layout
     private TopicSelectionBox topicSelectionBox;
@@ -24,7 +24,7 @@ public class QuizSettingsRoot extends VBox {
     /**
      * Constructs the node.
      */
-    public QuizSettingsRoot() {
+    public QuizSetupRoot() {
         // INITIALIZE NODES //
         Label   title = new Label("Quiz Setup");
         this.topicSelectionBox = new TopicSelectionBox();
@@ -138,6 +138,9 @@ public class QuizSettingsRoot extends VBox {
             // FUNCTIONALITY //
             cancel.setOnMouseClicked(event -> Main.switchScene(GUIScene.TITLE));
             begin.setOnMouseClicked(event -> {
+                if (topicSelectionBox.topics.getItems().size() == 0) {
+
+                }
                 int numOfQs = numOfQuestionsBox.getTotal();
                 if (numOfQs == -1) { // check if an error occurred
                     // alert and don't switch scenes yet

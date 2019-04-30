@@ -63,7 +63,7 @@ public class TitleRoot extends VBox {
       if (option.get() == ButtonType.YES) {
         //save
       } else
-        System.exit(0);
+        Main.closeApplication();
     });
 
     this.addQuestion.setOnAction(Event -> {

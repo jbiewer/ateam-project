@@ -12,7 +12,7 @@ public enum GUIScene {
     TITLE(TitleRoot.class),
     QUESTION(QuestionRoot.class),
     RESULTS(ResultsRoot.class),
-    QUIZ_SETTINGS(QuizSettingsRoot.class),
+    QUIZ_SETTINGS(QuizSetupRoot.class),
     NEW_QUESTION(NewQuestionRoot.class);
 
     private Class root; // root node's class

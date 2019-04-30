@@ -23,6 +23,7 @@ public class Main extends Application {
   private static Stage stage, currentPopup; // primary stage (first) and stage of the current popup (second)
   public static String mainTheme = "application/style/style-light.css", // default theme for all layouts
       alertTheme = "application/style/style-light-alert.css";
+  public static final File SAVE_QUESTION_DIR = new File("Questions");
 
   public static QuestionBank questionBank = new QuestionBank();
 
@@ -33,7 +34,7 @@ public class Main extends Application {
    */
   @Override
   public void init() throws Exception {
-
+    if (!SAVE_QUESTION_DIR.exists()) SAVE_QUESTION_DIR.mkdir(); // make 'Questions' dir if non-existent
   }
 
   /**

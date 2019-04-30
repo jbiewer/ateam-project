@@ -10,7 +10,7 @@ public class SaveQuizAlert extends CustomAlert {
     public SaveQuizAlert(){
         super(AlertType.INFORMATION);
         this.setTitle("Save Quiz Questions");
-        this.setHeaderText("Save quiz questions to Questions folder?");
+        this.setHeaderText("Save quiz questions to 'Questions' directory?");
 
         // change buttons
         this.getButtonTypes().removeAll(this.getButtonTypes());

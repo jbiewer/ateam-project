@@ -163,6 +163,7 @@ public class QuizSetupRoot extends VBox {
                 Main.quizManager.loadQuiz(new QuizSettingsData(topicSelectionBox.getTopic(), numOfQs));
                 Main.switchScene(GUIScene.QUESTION);
             });
+            begin.setDefaultButton(true);
 
             // SETUP LAYOUT AND STYLE //
             this.getChildren().addAll(cancel, begin);

@@ -11,7 +11,6 @@ import java.util.Optional;
  * Enumeration that holds alerts that can be used whenever and wherever.
  */
 public enum GUIAlert {
-    INPUT_FORMAT(InputFormatAlert.class),
     LAST_QUESTION(LastQuestionAlert.class),
     SAVE_ON_LEAVE(SaveOnLeaveAlert.class),
     NOT_ALL_ANSWERED(NotAllAnsweredAlert.class),

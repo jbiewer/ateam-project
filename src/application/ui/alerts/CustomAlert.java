@@ -39,4 +39,6 @@ abstract class CustomAlert extends Alert {
         a.getDialogPane().getStylesheets().add(Main.alertTheme);
         return a.showAndWait();
     }
+
+
 }

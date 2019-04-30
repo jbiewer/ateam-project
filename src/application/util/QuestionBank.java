@@ -2,6 +2,7 @@ package application.util;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +74,14 @@ public class QuestionBank implements QuestionBankADT {
   public boolean writeQuestionsToJSON(File destination) {
     if (!destination.exists())
       return false; // todo print message to user somehow of invalid destination
-    // todo implement
+    try{
+      FileWriter writer = new FileWriter(destination);
+      writer.write("Test data");
+      writer.close();
+    } catch(Exception e){
+      e.printStackTrace();
+    }
+
     return false;
   }
 

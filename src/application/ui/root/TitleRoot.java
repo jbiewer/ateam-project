@@ -13,7 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser.ExtensionFilter;
-
 import java.io.File;
 
 public class TitleRoot extends VBox {
@@ -72,16 +71,17 @@ public class TitleRoot extends VBox {
     });
 
     this.save.setOnAction(Event -> {
-      Main.initDialogScene(new Scene(new SaveQuizPopupRoot(), CustomAlert.WIDTH, CustomAlert.HEIGHT));
-
-      if(questionFile != null){
-        Main.questionBank.writeQuestionsToJSON(questionFile);
-      }
-      else{
-        File newQuestionFile = new File("./Quiz Questions/testttt2");
-        Main.questionBank.writeQuestionsToJSON(newQuestionFile);
-      }
-      Main.switchScene(GUIScene.TITLE);
+      Main.questionBank.writeQuestionsToJSON(new File("." + "newTestJSON"));
+      //      Main.initDialogScene(
+      //          new Scene(new SaveQuizPopupRoot(), CustomAlert.WIDTH, CustomAlert.HEIGHT));
+      //
+      //      if (questionFile != null) {
+      //        Main.questionBank.writeQuestionsToJSON(questionFile);
+      //      } else {
+      //        File newQuestionFile = new File("./Quiz Questions/testttt2");
+      //        Main.questionBank.writeQuestionsToJSON(newQuestionFile);
+      //      }
+      //      Main.switchScene(GUIScene.TITLE);
     });
 
   }

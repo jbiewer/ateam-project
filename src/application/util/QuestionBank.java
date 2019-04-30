@@ -74,23 +74,40 @@ public class QuestionBank implements QuestionBankADT {
   public boolean writeQuestionsToJSON(File destination) {
     if (!destination.exists())
       return false; // todo print message to user somehow of invalid destination
-    try{
-      FileWriter writer = new FileWriter(destination);
-      writer.write("Test data");
-      writer.close();
-    } catch(Exception e){
+    JSONArray questionArray = new JSONArray();
+    for (Question q : this.getAllQuestions()) {
+      JSONObject question = new JSONObject();
+      question.put("meta-data", "unused");
+      question.put("questionText", q.getPrompt());
+      question.put("topic", q.getTopic());
+      question.put("image", q.getImageURI());
+      JSONArray choices = new JSONArray();
+      for (String c : q.getChoices()) {
+        JSONObject choice = new JSONObject();
+        if (q.getCorrect().equals(c))
+          choice.put("isCorrect", "T");
+        else
+          choice.put("isCorrect", "F");
+
+        choice.put("choice", c);
+      }
+      question.put("choiceArray", choices);
+      questionArray.add(question);
+    }
+    try (FileWriter file = new FileWriter(destination)) {
+
+      file.write(questionArray.toJSONString());
+      file.flush();
+
+    } catch (IOException e) {
       e.printStackTrace();
     }
-
     return false;
   }
 
   @Override
   public String[] getAllTopics() {
-    return this.questionBank.stream()
-            .map(Question::getTopic)
-            .distinct()
-            .toArray(String[]::new);
+    return this.questionBank.stream().map(Question::getTopic).distinct().toArray(String[]::new);
   }
 
   @Override

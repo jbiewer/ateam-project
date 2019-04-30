@@ -1,0 +1,21 @@
+// just once:
+
+<===> OVERALL RESULTS <===>\n
+\tNumber correct:\t%d / %d
+\tPercent score:\t%d\n\n
+<===> SPECIFIC QUESTION RESULTS: <===>\n
+
+
+
+// for each question: (1=+/- or right/wrong; 2=topic; 3=question)
+
+\t+/-[Topic] Question:\t%s[%s] %s
+\tChoices:
+
+// for each choice: (1=* if that's what they chose; 2=choice)
+
+\t%s\t%s
+
+// after choice loop
+
+\n

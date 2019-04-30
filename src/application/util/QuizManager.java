@@ -5,6 +5,10 @@ import application.ui.root.QuestionRoot;
 import application.ui.root.ResultsRoot;
 import javafx.scene.image.Image;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 /**
@@ -281,7 +285,18 @@ public class QuizManager {
      * The text file is located in the directory relative to where the program was executed.
      */
     public void saveResults() {
-        // todo last: implement me!!! :D
+        try {
+            // todo last: implement me!!! :D
+            File resultsFile = new File("last_results.txt");
+            if (!resultsFile.exists()) resultsFile.createNewFile();
+
+            PrintWriter writer = new PrintWriter(resultsFile);
+            writer.printf("<===> OVERAL RESULTS <===>\n\n");
+            int numCorrect = Main.questionBank.getCorrect().length;
+            writer.printf("\tNumber correct:\t%d / %d\n", numCorrect, this.questionTotal);
+            writer.printf("\tPercent score:\t%s\n\n\n", String.valueOf((float) numCorrect / (float) this.questionTotal));
+
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
 }

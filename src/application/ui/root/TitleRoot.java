@@ -74,7 +74,7 @@ public class TitleRoot extends VBox {
 
   }
 
-  private void updateNumQuestions(int num) {
+  public void updateNumQuestions(int num) {
     this.totalNumQuestions += num;
     this.totalQuestions.setText("Total Questions: " + totalNumQuestions);
   }

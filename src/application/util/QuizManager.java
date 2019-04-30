@@ -2,8 +2,10 @@ package application.util;
 
 import application.main.Main;
 import application.ui.root.QuestionRoot;
+import application.ui.root.ResultsRoot;
 import javafx.scene.image.Image;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 /**
@@ -219,6 +221,20 @@ public class QuizManager {
             root.getImage().setImage(new Image(curr.getImageURI().toString()));
         root.getChoiceBox().setChoices(curr.getChoices());
         root.getChoiceBox().loadChoice(curr.getChosen());
+    }
+
+    /**
+     * Displays the results from the previous quiz into a results root.
+     * @param root ResultsRoot to display to.
+     */
+    public void loadResults(ResultsRoot root) {
+        int numCorrect = Main.questionBank.getCorrect().length;
+
+        root.getNumCorrectBox().setNumCorrect(numCorrect); // update numCorrect label
+        // update percentCorrect label
+        root.getPercentCorrectBox().setPercentCorrect((float) numCorrect / (float) this.questionTotal);
+
+        Arrays.stream(Main.questionBank.getAllQuestions()).forEach(q -> q.setChosen(null)); // clear all answers
     }
 
     /**

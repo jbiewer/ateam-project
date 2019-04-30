@@ -22,6 +22,12 @@ public interface QuestionBankADT {
     boolean writeQuestionsToJSON(File destination);
 
     /**
+     * Adds a question to the question bank.
+     * @param question Question to add.
+     */
+    void addQuestion(Question question);
+
+    /**
      * Goes through all the questions in the question bank and returns a distinct list of all the topics.
      * @return An array of all the topics.
      */
@@ -40,8 +46,8 @@ public interface QuestionBankADT {
     Question[] getAllQuestions();
 
     /**
-     * Adds a question to the question bank.
-     * @param question Question to add.
+     * @return All the questions that have correct answers.
      */
-    void addQuestion(Question question);
+    Question[] getCorrect();
+
 }

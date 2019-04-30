@@ -18,10 +18,8 @@ import javafx.scene.layout.VBox;
  * @author Jack Prazich
  */
 public class ResultsRoot extends VBox {
-	
-	//private fields of HBoxs to be referenced later
-	private HBox numCorrectBox;
-	private HBox percentCorrectBox;
+	private NumCorrectBox numCorrectBox;
+	private PercentCorrectBox percentCorrectBox;
 
 	/**
 	 * Constructor
@@ -39,12 +37,15 @@ public class ResultsRoot extends VBox {
         this.setSpacing(50);
 
         this.getChildren().addAll(summary, numCorrectBox, percentCorrectBox, decisionBtn);
+
+        Main.quizManager.loadResults(this);
     }
     
     /**
      * Custom root for number of questions correct
      */
-    private class NumCorrectBox extends HBox {
+    public class NumCorrectBox extends HBox {
+    	private Label numCorrect;
     	
     	/**
     	 * Constructor
@@ -52,7 +53,7 @@ public class ResultsRoot extends VBox {
     	private NumCorrectBox() {
     		
     		Label num = new Label("Number correct: ");
-    		Label numCorrect = new Label( "number to be changed");
+    		this.numCorrect = new Label( "< x >");
     		
     		//Functionality not implemented yet
     		//Get number of correct answers    		
@@ -60,6 +61,14 @@ public class ResultsRoot extends VBox {
     		//Add children
     		this.getChildren().addAll(num, numCorrect);
     	}
+
+		/**
+		 * Sets the text to display of the numCorrect label.
+		 * @param x Number to display.
+		 */
+		public void setNumCorrect(int x) {
+    		this.numCorrect.setText(String.valueOf(x));
+		}
     	
     	//numCorrect should be obtained not input by the user so I shouldn't
     	//have to check it right?
@@ -69,14 +78,15 @@ public class ResultsRoot extends VBox {
     /**
      * Custom root for percent of questions correct
      */    
-    private class PercentCorrectBox extends HBox {
-    	
+    public class PercentCorrectBox extends HBox {
+    	private Label percentCorrect;
+
     	/**
     	 * Constructor
     	 */
     	private PercentCorrectBox() {
     		Label percent = new Label("Percent correct: ");
-    		Label percentCorrect = new Label("% to be changed");
+    		this.percentCorrect = new Label("< % >");
     		
     		//Functionality not implemented yet
     		//Get number of correct answers
@@ -86,6 +96,16 @@ public class ResultsRoot extends VBox {
     		//Add children
     		this.getChildren().addAll(percent, percentCorrect);
     	}
+
+		/**
+		 * Sets the text to display to the percentCorrect label.
+		 * @param percent Percent to display.
+		 */
+		public void setPercentCorrect(float percent) {
+    		this.percentCorrect.setText(String.valueOf(
+    				Math.round(percent*10000f)/100f
+			) + "%");
+		}
     }
 
     /**
@@ -116,5 +136,19 @@ public class ResultsRoot extends VBox {
     	}
 
     }
-    
+
+	/**
+	 * @return HBox of the number of correct questions.
+	 */
+	public NumCorrectBox getNumCorrectBox() {
+		return numCorrectBox;
+
+	}
+
+	/**
+	 * @return HBox of the percent of correct questions.
+	 */
+	public PercentCorrectBox getPercentCorrectBox() {
+		return percentCorrectBox;
+	}
 }

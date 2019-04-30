@@ -49,9 +49,6 @@ public class TitleRoot extends VBox {
     this.load.setOnAction(event -> {
       Main.questionBank.addJSONQuiz(Main.loadFile(new ExtensionFilter("JSON (*.json)", "*.json"),
           "Choose the JSON Quiz File to Load"));
-      if (questionFile == null)
-        return;
-      Main.questionBank.addJSONQuiz(questionFile);
       updateNumQuestions();
     });
 

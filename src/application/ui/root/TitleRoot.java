@@ -27,12 +27,10 @@ public class TitleRoot extends VBox {
   private Button save;
   private Button start;
   private Button exit;
-  private HBox saveQuestionsBox;
   private int totalNumQuestions;
 
   public TitleRoot() {
     this.title = new Label("Quiz Generator");
-    this.saveQuestionsBox = new NewDecisionButtonBox();
     this.load = new Button("Load Quiz");
     this.save = new Button("Save Quiz");
     this.start = new Button("Start Quiz");
@@ -74,7 +72,8 @@ public class TitleRoot extends VBox {
     });
 
     this.save.setOnAction(Event -> {
-      // save unstored values in question database to the file
+      GUIAlert.SAVE_QUIZ.alert();
+      Main.switchScene(GUIScene.TITLE);
     });
 
   }
@@ -84,23 +83,5 @@ public class TitleRoot extends VBox {
     this.totalQuestions.setText("Total Questions: " + totalNumQuestions);
   }
 
-  private class NewDecisionButtonBox extends HBox {
-    /**
-     * Constructor
-     */
-    private NewDecisionButtonBox() {
-      Button saveQuestions = new Button("Save Quiz Questions");
 
-      // saves to directory
-      saveQuestions.setOnMouseClicked(event -> {
-        GUIAlert.SAVE_ON_LEAVE.alert();
-        Main.switchScene(GUIScene.TITLE);
-      });
-
-
-      //Add children
-      this.getChildren().addAll(saveQuestions);
-    }
-
-  }
 }

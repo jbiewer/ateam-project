@@ -2,6 +2,7 @@ package application.ui.root;
 
 import application.main.Main;
 import application.ui.alerts.SaveOnLeaveAlert;
+import application.ui.util.GUIAlert;
 import application.ui.util.GUIScene;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -26,10 +27,12 @@ public class TitleRoot extends VBox {
   private Button save;
   private Button start;
   private Button exit;
+  private HBox saveQuestionsBox;
   private int totalNumQuestions;
 
   public TitleRoot() {
     this.title = new Label("Quiz Generator");
+    this.saveQuestionsBox = new NewDecisionButtonBox();
     this.load = new Button("Load Quiz");
     this.save = new Button("Save Quiz");
     this.start = new Button("Start Quiz");
@@ -79,5 +82,25 @@ public class TitleRoot extends VBox {
   private void updateNumQuestions(int num) {
     this.totalNumQuestions += num;
     this.totalQuestions.setText("Total Questions: " + totalNumQuestions);
+  }
+
+  private class NewDecisionButtonBox extends HBox {
+    /**
+     * Constructor
+     */
+    private NewDecisionButtonBox() {
+      Button saveQuestions = new Button("Save Quiz Questions");
+
+      // saves to directory
+      saveQuestions.setOnMouseClicked(event -> {
+        GUIAlert.SAVE_ON_LEAVE.alert();
+        Main.switchScene(GUIScene.TITLE);
+      });
+
+
+      //Add children
+      this.getChildren().addAll(saveQuestions);
+    }
+
   }
 }

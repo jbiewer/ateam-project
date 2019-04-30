@@ -1,9 +1,6 @@
 package application.ui.util;
 
-import application.ui.alerts.InputFormatAlert;
-import application.ui.alerts.LastQuestionAlert;
-import application.ui.alerts.NotAllAnsweredAlert;
-import application.ui.alerts.SaveOnLeaveAlert;
+import application.ui.alerts.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
@@ -16,7 +13,8 @@ public enum GUIAlert {
     INPUT_FORMAT(InputFormatAlert.class),
     LAST_QUESTION(LastQuestionAlert.class),
     SAVE_ON_LEAVE(SaveOnLeaveAlert.class),
-    NOT_ALL_ANSWERED(NotAllAnsweredAlert.class);
+    NOT_ALL_ANSWERED(NotAllAnsweredAlert.class),
+    SAVE_QUIZ(SaveQuizAlert.class);
 
     private Class alert; // alert's class
 

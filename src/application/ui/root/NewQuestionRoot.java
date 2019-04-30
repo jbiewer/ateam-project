@@ -140,6 +140,7 @@ public class NewQuestionRoot extends GridPane {
                 imgPreview.setImage(new Image(imgFile.toURI().toString()));
                 imgPreview.setFitWidth(100);
                 imgPreview.setFitHeight(100);
+                imgToSave = imgFile; // store reference to image chosen
             });
 
             // SETUP LAYOUT //
@@ -207,7 +208,10 @@ public class NewQuestionRoot extends GridPane {
                 if (promptField.getText().isEmpty()
                         || choicesVBox.getChoices().length == 0
                         || topicsList.getValue().isEmpty()) {
-                    GUIAlert.INPUT_FORMAT.alert();
+                    GUIAlert.quickAlert(Alert.AlertType.WARNING,
+                            "Wrong Input",
+                            "One of the input fields is either incorrect or not filled in."
+                    );
                     return;
                 }
                 saveQuestion();

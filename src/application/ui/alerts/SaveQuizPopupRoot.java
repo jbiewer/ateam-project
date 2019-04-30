@@ -1,5 +1,6 @@
 package application.ui.alerts;
 
+import application.main.Main;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.BorderPaneBuilder;
@@ -12,9 +13,12 @@ public class SaveQuizPopupRoot extends VBox {
      * Constructs a new custom alert that allows the user to save the quiz questions
      */
     public SaveQuizPopupRoot(){
-        this.getChildren().addAll(
-                new TExt
-        )
+        this.getChildren().addAll();
+
+
+//        Main.closeCurrentDialogScene();
+
+
 //        this.setTitle("Save Quiz Questions");
 //        this.setHeaderText("What would you like to name the question file?");
 //        TextInputDialog confirm = new TextInputDialog();

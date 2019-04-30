@@ -1,25 +1,20 @@
 package application.ui.root;
 
 import application.main.Main;
-import application.ui.alerts.SaveOnLeaveAlert;
+import application.ui.alerts.CustomAlert;
 import application.ui.alerts.SaveQuizPopupRoot;
 import application.ui.util.GUIAlert;
 import application.ui.util.GUIScene;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser.ExtensionFilter;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.io.File;
-import java.util.Optional;
-
 
 public class TitleRoot extends VBox {
 
@@ -65,12 +60,9 @@ public class TitleRoot extends VBox {
     });
 
     this.exit.setOnAction(Event -> {
-      Alert leave = new SaveOnLeaveAlert();
-      Optional<ButtonType> option = leave.showAndWait();
-      if (option.get() == ButtonType.YES) {
-        //save
-      } else
-        Main.closeApplication();
+      if (GUIAlert.SAVE_ON_LEAVE.alert().get() == ButtonType.YES)
+        Main.questionBank.writeQuestionsToJSON(Main.SAVE_QUESTION_DIR);
+      Main.closeApplication();
     });
 
     this.addQuestion.setOnAction(Event -> {
@@ -78,24 +70,14 @@ public class TitleRoot extends VBox {
     });
 
     this.save.setOnAction(Event -> {
-      Optional<ButtonType> type = GUIAlert.SAVE_QUIZ.alert();
-      if(type.get() == ButtonType.OK){
+      Main.initDialogScene(new Scene(new SaveQuizPopupRoot(), CustomAlert.WIDTH, CustomAlert.HEIGHT));
 
-        Main.initDialogScene(new Scene(new SaveQuizPopupRoot(), ));
-
-        if(questionFile != null){
-          Main.questionBank.writeQuestionsToJSON(questionFile);
-        }
-        else{
-          try {
-            File newQuestionFile = new File("./Quiz Questions/testttt2");
-            newQuestionFile.createNewFile();
-            Main.questionBank.writeQuestionsToJSON(newQuestionFile);
-          }  catch(Exception e){
-            e.printStackTrace();
-          }
+      if(questionFile.exists()){
+        Main.questionBank.writeQuestionsToJSON(questionFile);
       }
-
+      else{
+        File newQuestionFile = new File("./Quiz Questions/testttt2");
+        Main.questionBank.writeQuestionsToJSON(newQuestionFile);
       }
       Main.switchScene(GUIScene.TITLE);
     });

@@ -1,6 +1,7 @@
 package application.ui.root;
 
 import application.main.Main;
+import application.ui.util.GUIAlert;
 import application.ui.util.GUIScene;
 import application.util.Question;
 import javafx.geometry.HPos;
@@ -206,10 +207,7 @@ public class NewQuestionRoot extends GridPane {
                 if (promptField.getText().isEmpty()
                         || choicesVBox.getChoices().length == 0
                         || topicsList.getValue().isEmpty()) {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Input incorrect!");
-                    alert.setHeaderText("There are still empty fields!");
-                    alert.showAndWait();
+                    GUIAlert.INPUT_FORMAT.alert();
                     return;
                 }
                 saveQuestion();

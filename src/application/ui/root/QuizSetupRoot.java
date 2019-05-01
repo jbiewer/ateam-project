@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 /**
@@ -69,11 +70,8 @@ public class QuizSetupRoot extends VBox {
             // allow multiple items to be selected
             this.topicsList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
             // set the list of topics in alphabetical order
-            this.topicsList.setItems(FXCollections.observableArrayList(
-                    Arrays.stream(Main.questionBank.getAllTopics())
-                            .sorted()
-                            .collect(Collectors.toList())
-            ));
+            this.topicsList.setItems(FXCollections.observableArrayList(Arrays.asList(Main.questionBank.getAllTopics())));
+            Collections.sort(this.topicsList.getItems());
 
             // allows the VBox to be scrolled through
             this.getChildren().addAll(topicLabel, this.topicsList);

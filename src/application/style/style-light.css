@@ -4,9 +4,9 @@
 
 .root {
     -fx-padding: 30 30 30 30;
-    -fx-background-image: url("wallpaper.png");
+    -fx-background-image: url("blueCircuitsStrong.jpg");
     -fx-background-image-repeat: stretch;
-    -fx-background-size: 800 600;
+    -fx-background-size: 400 400;
     -fx-background-position: center center;
 }
 

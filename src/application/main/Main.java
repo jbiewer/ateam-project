@@ -17,7 +17,7 @@ import java.io.File;
  */
 public class Main extends Application {
 
-  public static final int WIDTH = 1400, HEIGHT = 1000; // dimensions of each scene
+  public static final int WIDTH = 800, HEIGHT = 600; // dimensions of each scene
 
   public static QuizManager quizManager = new QuizManager();
   private static Stage stage, currentPopup; // primary stage (first) and stage of the current popup (second)

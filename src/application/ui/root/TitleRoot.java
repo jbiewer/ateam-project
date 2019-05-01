@@ -1,7 +1,6 @@
 package application.ui.root;
 
 import application.main.Main;
-import application.ui.alerts.CustomAlert;
 import application.ui.alerts.SaveQuizPopupRoot;
 import application.ui.util.GUIAlert;
 import application.ui.util.GUIScene;
@@ -10,66 +9,47 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser.ExtensionFilter;
-import java.io.File;
 
-public class TitleRoot extends VBox {
+public class TitleRoot extends BorderPane {
 
-  private Label title;
   private Label totalQuestions;
-  private HBox middle;
-  private HBox bottom;
-  private Button load;
-  private Button addQuestion;
-  private Button save;
-  private Button start;
-  private Button exit;
-  private int totalNumQuestions;
 
   public TitleRoot() {
-    this.title = new Label("Quiz Generator");
-    this.load = new Button("Load Quiz");
-    this.save = new Button("Save Quiz");
-    this.start = new Button("Start Quiz");
-    this.exit = new Button("Exit");
-    this.addQuestion = new Button("Add Question");
-    this.totalQuestions = new Label("Total Questions: " + this.totalNumQuestions);
-    this.middle = new HBox(10, load, addQuestion, save);
-    this.middle.setAlignment(Pos.CENTER);
-    this.bottom = new HBox(10, exit, totalQuestions, start);
-    this.bottom.setAlignment(Pos.CENTER);
-    this.getChildren().addAll(this.title, this.bottom, this.middle);
-    this.setSpacing(10);
-    this.setAlignment(Pos.CENTER);
+    // INITIALIZE NODES //
+    Label title = new Label("Quiz Generator");
+    Button  load = new Button("Load Quiz"),
+            save = new Button("Save Quiz"),
+            start = new Button("Start Quiz"),
+            exit = new Button("Exit"),
+            addQuestion = new Button("Add Question");
+    HBox    buttons = new HBox(exit, load, addQuestion, save, start);
+    this.totalQuestions = new Label("Total Questions: ");
 
-    updateNumQuestions(); // update the num of questions if they've changed
-
-    this.load.setOnAction(event -> {
+    // FUNCTIONALITY /
+    load.setOnAction(event -> {
       Main.questionBank.addJSONQuiz(Main.loadFile(new ExtensionFilter("JSON (*.json)", "*.json"),
           "Choose the JSON Quiz File to Load"));
       updateNumQuestions();
     });
+    start.setOnAction(Event -> Main.switchScene(GUIScene.QUIZ_SETTINGS));
+    exit.setOnAction(Event -> Main.closeApplication());
+    addQuestion.setOnAction(Event -> Main.switchScene(GUIScene.NEW_QUESTION));
+    save.setOnAction(Event -> Main.initDialogScene(new Scene(new SaveQuizPopupRoot(), 600, 150)));
 
-    this.start.setOnAction(Event -> {
-      Main.switchScene(GUIScene.QUIZ_SETTINGS);
-    });
+    // SETUP LAYOUT //
+    BorderPane.setAlignment(title, Pos.CENTER);
+    BorderPane.setAlignment(buttons, Pos.CENTER);
+    buttons.setSpacing(20);
+    buttons.setAlignment(Pos.CENTER);
 
-    this.exit.setOnAction(Event -> {
-      if (GUIAlert.SAVE_ON_LEAVE.alert().get() == ButtonType.YES)
-        Main.questionBank.writeQuestionsToJSON(Main.SAVE_QUESTION_DIR);
-      Main.closeApplication();
-    });
+    this.setTop(title);
+    this.setCenter(this.totalQuestions);
+    this.setBottom(buttons);
 
-    this.addQuestion.setOnAction(Event -> {
-      Main.switchScene(GUIScene.NEW_QUESTION);
-    });
-
-    this.save.setOnAction(Event -> {
-      Main.initDialogScene(new Scene(new SaveQuizPopupRoot(), 600, 150));
-    });
-
+    updateNumQuestions(); // update the num of questions if they've changed
   }
 
   public void updateNumQuestions() {

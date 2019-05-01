@@ -258,7 +258,7 @@ public class QuizManager {
     public void loadResults(ResultsRoot root) {
         int numCorrect = Main.questionBank.getCorrect().length;
 
-        root.getNumCorrectBox().setNumCorrect(numCorrect); // update numCorrect label
+        root.getNumCorrectBox().setNumCorrect(numCorrect, this.questionTotal); // update numCorrect label
         // update percentCorrect label
         root.getPercentCorrectBox().setPercentCorrect((float) numCorrect / (float) this.questionTotal);
 

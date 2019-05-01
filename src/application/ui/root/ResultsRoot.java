@@ -64,10 +64,11 @@ public class ResultsRoot extends VBox {
 
 		/**
 		 * Sets the text to display of the numCorrect label.
-		 * @param x Number to display.
+		 * @param correct Number of questions correct.
+		 * @param total The total number of questions.
 		 */
-		public void setNumCorrect(int x) {
-    		this.numCorrect.setText(String.valueOf(x));
+		public void setNumCorrect(int correct, int total) {
+    		this.numCorrect.setText(correct + " / " + total);
 		}
     	
     	//numCorrect should be obtained not input by the user so I shouldn't

@@ -25,7 +25,14 @@ public class QuestionBank implements QuestionBankADT {
   public QuestionBank() {
     this.questionBank = new ArrayList<>();
   }
+  
 
+  
+
+  /**
+   * 
+   * Reads in and parses through JSON file
+   */
   @Override
   public boolean addJSONQuiz(File jsonFile) {
     if (jsonFile == null) return false; // return if no file selected
@@ -78,6 +85,10 @@ public class QuestionBank implements QuestionBankADT {
     return true;
   }
 
+
+  /**
+   *  Writes questions to JSON object to specified file
+   */
   @Override
   public boolean writeQuestionsToJSON(File destination) {
     // create root JSON object
@@ -121,28 +132,43 @@ public class QuestionBank implements QuestionBankADT {
 
     return false;
   }
-
+  
+  /**
+   * Getter method returning all topics
+   */
   @Override
   public String[] getAllTopics() {
     return this.questionBank.stream().map(Question::getTopic).distinct().toArray(String[]::new);
   }
-
+  
+  /**
+   * Getter method returning all questions of a specified topic
+   */
   @Override
   public Question[] getQuestionsOfTopic(String topic) {
     return this.questionBank.stream().filter(question -> question.getTopic().equals(topic))
         .toArray(Question[]::new);
   }
-
+  
+  /**
+   * Getter method returning all questions
+   */
   @Override
   public Question[] getAllQuestions() {
     return questionBank.toArray(new Question[0]);
   }
-
+  
+  /**
+   * Adds question to question bank
+   */
   @Override
   public void addQuestion(Question question) {
     this.questionBank.add(question);
   }
-
+  
+  /**
+   * Returns correct answer of question
+   */
   @Override
   public Question[] getCorrect() {
     return this.questionBank.stream()

@@ -25,15 +25,18 @@ public class ChooseCorrectAnswerRoot extends VBox {
 		this.choices = choices;
         this.getChildren().addAll();
 
-        this.getStylesheets().add(Main.mainTheme); // add stylesheet
+        this.getStylesheets().add(Main.alertTheme); // add stylesheet
+
 
         // INITIALIZE NODES //
         Label instructions = new Label("Choose the correct answer: ");
         Button cancel = new Button("Cancel");
         Button done = new Button("Done");
         ChoicesBox choicesBox = new ChoicesBox(choices);
-
-
+        
+        choicesBox.getStyleClass().add("choice-box");
+        choicesBox.setAlignment(Pos.CENTER_LEFT);
+        
         // FUNCTIONALITY //
         done.setDefaultButton(true);
         done.setOnMouseClicked(event -> {

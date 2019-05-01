@@ -96,6 +96,9 @@ public class QuizManager {
             return tail.data;
         }
 
+        /**
+         * @return String representation of the stack.
+         */
         @Override
         public String toString() {
             StringBuilder sb = new StringBuilder("[");
@@ -106,6 +109,9 @@ public class QuizManager {
             return sb.toString();
         }
 
+        /**
+         * @return Iterator of the stack.
+         */
         @Override
         public Iterator<Question> iterator() {
             return new Iterator<Question>() {

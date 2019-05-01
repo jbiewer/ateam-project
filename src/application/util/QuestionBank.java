@@ -20,18 +20,16 @@ public class QuestionBank implements QuestionBankADT {
   private List<Question> questionBank;
 
   /**
-   * Initializes field members
+   * Initializes field members.
    */
   public QuestionBank() {
     this.questionBank = new ArrayList<>();
   }
   
-
-  
-
   /**
-   * 
-   * Reads in and parses through JSON file
+   * Reads in and parses through JSON quiz file.
+   * @param jsonFile JSON quiz file.
+   * @return True if the file was parsed successfully, false otherwise.
    */
   @Override
   public boolean addJSONQuiz(File jsonFile) {
@@ -85,9 +83,10 @@ public class QuestionBank implements QuestionBankADT {
     return true;
   }
 
-
   /**
-   *  Writes questions to JSON object to specified file
+   *  Writes questions to JSON quiz file.
+   * @param destination Directory to store JSON in.
+   * @return True if the file was successfully written, false if the location doesn't exist.
    */
   @Override
   public boolean writeQuestionsToJSON(File destination) {
@@ -134,7 +133,8 @@ public class QuestionBank implements QuestionBankADT {
   }
   
   /**
-   * Getter method returning all topics
+   * Goes through all the questions in the question bank and returns a distinct list of all the topics.
+   * @return An array of all the topics.
    */
   @Override
   public String[] getAllTopics() {
@@ -142,7 +142,10 @@ public class QuestionBank implements QuestionBankADT {
   }
   
   /**
-   * Getter method returning all questions of a specified topic
+   * Goes through all the questions and looks for the topic passed in. It then collects those
+   * questions.
+   * @param topic Topic of questions.
+   * @return Array of questions of topic 'topic'.
    */
   @Override
   public Question[] getQuestionsOfTopic(String topic) {
@@ -151,7 +154,7 @@ public class QuestionBank implements QuestionBankADT {
   }
   
   /**
-   * Getter method returning all questions
+   * @return All the questions in the question bank.
    */
   @Override
   public Question[] getAllQuestions() {
@@ -159,7 +162,7 @@ public class QuestionBank implements QuestionBankADT {
   }
   
   /**
-   * Adds question to question bank
+   * Adds question to question bank.
    */
   @Override
   public void addQuestion(Question question) {
@@ -167,7 +170,7 @@ public class QuestionBank implements QuestionBankADT {
   }
   
   /**
-   * Returns correct answer of question
+   * @return An array of all the correct questions.
    */
   @Override
   public Question[] getCorrect() {

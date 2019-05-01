@@ -54,28 +54,6 @@ public class Main extends Application {
    * @param args cmd line args.
    */
   public static void main(String[] args) {
-    if (args.length != 0) {
-      if (args[0].equals("themes")) {
-        System.out.println("Themes: light, dark");
-        return;
-      }
-
-      switch (args[0]) {
-        case "light":
-          Main.mainTheme = "application/style/style-light.css";
-          break;
-        case "dark":
-          Main.mainTheme = "application/style/style-dark.css";
-          break;
-        default:
-          System.out
-              .println("Theme '" + args[0] + "' unrecognized. Using default 'light' mainTheme.");
-          Main.mainTheme = "application/style/style-light.css";
-          break;
-      }
-    } else {
-      Main.mainTheme = "application/style/style-light.css";
-    }
     launch(args);
   }
 

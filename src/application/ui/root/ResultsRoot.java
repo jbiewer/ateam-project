@@ -122,12 +122,14 @@ public class ResultsRoot extends VBox {
             // functions
 			newQuiz.setOnMouseClicked(event -> {
 				if (GUIAlert.SAVE_ON_LEAVE.alert().get() == ButtonType.YES)
-					Main.questionBank.writeQuestionsToJSON(Main.SAVE_QUESTION_DIR);
+					Main.quizManager.saveResults();
+				Arrays.stream(Main.questionBank.getAllQuestions()).forEach(q -> q.setChosen(null)); // clear all answers
 				Main.switchScene(GUIScene.TITLE);
 			});
 			tryAgain.setOnMouseClicked(event -> {
 				if (GUIAlert.SAVE_ON_LEAVE.alert().get() == ButtonType.YES)
-					Main.questionBank.writeQuestionsToJSON(Main.SAVE_QUESTION_DIR);
+					Main.quizManager.saveResults();
+				Arrays.stream(Main.questionBank.getAllQuestions()).forEach(q -> q.setChosen(null)); // clear all answers
 				Main.switchScene(GUIScene.QUIZ_SETTINGS);
 			});
 

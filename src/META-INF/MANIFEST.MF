@@ -1,3 +1,4 @@
 Manifest-Version: 1.0
+Created-By: jake-jack-max-emily
 Main-Class: application.main.Main
 

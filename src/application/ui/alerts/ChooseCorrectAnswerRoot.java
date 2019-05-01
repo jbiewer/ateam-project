@@ -16,6 +16,12 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 
+/**
+ * Root node class of scene "Choose correct answer".
+ * @author Jacob Biewer, Jack Prazich
+ *
+ */
+
 public class ChooseCorrectAnswerRoot extends VBox {
 	
 	private String[] choices;

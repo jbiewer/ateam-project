@@ -22,11 +22,11 @@ import javafx.scene.layout.VBox;
  *
  */
 
-public class ChooseCorrectAnswerRoot extends VBox {
+public class ChooseCorrectPopupRoot extends VBox {
 	
 	private String[] choices;
 	
-	public ChooseCorrectAnswerRoot(String[] choices, CancelSaveHBox root){
+	public ChooseCorrectPopupRoot(String[] choices, CancelSaveHBox root){
 		
 		this.choices = choices;
         this.getChildren().addAll();

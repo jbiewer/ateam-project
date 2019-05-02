@@ -13,8 +13,7 @@ import java.util.Optional;
 public enum GUIAlert {
     LAST_QUESTION(LastQuestionAlert.class),
     SAVE_ON_LEAVE(SaveOnLeaveAlert.class),
-    NOT_ALL_ANSWERED(NotAllAnsweredAlert.class),
-    SAVE_QUIZ(SaveQuizPopupRoot.class);
+    NOT_ALL_ANSWERED(NotAllAnsweredAlert.class);
 
     private Class alert; // alert's class
 

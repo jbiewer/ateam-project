@@ -1,7 +1,7 @@
 package application.ui.root;
 
 import application.main.Main;
-import application.ui.alerts.ChooseCorrectAnswerRoot;
+import application.ui.alerts.ChooseCorrectPopupRoot;
 import application.ui.util.GUIAlert;
 import application.ui.util.GUIScene;
 import application.util.Question;
@@ -232,7 +232,7 @@ public class NewQuestionRoot extends GridPane {
                     return;
                 }
                 
-                Main.initDialogScene(new Scene(new ChooseCorrectAnswerRoot(choicesVBox.getChoices(), this)));
+                Main.initDialogScene(new Scene(new ChooseCorrectPopupRoot(choicesVBox.getChoices(), this)));
             });
 
             // SETUP LAYOUT AND STYLE //

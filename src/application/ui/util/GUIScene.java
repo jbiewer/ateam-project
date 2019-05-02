@@ -1,7 +1,6 @@
 package application.ui.util;
 
 import application.main.Main;
-import application.ui.alerts.SaveQuizPopupRoot;
 import application.ui.root.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -32,7 +31,7 @@ public enum GUIScene {
     public Scene getScene() {
         try {
             Scene s = new Scene((Parent) this.root.newInstance(), Main.WIDTH, Main.HEIGHT);
-            s.getStylesheets().add(Main.mainTheme);
+            s.getStylesheets().add(Main.MAIN_THEME);
             return s;
         } catch (InstantiationException | IllegalAccessException e) { e.printStackTrace(); }
         return null;

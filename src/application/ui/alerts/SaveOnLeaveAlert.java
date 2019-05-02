@@ -1,7 +1,5 @@
 package application.ui.alerts;
 
-import application.main.Main;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
 /**

@@ -1,7 +1,10 @@
 package application.ui.util;
 
 import application.main.Main;
-import application.ui.alerts.*;
+import application.ui.alerts.CustomAlert;
+import application.ui.alerts.LastQuestionAlert;
+import application.ui.alerts.NotAllAnsweredAlert;
+import application.ui.alerts.SaveOnLeaveAlert;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
@@ -42,13 +45,15 @@ public enum GUIAlert {
      * @param header Header text of the alert.
      * @return The ButtonType clicked by the user.
      */
-    public static Optional<ButtonType> quickAlert(Alert.AlertType type, String title, String header) {
+    public static Optional<ButtonType> quickAlert(Alert.AlertType type, String title, String header, ButtonType... types) {
         Alert a = new Alert(type);
         a.setWidth(CustomAlert.WIDTH);
         a.setHeight(CustomAlert.HEIGHT);
         a.setTitle(title);
         a.setHeaderText(header);
-        a.getDialogPane().getStylesheets().add(Main.alertTheme);
+        if (types.length != 0) a.getButtonTypes().setAll(types);
+        a.getDialogPane().getStylesheets().add(Main.ALERT_THEME);
         return a.showAndWait();
+
     }
 }

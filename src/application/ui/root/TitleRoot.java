@@ -2,12 +2,10 @@ package application.ui.root;
 
 import application.main.Main;
 import application.ui.alerts.SaveQuizPopupRoot;
-import application.ui.util.GUIAlert;
 import application.ui.util.GUIScene;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;

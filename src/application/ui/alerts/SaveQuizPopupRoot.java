@@ -1,57 +1,62 @@
 package application.ui.alerts;
 
 import application.main.Main;
+import application.ui.util.GUIAlert;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPaneBuilder;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
 import java.util.Optional;
 
+/**
+ * Root node that contains UI on entering a file name and then saves all the questions in the
+ * question bank (form Main) to a JSON file.
+ */
 public class SaveQuizPopupRoot extends VBox {
-
-    TextField fileNameEntry;
-
 
     /**
      * Constructs a new custom alert that allows the user to save the quiz questions
      */
-    public SaveQuizPopupRoot(){
-        this.getStylesheets().add(Main.mainTheme); // add stylesheet
+    public SaveQuizPopupRoot() {
+        this.getStylesheets().add(Main.MAIN_THEME); // add stylesheet
 
         // INITIALIZE NODES //
         Button cancel = new Button("Cancel"),
                 done = new Button("Save");
         Label topic = new Label("File Name:");
-        this.fileNameEntry = new TextField();
+        TextField fileNameEntry = new TextField();
 
-        HBox fieldBox = new HBox(topic, this.fileNameEntry),
+        HBox fieldBox = new HBox(topic, fileNameEntry),
                 controlBox = new HBox(cancel, done);
 
         // FUNCTIONALITY //
         done.setDefaultButton(true);
         done.setOnMouseClicked(event -> {
-            if(this.fileNameEntry.getText().isEmpty()) {
-                new Alert(Alert.AlertType.WARNING, "Topic field can't be empty.").showAndWait();
+            if(fileNameEntry.getText().isEmpty()) {
+                GUIAlert.quickAlert(Alert.AlertType.WARNING, "Missing Field", "Must specify file name.");
                 return;
             }
-            if(new File("./Questions/" + fileNameEntry.getText()).exists()){ //if the file already exists
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "This path already exists. Would you like to overwrite it?");
-                ButtonType confirmation = ButtonType.YES;
-                ButtonType cancelBtn = ButtonType.CANCEL;
 
-                alert.getButtonTypes().setAll(confirmation, cancelBtn);
-                Optional<ButtonType> result = alert.showAndWait();
-                if(result.get() == confirmation){
-                    Main.questionBank.writeQuestionsToJSON(new File("./Questions/" + fileNameEntry.getText() + ".json"));
-                }
+            // check if user put in extension
+            String fileName = fileNameEntry.getText() + ".json";
+            if (fileNameEntry.getText().length() > 5) {
+                fileName = fileNameEntry.getText().substring(fileNameEntry.getText().length() - 5).equals(".json") ?
+                        fileNameEntry.getText() : fileNameEntry.getText() + ".json";
+            }
+            // write to file
+            File quizFile = new File(Main.SAVE_QUESTION_DIR + "/" + fileName);
+            if(quizFile.exists()) { // if the file already exists
+                Optional<ButtonType> result = GUIAlert.quickAlert(Alert.AlertType.CONFIRMATION,
+                        "File Exists",
+                        "This path already exists, would you like to overwrite it?",
+                        ButtonType.YES, ButtonType.NO);
 
-            }
-            else{ //if the file does not exist, make a new one
-                Main.questionBank.writeQuestionsToJSON(new File("./Questions/" + fileNameEntry.getText() + ".json"));
-            }
+                // if the user wants to overwrite, then do so
+                if(result.get() == ButtonType.YES) Main.questionBank.writeQuestionsToJSON(quizFile);
+
+            } else Main.questionBank.writeQuestionsToJSON(quizFile); // if the file does not exist, make a new one
 
             Main.closeCurrentDialogScene();
         });
@@ -65,19 +70,6 @@ public class SaveQuizPopupRoot extends VBox {
         });
         this.setSpacing(20);
         this.setAlignment(Pos.CENTER);
-
-//        Main.closeCurrentDialogScene();
-
-
-//        this.setTitle("Save Quiz Questions");
-//        this.setHeaderText("What would you like to name the question file?");
-//        TextInputDialog confirm = new TextInputDialog();
-//        confirm.setContentText("File name:");
-//
-//        // change buttons
-//        this.getButtonTypes().removeAll(this.getButtonTypes());
-//        this.getButtonTypes().addAll(ButtonType.OK);
-
     }
 
 }

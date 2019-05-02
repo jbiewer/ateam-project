@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import application.main.Main;
-import application.ui.root.NewQuestionRoot;
 import application.ui.root.NewQuestionRoot.CancelSaveHBox;
 import application.ui.util.GUIAlert;
 import application.ui.util.GUIScene;
@@ -21,18 +20,15 @@ import javafx.scene.layout.VBox;
  * @author Jacob Biewer, Jack Prazich
  *
  */
-
 public class ChooseCorrectPopupRoot extends VBox {
-	
-	private String[] choices;
-	
-	public ChooseCorrectPopupRoot(String[] choices, CancelSaveHBox root){
-		
-		this.choices = choices;
-        this.getChildren().addAll();
 
-        this.getStylesheets().add(Main.alertTheme); // add stylesheet
-
+    /**
+     * Constructs the root node.
+     * @param choices List of choices to display.
+     * @param root HBox containing the save button that was clicked to construct this node.
+     */
+	public ChooseCorrectPopupRoot(String[] choices, CancelSaveHBox root) {
+        this.getStylesheets().add(Main.ALERT_THEME); // add stylesheet
 
         // INITIALIZE NODES //
         Label instructions = new Label("Choose the correct answer: ");
@@ -76,6 +72,10 @@ public class ChooseCorrectPopupRoot extends VBox {
     public class ChoicesBox extends VBox {
         private ToggleGroup group;
 
+        /**
+         * Constructs a custom VBox
+         * @param choices List of choices to display.
+         */
         private ChoicesBox(String[] choices) { 
         	this.group = new ToggleGroup();
 
@@ -88,6 +88,9 @@ public class ChooseCorrectPopupRoot extends VBox {
 	    	this.group.getToggles().forEach(toggle -> this.getChildren().add((RadioButton) toggle));
         }
 
+        /**
+         * @return The selected toggle.
+         */
         public String getChosen() {
             if(group.getSelectedToggle() == null) return null;
             else return ((RadioButton) group.getSelectedToggle()).getText();

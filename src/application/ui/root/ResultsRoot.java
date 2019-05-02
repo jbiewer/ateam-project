@@ -1,9 +1,6 @@
 package application.ui.root;
 
-import java.util.Arrays;
-
 import application.main.Main;
-import application.ui.alerts.SaveOnLeaveAlert;
 import application.ui.util.GUIAlert;
 import application.ui.util.GUIScene;
 import javafx.geometry.Pos;
@@ -12,6 +9,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
+import java.util.Arrays;
 
 /**
  * Root node for ResultsRoot scene.

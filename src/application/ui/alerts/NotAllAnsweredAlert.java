@@ -1,8 +1,5 @@
 package application.ui.alerts;
 
-import application.main.Main;
-import javafx.scene.control.Alert;
-
 /**
  * An alert that prompts the user that they haven't answered all their questions.
  */

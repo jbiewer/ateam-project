@@ -14,6 +14,14 @@ import java.io.File;
 
 /**
  * The main class of the entire program. It's the Main Man.
+ *
+ * Stores all public static variables used throughout the program including question bank/manager,
+ * default dimensions of scenes, URIs to files, etc.
+ *
+ * @author Jacob Biewer
+ * @author Max Drexler
+ * @author Emily Cebasek
+ * @author Jack Prazich
  */
 public class Main extends Application {
 
@@ -21,9 +29,9 @@ public class Main extends Application {
 
   public static QuizManager quizManager = new QuizManager();
   private static Stage stage, currentPopup; // primary stage (first) and stage of the current popup (second)
-  public static String mainTheme = "application/style/style-light.css", // default theme for all layouts
-      alertTheme = "application/style/style-light-alert.css";
-  public static final File SAVE_QUESTION_DIR = new File("Questions");
+  public static final String MAIN_THEME = "application/style/style-light.css", // default theme for all layouts
+      ALERT_THEME = "application/style/style-light-alert.css";
+  public static final File SAVE_QUESTION_DIR = new File("Quizzes");
 
   public static QuestionBank questionBank = new QuestionBank();
 

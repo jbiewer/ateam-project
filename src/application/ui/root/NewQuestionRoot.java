@@ -263,7 +263,7 @@ public class NewQuestionRoot extends GridPane {
          * Constructs the node.
          */
         private NewTopicPopupRoot() {
-            this.getStylesheets().add(Main.mainTheme); // add stylesheet
+            this.getStylesheets().add(Main.MAIN_THEME); // add stylesheet
 
             // INITIALIZE NODES //
             Button  cancel = new Button("Cancel"),

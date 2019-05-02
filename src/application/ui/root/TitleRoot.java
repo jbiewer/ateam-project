@@ -13,19 +13,22 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser.ExtensionFilter;
 
+/**
+ * Root node for main title scene
+ * @author Max Drexler
+ *
+ */
 public class TitleRoot extends BorderPane {
 
-  private Label totalQuestions;
+  private Label totalQuestions; // label that displays how many questions are in the program
 
   public TitleRoot() {
     // INITIALIZE NODES //
     Label title = new Label("Quiz Generator");
-    Button  load = new Button("Load Quiz"),
-            save = new Button("Save Quiz"),
-            start = new Button("Start Quiz"),
-            exit = new Button("Exit"),
-            addQuestion = new Button("Add Question");
-    HBox    buttons = new HBox(exit, load, addQuestion, save, start);
+    Button load = new Button("Load Quiz"), save = new Button("Save Quiz"),
+        start = new Button("Start Quiz"), exit = new Button("Exit"),
+        addQuestion = new Button("Add Question");
+    HBox buttons = new HBox(exit, load, addQuestion, save, start);
     this.totalQuestions = new Label("Total Questions: ");
 
     // FUNCTIONALITY /
@@ -52,6 +55,9 @@ public class TitleRoot extends BorderPane {
     updateNumQuestions(); // update the num of questions if they've changed
   }
 
+  /**
+   * updates the totalQuestion field to display the correct amount of total questions in the program
+   */
   public void updateNumQuestions() {
     this.totalQuestions.setText("Total Questions: " + Main.questionBank.getAllQuestions().length);
   }

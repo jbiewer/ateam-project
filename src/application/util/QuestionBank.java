@@ -115,7 +115,7 @@ public class QuestionBank implements QuestionBankADT {
         choices.add(choice);
       }
 
-      // add to question array
+      // add choics to question and question to array
       question.put("choiceArray", choices);
       questionArray.add(question);
     }

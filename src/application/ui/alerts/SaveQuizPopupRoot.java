@@ -67,19 +67,5 @@ public class SaveQuizPopupRoot extends VBox {
         });
         this.setSpacing(20);
         this.setAlignment(Pos.CENTER);
-
-//        Main.closeCurrentDialogScene();
-
-
-//        this.setTitle("Save Quiz Questions");
-//        this.setHeaderText("What would you like to name the question file?");
-//        TextInputDialog confirm = new TextInputDialog();
-//        confirm.setContentText("File name:");
-//
-//        // change buttons
-//        this.getButtonTypes().removeAll(this.getButtonTypes());
-//        this.getButtonTypes().addAll(ButtonType.OK);
-
     }
-
 }

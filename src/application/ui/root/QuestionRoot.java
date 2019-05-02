@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 
 import java.util.Optional;
 
@@ -43,8 +44,10 @@ public class QuestionRoot extends VBox {
 
         // SETUP LAYOUT AND STYLE //
         this.topicLabel.getStyleClass().add("label-big");
-        this.choiceBox.getStyleClass().add("choice-box");
+        this.questionLabel.getStyleClass().add("label-small");
         this.questionLabel.setWrapText(true);
+        this.questionLabel.setTextAlignment(TextAlignment.JUSTIFY);
+        this.choiceBox.getStyleClass().add("choice-box");
         this.getChildren().addAll(
                 this.topicLabel, this.numLabel, this.questionLabel,
                 this.image, this.choiceBox, backNextBox

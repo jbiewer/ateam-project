@@ -155,7 +155,7 @@ public class QuizManager {
     public void loadQuiz(QuizSettingsData data) {
         // start by getting questions to quiz on
         Question[] questions;
-        if (data.getTopics() == null) questions = Main.questionBank.getAllQuestions();
+        if (data.getTopics() == null || data.getTopics().length == 0) questions = Main.questionBank.getAllQuestions();
         else {
             // for each topic, add all the questions of that topic to the questions array
             List<Question> qs = new ArrayList<>();

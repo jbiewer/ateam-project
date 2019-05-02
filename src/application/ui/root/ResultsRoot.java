@@ -21,7 +21,7 @@ public class ResultsRoot extends VBox {
 	private PercentCorrectBox percentCorrectBox;
 
 	/**
-	 * Constructor
+	 * Constructs root node.
 	 */
     public ResultsRoot() {
         // Initialize nodes
@@ -31,9 +31,10 @@ public class ResultsRoot extends VBox {
         HBox decisionBtn = new NewDecisionButtonBox();
 
         //Stream in all HBoxes and center all of them
-        Arrays.stream(new HBox[] { this.numCorrectBox, this.percentCorrectBox, decisionBtn })
-        .forEach(box -> box.setAlignment(Pos.CENTER));
+        Arrays.asList(this.numCorrectBox, this.percentCorrectBox, decisionBtn)
+				.forEach(box -> box.setAlignment(Pos.CENTER));
         this.setSpacing(50);
+        this.setAlignment(Pos.CENTER);
 
         this.getChildren().addAll(summary, numCorrectBox, percentCorrectBox, decisionBtn);
 
@@ -54,10 +55,8 @@ public class ResultsRoot extends VBox {
     		Label num = new Label("Number correct: ");
     		this.numCorrect = new Label( "< x >");
     		
-    		//Functionality not implemented yet
-    		//Get number of correct answers    		
-
     		//Add children
+			this.setSpacing(20);
     		this.getChildren().addAll(num, numCorrect);
     	}
 
@@ -88,12 +87,8 @@ public class ResultsRoot extends VBox {
     		Label percent = new Label("Percent correct: ");
     		this.percentCorrect = new Label("< % >");
     		
-    		//Functionality not implemented yet
-    		//Get number of correct answers
-    		//Get total number of questions
-    		//Calculate and display percentage
-
     		//Add children
+			this.setSpacing(20);
     		this.getChildren().addAll(percent, percentCorrect);
     	}
 
@@ -134,6 +129,7 @@ public class ResultsRoot extends VBox {
 			});
 
             //Add children
+			this.setSpacing(20);
             this.getChildren().addAll(newQuiz, tryAgain);
     	}
 

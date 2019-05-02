@@ -57,15 +57,27 @@ Button{
 }
 
 .label-big{
-     -fx-font: 40px Droid-Serif;
-     -fx-padding: 10 10 10 10;
-     -fx-background-color: white;
-     -fx-fill: #21586b;
-     -fx-stroke: black;
-     -fx-stroke-width: 1;
-     -fx-font-weight: bold;
-     -fx-border-radius: 30 30 30 30;
-     -fx-background-radius: 10 10 10 10;
+    -fx-font: 40px Droid-Serif;
+    -fx-padding: 10 10 10 10;
+    -fx-background-color: white;
+    -fx-fill: #21586b;
+    -fx-stroke: black;
+    -fx-stroke-width: 1;
+    -fx-font-weight: bold;
+    -fx-border-radius: 30 30 30 30;
+    -fx-background-radius: 10 10 10 10;
+}
+
+.label-small{
+    -fx-font: 16px Droid-Serif;
+    -fx-padding: 10 10 10 10;
+    -fx-background-color: white;
+    -fx-fill: #21586b;
+    -fx-stroke: black;
+    -fx-stroke-width: 1;
+    -fx-font-weight: bold;
+    -fx-border-radius: 30 30 30 30;
+    -fx-background-radius: 10 10 10 10;
 }
 
 .main-text{
@@ -88,14 +100,3 @@ Button{
      -fx-stroke-width: 1;
      -fx-font-weight: bold;
 }
-
-.dropdown{
-
-}
-
-.text-field{
-
-}
-
-
-

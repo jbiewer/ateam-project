@@ -19,8 +19,6 @@ public class SaveQuizPopupRoot extends VBox {
      * Constructs a new custom alert that allows the user to save the quiz questions
      */
     public SaveQuizPopupRoot(){
-        this.getChildren().addAll();
-
         this.getStylesheets().add(Main.mainTheme); // add stylesheet
 
         // INITIALIZE NODES //

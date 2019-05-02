@@ -71,5 +71,4 @@ public class SaveQuizPopupRoot extends VBox {
         this.setSpacing(20);
         this.setAlignment(Pos.CENTER);
     }
-
 }
